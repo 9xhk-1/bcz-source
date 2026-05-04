@@ -118,8 +118,8 @@ Cookie: device_name=...; version=...; app_name=7081400; channel=...; client_time
 
 | 字段 ID | 字段名 | Thrift 类型 | 示例值 | 说明 |
 |---------|--------|-------------|--------|------|
-| 1 | `phone` | string (type=11) | `"13812345678"` | 手机号 |
-| 2 | `verify_type` | i32 (type=8) | `5` | 验证码类型：LOGIN=5，REGISTER=1 |
+| 1 | `phone` | string | `"13812345678"` | 手机号 |
+| 2 | `verify_type` | i32 | `5` | 验证码类型：LOGIN=5，REGISTER=1 |
 
 **`verify_type` 枚举值（来源：`SmsCaptcha` 枚举类）：**
 
@@ -178,15 +178,15 @@ Cookie: device_name=...; version=...; app_name=7081400; channel=...; client_time
 
 | 字段 ID | 字段名 | Thrift 类型 | 示例值 | 说明 |
 |---------|--------|-------------|--------|------|
-| 1 | `verify_code_request` | struct (type=12) | 见下 | 手机号+验证码结构体 |
-| 3 | `device` | string (type=11) | `"aabbccdd1234abcd"` | 设备唯一ID（android_id） |
+| 1 | `verify_code_request` | struct | 见下 | 手机号+验证码结构体 |
+| 3 | `device` | string | `"aabbccdd1234abcd"` | 设备唯一ID（android_id） |
 
 **PhoneVerifyCodeRequest 字段（嵌套在 field 1）：**
 
 | 字段 ID | 字段名 | Thrift 类型 | 示例值 | 说明 |
 |---------|--------|-------------|--------|------|
-| 1 | `phone` | string (type=11) | `"13812345678"` | 手机号 |
-| 2 | `verify_code` | string (type=11) | `"123456"` | 短信验证码 |
+| 1 | `phone` | string | `"13812345678"` | 手机号 |
+| 2 | `verify_code` | string | `"123456"` | 短信验证码 |
 
 ### 5.3 响应：UserLoginResult
 
@@ -203,8 +203,10 @@ Cookie: device_name=...; version=...; app_name=7081400; channel=...; client_time
 | 7 | `phone` | string | 手机号 |
 | 8 | `force_bind_phone` | i32 | 是否强制绑手机 |
 | 9 | `role_new` | i32 | 角色新版字段 |
-| 10 | `role` | struct RoleInfo | 角色信息 |
+| 10 | `role` | struct | 角色信息（RoleInfo） |
 | 11 | `game_mode` | i32 | 游戏模式 |
+
+> **注意（TCompact 线路编码 vs. Thrift 模式类型）：** 上表中的 "Thrift 类型" 使用人类可读名称。Java 源码中 `TField` 构造器使用 `TType` 常量（`STRING=11, I32=8, STRUCT=12` 等）定义模式；而实际 TCompactProtocol 线路上字段类型使用不同编码（`BINARY=8, I32=5, STRUCT=12`）。`result/login.py` 中的常量 `TYPE_*` 对应 TCompact 线路类型。
 
 **获取 Session ID：** 从 `UserLoginResult.access_token` 字段取值，后续请求在 Cookie 中携带 `access_token={value}`。
 

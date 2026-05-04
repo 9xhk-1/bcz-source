@@ -123,7 +123,8 @@ class CompactWriter:
         self._last_field_id_stack.append(0)
 
     def write_struct_end(self):
-        self._last_field_id_stack.pop()
+        if len(self._last_field_id_stack) > 1:
+            self._last_field_id_stack.pop()
 
     def write_field_begin(self, field_type: int, field_id: int):
         self._write_type_and_field(field_type, field_id)
@@ -158,6 +159,11 @@ class CompactReader:
         self._last_field_id_stack = [0]
 
     def _read(self, n: int) -> bytes:
+        if self._pos + n > len(self._buf):
+            raise ValueError(
+                f"Unexpected end of buffer: need {n} bytes at pos {self._pos}, "
+                f"buf len {len(self._buf)}"
+            )
         chunk = self._buf[self._pos:self._pos + n]
         self._pos += n
         return chunk
@@ -179,7 +185,8 @@ class CompactReader:
         self._last_field_id_stack.append(0)
 
     def read_struct_end(self):
-        self._last_field_id_stack.pop()
+        if len(self._last_field_id_stack) > 1:
+            self._last_field_id_stack.pop()
 
     def read_field_begin(self):
         """Return (field_type, field_id). field_type=0 means STOP."""

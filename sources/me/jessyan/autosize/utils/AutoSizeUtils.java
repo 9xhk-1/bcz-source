@@ -1,0 +1,57 @@
+package me.jessyan.autosize.utils;
+
+import android.app.Application;
+import android.content.Context;
+import android.util.TypedValue;
+import java.lang.reflect.InvocationTargetException;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes8.dex */
+public class AutoSizeUtils {
+    private AutoSizeUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
+    }
+
+    public static int dp2px(Context context, float f11) {
+        return (int) (TypedValue.applyDimension(1, f11, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+
+    public static Application getApplicationByReflect() {
+        try {
+            Class<?> cls = Class.forName("android.app.ActivityThread");
+            Object invoke = cls.getMethod("getApplication", null).invoke(cls.getMethod("currentActivityThread", null).invoke(null, null), null);
+            if (invoke != null) {
+                return (Application) invoke;
+            }
+            throw new NullPointerException("you should init first");
+        } catch (ClassNotFoundException e11) {
+            e11.printStackTrace();
+            throw new NullPointerException("you should init first");
+        } catch (IllegalAccessException e12) {
+            e12.printStackTrace();
+            throw new NullPointerException("you should init first");
+        } catch (NoSuchMethodException e13) {
+            e13.printStackTrace();
+            throw new NullPointerException("you should init first");
+        } catch (InvocationTargetException e14) {
+            e14.printStackTrace();
+            throw new NullPointerException("you should init first");
+        }
+    }
+
+    public static int in2px(Context context, float f11) {
+        return (int) (TypedValue.applyDimension(4, f11, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+
+    public static int mm2px(Context context, float f11) {
+        return (int) (TypedValue.applyDimension(5, f11, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+
+    public static int pt2px(Context context, float f11) {
+        return (int) (TypedValue.applyDimension(3, f11, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+
+    public static int sp2px(Context context, float f11) {
+        return (int) (TypedValue.applyDimension(2, f11, context.getResources().getDisplayMetrics()) + 0.5f);
+    }
+}

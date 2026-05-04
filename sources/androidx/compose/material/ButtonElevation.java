@@ -1,0 +1,19 @@
+package androidx.compose.material;
+
+import androidx.compose.foundation.interaction.InteractionSource;
+import androidx.compose.runtime.Composable;
+import androidx.compose.runtime.Composer;
+import androidx.compose.runtime.Stable;
+import androidx.compose.runtime.State;
+import androidx.compose.ui.unit.Dp;
+import m80.k;
+import m80.l;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@Stable
+/* loaded from: classes.dex */
+public interface ButtonElevation {
+    @Composable
+    @k
+    State<Dp> elevation(boolean z11, @k InteractionSource interactionSource, @l Composer composer, int i11);
+}

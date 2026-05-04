@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape>
+            <corners android:radius="@dimen/home_card_btn_radius_7dp"/>
+            <solid android:color="#99e6e9ee"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="@dimen/home_card_btn_radius_7dp"/>
+            <solid android:color="#0f40be"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="@dimen/home_card_btn_radius_7dp"/>
+            <solid android:color="@color/main_color_blue_dark"/>
+        </shape>
+    </item>
+</selector>

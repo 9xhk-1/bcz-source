@@ -1,0 +1,29 @@
+package com.getui.gtc.base.crypt;
+
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+
+/* loaded from: classes6.dex */
+final class b {
+
+    /* renamed from: a, reason: collision with root package name */
+    private SecretKey f29788a;
+
+    public b(String str) throws NoSuchAlgorithmException {
+        this.f29788a = CryptTools.wrapperKey("RC4", CryptTools.digest("MD5", str.getBytes()));
+    }
+
+    public final byte[] a(byte[] bArr) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        return CryptTools.encrypt("RC4", this.f29788a, (IvParameterSpec) null, bArr);
+    }
+
+    public final byte[] b(byte[] bArr) throws NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+        return CryptTools.decrypt("RC4", this.f29788a, (IvParameterSpec) null, bArr);
+    }
+}

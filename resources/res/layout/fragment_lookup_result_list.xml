@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@color/main_color_word_b8"
+        android:id="@+id/history_tag"
+        android:background="#fff"
+        android:paddingLeft="16dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="搜索历史"
+        android:fontFamily="sans-serif-medium"/>
+    <ImageView
+        android:id="@+id/history_clear"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_search_history_clear"
+        android:layout_alignTop="@+id/history_tag"
+        android:layout_alignParentRight="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lookup_result_list"
+        android:background="@color/main_color_white"
+        android:scrollbars="vertical"
+        android:saveEnabled="false"
+        android:clipToPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_tag"/>
+</RelativeLayout>

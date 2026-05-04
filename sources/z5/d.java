@@ -1,0 +1,22 @@
+package z5;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes3.dex */
+public final class d {
+
+    /* renamed from: a, reason: collision with root package name */
+    @m80.k
+    public static final String f100844a = "DailyReviewScope";
+
+    /* renamed from: b, reason: collision with root package name */
+    @m80.k
+    public static final String f100845b = "DailyReviewKey";
+
+    public static final String c(Long l11) {
+        return "DailyReviewScope_" + l11;
+    }
+
+    public static final String d(long j11, long j12) {
+        return "DailyReviewKey_" + j11 + '_' + j12;
+    }
+}

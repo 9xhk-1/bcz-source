@@ -1,0 +1,35 @@
+package androidx.camera.camera2.internal.compat.workaround;
+
+import android.util.Size;
+import androidx.annotation.NonNull;
+import androidx.camera.camera2.internal.compat.quirk.DeviceQuirks;
+import androidx.camera.camera2.internal.compat.quirk.ExcludedSupportedSizesQuirk;
+import java.util.ArrayList;
+import java.util.List;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes.dex */
+public class ExcludedSupportedSizesContainer {
+
+    @NonNull
+    private final String mCameraId;
+
+    public ExcludedSupportedSizesContainer(@NonNull String str) {
+        this.mCameraId = str;
+    }
+
+    @NonNull
+    public List<Size> get(int i11) {
+        ExcludedSupportedSizesQuirk excludedSupportedSizesQuirk = (ExcludedSupportedSizesQuirk) DeviceQuirks.get(ExcludedSupportedSizesQuirk.class);
+        return excludedSupportedSizesQuirk == null ? new ArrayList() : excludedSupportedSizesQuirk.getExcludedSizes(this.mCameraId, i11);
+    }
+
+    @NonNull
+    public List<Size> get(@NonNull Class<?> cls) {
+        ExcludedSupportedSizesQuirk excludedSupportedSizesQuirk = (ExcludedSupportedSizesQuirk) DeviceQuirks.get(ExcludedSupportedSizesQuirk.class);
+        if (excludedSupportedSizesQuirk == null) {
+            return new ArrayList();
+        }
+        return excludedSupportedSizesQuirk.getExcludedSizes(this.mCameraId, cls);
+    }
+}

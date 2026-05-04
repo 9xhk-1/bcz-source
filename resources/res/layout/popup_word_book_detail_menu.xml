@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/popup_word_book_detail_menu_0"
+    android:background="@drawable/white_rounded_bg"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_width="155dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/show_hide_english"
+        android:text="隐藏英文"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/show_hide_chinese"
+        android:text="隐藏释义"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_hide_english"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/add_word"
+        android:text="添加单词"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_hide_chinese"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/edit_book"
+        android:text="编辑单词本"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_word"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/change_voice"
+        android:text="切换美音"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_book"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/pdf_history"
+        android:visibility="gone"
+        android:text="查看历史PDF链接"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_voice"
+        style="@style/style_word_book_menu_text"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

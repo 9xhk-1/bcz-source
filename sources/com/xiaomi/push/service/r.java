@@ -1,0 +1,26 @@
+package com.xiaomi.push.service;
+
+import com.xiaomi.push.hg;
+import com.xiaomi.push.hl;
+import java.util.List;
+
+/* loaded from: classes8.dex */
+public class r implements hg {
+
+    /* renamed from: a, reason: collision with root package name */
+    private final XMPushService f46393a;
+
+    public r(XMPushService xMPushService) {
+        this.f46393a = xMPushService;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public String a(String str) {
+        return "com.xiaomi.xmsf".equals(str) ? "1000271" : this.f46393a.getSharedPreferences("pref_registered_pkg_names", 0).getString(str, null);
+    }
+
+    @Override // com.xiaomi.push.hg
+    public void a(List<hl> list, String str, String str2) {
+        this.f46393a.a(new s(this, 4, str, list, str2));
+    }
+}

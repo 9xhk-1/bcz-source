@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.baicizhan.client.friend.widget.FriendFeedView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="55dp"
+    app:markerColor="#f6a623"
+    app:markerLineColor="#d0d0d6"
+    app:markerLineWidth="1px"
+    app:markerOffsetX="28dp"
+    app:markerRadius="3.5dp">
+    <com.baicizhan.client.business.widget.CircleImageView
+        android:id="@+id/thumb"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/defaultavatarbig_normal_default"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:textSize="@dimen/business_fs1"
+        android:textColor="#9937363c"
+        android:gravity="center"
+        android:id="@+id/datetime"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:singleLine="true"
+        android:layout_toRightOf="@+id/thumb"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:textSize="@dimen/business_fs4"
+        android:id="@+id/content"
+        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@+id/datetime"
+        android:layout_centerVertical="true"/>
+</com.baicizhan.client.friend.widget.FriendFeedView>

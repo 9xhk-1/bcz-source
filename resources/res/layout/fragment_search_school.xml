@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/fragment_search_school_0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:textSize="14sp"
+        android:textColor="@color/main_color_word_b8"
+        android:gravity="center"
+        android:id="@+id/search"
+        android:tag="binding_1"
+        android:background="@drawable/edit_school_search_bg"
+        android:paddingLeft="16dp"
+        android:paddingRight="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/userinfo_edit_search_title"
+        android:drawableLeft="@drawable/ic_edit_school_search"
+        android:drawablePadding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:tag="binding_2"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_input_clear_normal_default"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/search"
+        app:layout_constraintRight_toRightOf="@+id/search"
+        app:layout_constraintTop_toTopOf="@+id/search"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schools"
+        android:tag="binding_3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

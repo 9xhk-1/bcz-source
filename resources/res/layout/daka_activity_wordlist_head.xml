@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:tag="layout/daka_activity_wordlist_head_0"
+    android:paddingBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="28dp">
+    <TextView
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_color_main_word"
+        android:gravity="left"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/daka_page_word_list_word"/>
+    <TextView
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_color_main_word"
+        android:gravity="left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/daka_page_word_list_mean"
+        android:layout_weight="1"/>
+    <TextView
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_color_main_word"
+        android:gravity="right"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:text="@string/daka_page_word_list_wrong_count"/>
+</LinearLayout>

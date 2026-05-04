@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/dialog_wifi_tips_prompt_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:id="@+id/magic_prompt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <com.baicizhan.client.business.widget.MaxHeightScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:maxHeight="180dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magic_prompt_title">
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/main_color_word_822"
+            android:gravity="left"
+            android:id="@+id/magic_prompt_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.baicizhan.client.business.widget.MaxHeightScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

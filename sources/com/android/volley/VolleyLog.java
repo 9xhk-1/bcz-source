@@ -1,0 +1,129 @@
+package com.android.volley;
+
+import android.os.SystemClock;
+import android.util.Log;
+import androidx.camera.core.CameraInfo;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes3.dex */
+public class VolleyLog {
+    public static String TAG = "Volley";
+    public static boolean DEBUG = Log.isLoggable("Volley", 2);
+    private static final String CLASS_NAME = VolleyLog.class.getName();
+
+    /* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+    public static class MarkerLog {
+        public static final boolean ENABLED = VolleyLog.DEBUG;
+        private static final long MIN_DURATION_FOR_LOGGING_MS = 0;
+        private final List<Marker> mMarkers = new ArrayList();
+        private boolean mFinished = false;
+
+        /* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+        public static class Marker {
+            public final String name;
+            public final long thread;
+            public final long time;
+
+            public Marker(String str, long j11, long j12) {
+                this.name = str;
+                this.thread = j11;
+                this.time = j12;
+            }
+        }
+
+        private long getTotalDuration() {
+            if (this.mMarkers.size() == 0) {
+                return 0L;
+            }
+            return this.mMarkers.get(r2.size() - 1).time - this.mMarkers.get(0).time;
+        }
+
+        public synchronized void add(String str, long j11) {
+            if (this.mFinished) {
+                throw new IllegalStateException("Marker added to finished log");
+            }
+            this.mMarkers.add(new Marker(str, j11, SystemClock.elapsedRealtime()));
+        }
+
+        public void finalize() throws Throwable {
+            if (this.mFinished) {
+                return;
+            }
+            finish("Request on the loose");
+            VolleyLog.e("Marker log finalized without finish() - uncaught exit point for request", new Object[0]);
+        }
+
+        public synchronized void finish(String str) {
+            this.mFinished = true;
+            long totalDuration = getTotalDuration();
+            if (totalDuration <= 0) {
+                return;
+            }
+            long j11 = this.mMarkers.get(0).time;
+            VolleyLog.d("(%-4d ms) %s", Long.valueOf(totalDuration), str);
+            for (Marker marker : this.mMarkers) {
+                long j12 = marker.time;
+                VolleyLog.d("(+%-4d) [%2d] %s", Long.valueOf(j12 - j11), Long.valueOf(marker.thread), marker.name);
+                j11 = j12;
+            }
+        }
+    }
+
+    private static String buildMessage(String str, Object... objArr) {
+        String str2;
+        if (objArr != null) {
+            str = String.format(Locale.US, str, objArr);
+        }
+        StackTraceElement[] stackTrace = new Throwable().fillInStackTrace().getStackTrace();
+        int i11 = 2;
+        while (true) {
+            if (i11 >= stackTrace.length) {
+                str2 = CameraInfo.IMPLEMENTATION_TYPE_UNKNOWN;
+                break;
+            }
+            if (!stackTrace[i11].getClassName().equals(CLASS_NAME)) {
+                String className = stackTrace[i11].getClassName();
+                String substring = className.substring(className.lastIndexOf(46) + 1);
+                str2 = substring.substring(substring.lastIndexOf(36) + 1) + "." + stackTrace[i11].getMethodName();
+                break;
+            }
+            i11++;
+        }
+        return String.format(Locale.US, "[%d] %s: %s", Long.valueOf(Thread.currentThread().getId()), str2, str);
+    }
+
+    public static void d(String str, Object... objArr) {
+        Log.d(TAG, buildMessage(str, objArr));
+    }
+
+    public static void e(String str, Object... objArr) {
+        Log.e(TAG, buildMessage(str, objArr));
+    }
+
+    public static void setTag(String str) {
+        d("Changing log tag to %s", str);
+        TAG = str;
+        DEBUG = Log.isLoggable(str, 2);
+    }
+
+    public static void v(String str, Object... objArr) {
+        if (DEBUG) {
+            Log.v(TAG, buildMessage(str, objArr));
+        }
+    }
+
+    public static void wtf(String str, Object... objArr) {
+        Log.wtf(TAG, buildMessage(str, objArr));
+    }
+
+    public static void e(Throwable th2, String str, Object... objArr) {
+        Log.e(TAG, buildMessage(str, objArr), th2);
+    }
+
+    public static void wtf(Throwable th2, String str, Object... objArr) {
+        Log.wtf(TAG, buildMessage(str, objArr), th2);
+    }
+}

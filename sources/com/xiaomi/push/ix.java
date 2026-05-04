@@ -1,0 +1,15 @@
+package com.xiaomi.push;
+
+/* loaded from: classes8.dex */
+public class ix extends Exception {
+    public ix() {
+    }
+
+    public ix(String str) {
+        super(str);
+    }
+
+    public ix(Throwable th2) {
+        super(th2);
+    }
+}

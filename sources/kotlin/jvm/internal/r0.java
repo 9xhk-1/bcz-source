@@ -1,0 +1,20 @@
+package kotlin.jvm.internal;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import kotlin.annotation.AnnotationRetention;
+import kotlin.annotation.AnnotationTarget;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@Target({ElementType.TYPE})
+@yz.y0(version = "1.6")
+@zz.c(AnnotationRetention.BINARY)
+@zz.d(allowedTargets = {AnnotationTarget.CLASS})
+@Retention(RetentionPolicy.CLASS)
+/* loaded from: classes8.dex */
+public @interface r0 {
+    @w00.j(name = yr.e.f100279a)
+    String[] b() default {};
+}

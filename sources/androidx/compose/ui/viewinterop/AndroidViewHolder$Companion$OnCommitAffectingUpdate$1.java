@@ -1,0 +1,35 @@
+package androidx.compose.ui.viewinterop;
+
+import android.os.Handler;
+import kotlin.jvm.internal.Lambda;
+import x00.l;
+import yz.g2;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes2.dex */
+public final class AndroidViewHolder$Companion$OnCommitAffectingUpdate$1 extends Lambda implements l<AndroidViewHolder, g2> {
+    public static final AndroidViewHolder$Companion$OnCommitAffectingUpdate$1 INSTANCE = new AndroidViewHolder$Companion$OnCommitAffectingUpdate$1();
+
+    public AndroidViewHolder$Companion$OnCommitAffectingUpdate$1() {
+        super(1);
+    }
+
+    @Override // x00.l
+    public /* bridge */ /* synthetic */ g2 invoke(AndroidViewHolder androidViewHolder) {
+        invoke2(androidViewHolder);
+        return g2.f100423a;
+    }
+
+    /* renamed from: invoke, reason: avoid collision after fix types in other method */
+    public final void invoke2(AndroidViewHolder androidViewHolder) {
+        final x00.a aVar;
+        Handler handler = androidViewHolder.getHandler();
+        aVar = androidViewHolder.runUpdate;
+        handler.post(new Runnable() { // from class: androidx.compose.ui.viewinterop.b
+            @Override // java.lang.Runnable
+            public final void run() {
+                x00.a.this.invoke();
+            }
+        });
+    }
+}

@@ -1,0 +1,29 @@
+package androidx.constraintlayout.compose;
+
+import androidx.compose.ui.semantics.SemanticsPropertyReceiver;
+import kotlin.jvm.internal.Lambda;
+import x00.l;
+import yz.g2;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes2.dex */
+public final class ConstraintLayoutKt$ConstraintLayout$6$1$1 extends Lambda implements l<SemanticsPropertyReceiver, g2> {
+    final /* synthetic */ Measurer2 $measurer;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public ConstraintLayoutKt$ConstraintLayout$6$1$1(Measurer2 measurer2) {
+        super(1);
+        this.$measurer = measurer2;
+    }
+
+    @Override // x00.l
+    public /* bridge */ /* synthetic */ g2 invoke(SemanticsPropertyReceiver semanticsPropertyReceiver) {
+        invoke2(semanticsPropertyReceiver);
+        return g2.f100423a;
+    }
+
+    /* renamed from: invoke, reason: avoid collision after fix types in other method */
+    public final void invoke2(SemanticsPropertyReceiver semanticsPropertyReceiver) {
+        ToolingUtilsKt.setDesignInfoProvider(semanticsPropertyReceiver, this.$measurer);
+    }
+}

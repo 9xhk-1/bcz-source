@@ -1,0 +1,39 @@
+package com.huawei.hms.common;
+
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentSender;
+import com.huawei.hms.common.internal.ResponseErrorCode;
+import com.huawei.hms.support.api.client.Status;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes7.dex */
+public class ResolvableApiException extends ApiException {
+    public ResolvableApiException(Status status) {
+        super(status);
+    }
+
+    public PendingIntent getResolution() {
+        return this.mStatus.getResolution();
+    }
+
+    public Intent getResolutionIntent() {
+        return this.mStatus.getResolutionIntent();
+    }
+
+    public void startResolutionForResult(Activity activity, int i11) throws IntentSender.SendIntentException {
+        this.mStatus.startResolutionForResult(activity, i11);
+    }
+
+    public ResolvableApiException(ResponseErrorCode responseErrorCode) {
+        super(new Status(responseErrorCode.getErrorCode(), responseErrorCode.getErrorReason()));
+        if (responseErrorCode.hasResolution()) {
+            if (responseErrorCode.getParcelable() instanceof PendingIntent) {
+                this.mStatus.setPendingIntent((PendingIntent) responseErrorCode.getParcelable());
+            } else if (responseErrorCode.getParcelable() instanceof Intent) {
+                this.mStatus.setIntent((Intent) responseErrorCode.getParcelable());
+            }
+        }
+    }
+}

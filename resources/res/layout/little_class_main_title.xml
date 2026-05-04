@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:background="?attr/color_common_bar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:elevation="4dp">
+    <TextView
+        android:textSize="@dimen/T5"
+        android:textColor="?attr/color_topbar_text2"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/notify_msg_list_title"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:textSize="@dimen/T4"
+        android:textColor="?attr/color_topbar_text2"
+        android:gravity="center"
+        android:id="@+id/collect"
+        android:background="?attr/actionBarItemBackground"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="收藏"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

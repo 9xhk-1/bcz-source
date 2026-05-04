@@ -1,0 +1,2044 @@
+[
+    {
+        "group_id": 15,
+        "group_num": 1,
+        "arr_short_phrase": [
+            {
+                "topic_id": 63,
+                "word": "act as"
+            },
+            {
+                "topic_id": 64,
+                "word": "bend over"
+            },
+            {
+                "topic_id": 65,
+                "word": "drop off"
+            },
+            {
+                "topic_id": 66,
+                "word": "get over"
+            },
+            {
+                "topic_id": 67,
+                "word": "break in"
+            },
+            {
+                "topic_id": 68,
+                "word": "call off"
+            },
+            {
+                "topic_id": 69,
+                "word": "end up"
+            },
+            {
+                "topic_id": 70,
+                "word": "find out"
+            }
+        ]
+    },
+    {
+        "group_id": 1,
+        "group_num": 2,
+        "arr_short_phrase": [
+            {
+                "topic_id": 1,
+                "word": "cut out"
+            },
+            {
+                "topic_id": 2,
+                "word": "cut away"
+            },
+            {
+                "topic_id": 3,
+                "word": "cut off"
+            },
+            {
+                "topic_id": 4,
+                "word": "cut up"
+            },
+            {
+                "topic_id": 5,
+                "word": "cut down"
+            }
+        ]
+    },
+    {
+        "group_id": 16,
+        "group_num": 3,
+        "arr_short_phrase": [
+            {
+                "topic_id": 71,
+                "word": "act for"
+            },
+            {
+                "topic_id": 72,
+                "word": "burst into"
+            },
+            {
+                "topic_id": 73,
+                "word": "divide up"
+            },
+            {
+                "topic_id": 74,
+                "word": "carry off"
+            },
+            {
+                "topic_id": 75,
+                "word": "bring about"
+            },
+            {
+                "topic_id": 76,
+                "word": "come out"
+            },
+            {
+                "topic_id": 77,
+                "word": "drop by"
+            },
+            {
+                "topic_id": 78,
+                "word": "get across"
+            }
+        ]
+    },
+    {
+        "group_id": 17,
+        "group_num": 4,
+        "arr_short_phrase": [
+            {
+                "topic_id": 79,
+                "word": "calm down"
+            },
+            {
+                "topic_id": 80,
+                "word": "do away with"
+            },
+            {
+                "topic_id": 81,
+                "word": "cut in"
+            },
+            {
+                "topic_id": 82,
+                "word": "fill up"
+            },
+            {
+                "topic_id": 83,
+                "word": "drive off"
+            },
+            {
+                "topic_id": 84,
+                "word": "bring out"
+            },
+            {
+                "topic_id": 85,
+                "word": "check in"
+            },
+            {
+                "topic_id": 86,
+                "word": "call up"
+            }
+        ]
+    },
+    {
+        "group_id": 18,
+        "group_num": 5,
+        "arr_short_phrase": [
+            {
+                "topic_id": 87,
+                "word": "get over"
+            },
+            {
+                "topic_id": 88,
+                "word": "ask after"
+            },
+            {
+                "topic_id": 89,
+                "word": "cast away"
+            },
+            {
+                "topic_id": 90,
+                "word": "draw back"
+            },
+            {
+                "topic_id": 91,
+                "word": "bring up"
+            },
+            {
+                "topic_id": 92,
+                "word": "break in"
+            },
+            {
+                "topic_id": 93,
+                "word": "fix up"
+            },
+            {
+                "topic_id": 94,
+                "word": "leave alone"
+            }
+        ]
+    },
+    {
+        "group_id": 2,
+        "group_num": 6,
+        "arr_short_phrase": [
+            {
+                "topic_id": 6,
+                "word": "blow out"
+            },
+            {
+                "topic_id": 7,
+                "word": "blow off"
+            },
+            {
+                "topic_id": 8,
+                "word": "put out"
+            },
+            {
+                "topic_id": 9,
+                "word": "put down"
+            }
+        ]
+    },
+    {
+        "group_id": 19,
+        "group_num": 7,
+        "arr_short_phrase": [
+            {
+                "topic_id": 95,
+                "word": "burst into"
+            },
+            {
+                "topic_id": 96,
+                "word": "attend to"
+            },
+            {
+                "topic_id": 97,
+                "word": "cut in"
+            },
+            {
+                "topic_id": 98,
+                "word": "figure out"
+            },
+            {
+                "topic_id": 99,
+                "word": "drop off"
+            },
+            {
+                "topic_id": 100,
+                "word": "carry off"
+            },
+            {
+                "topic_id": 101,
+                "word": "allow for"
+            },
+            {
+                "topic_id": 106,
+                "word": "bring out"
+            }
+        ]
+    },
+    {
+        "group_id": 20,
+        "group_num": 8,
+        "arr_short_phrase": [
+            {
+                "topic_id": 102,
+                "word": "get at"
+            },
+            {
+                "topic_id": 103,
+                "word": "answer for"
+            },
+            {
+                "topic_id": 104,
+                "word": "come at"
+            },
+            {
+                "topic_id": 105,
+                "word": "get across"
+            },
+            {
+                "topic_id": 107,
+                "word": "draw up"
+            },
+            {
+                "topic_id": 108,
+                "word": "go beyond"
+            },
+            {
+                "topic_id": 109,
+                "word": "come out"
+            },
+            {
+                "topic_id": 110,
+                "word": "call up"
+            }
+        ]
+    },
+    {
+        "group_id": 21,
+        "group_num": 9,
+        "arr_short_phrase": [
+            {
+                "topic_id": 111,
+                "word": "draw back"
+            },
+            {
+                "topic_id": 112,
+                "word": "attend to"
+            },
+            {
+                "topic_id": 113,
+                "word": "date from"
+            },
+            {
+                "topic_id": 114,
+                "word": "become of"
+            },
+            {
+                "topic_id": 115,
+                "word": "live on"
+            },
+            {
+                "topic_id": 116,
+                "word": "get over"
+            },
+            {
+                "topic_id": 118,
+                "word": "fix up"
+            },
+            {
+                "topic_id": 123,
+                "word": "take down"
+            }
+        ]
+    },
+    {
+        "group_id": 3,
+        "group_num": 10,
+        "arr_short_phrase": [
+            {
+                "topic_id": 10,
+                "word": "wash away"
+            },
+            {
+                "topic_id": 11,
+                "word": "wash down"
+            },
+            {
+                "topic_id": 12,
+                "word": "in the north of"
+            },
+            {
+                "topic_id": 13,
+                "word": "on the north of"
+            },
+            {
+                "topic_id": 14,
+                "word": "to the north of"
+            }
+        ]
+    },
+    {
+        "group_id": 22,
+        "group_num": 11,
+        "arr_short_phrase": [
+            {
+                "topic_id": 117,
+                "word": "act out"
+            },
+            {
+                "topic_id": 119,
+                "word": "act up"
+            },
+            {
+                "topic_id": 120,
+                "word": "build up"
+            },
+            {
+                "topic_id": 121,
+                "word": "call out"
+            },
+            {
+                "topic_id": 122,
+                "word": "go out"
+            },
+            {
+                "topic_id": 124,
+                "word": "drink to"
+            },
+            {
+                "topic_id": 125,
+                "word": "come off"
+            },
+            {
+                "topic_id": 126,
+                "word": "get down"
+            }
+        ]
+    },
+    {
+        "group_id": 23,
+        "group_num": 12,
+        "arr_short_phrase": [
+            {
+                "topic_id": 127,
+                "word": "call in"
+            },
+            {
+                "topic_id": 128,
+                "word": "leave behind"
+            },
+            {
+                "topic_id": 129,
+                "word": "hang out"
+            },
+            {
+                "topic_id": 130,
+                "word": "go through"
+            },
+            {
+                "topic_id": 131,
+                "word": "give over to"
+            },
+            {
+                "topic_id": 132,
+                "word": "break out"
+            },
+            {
+                "topic_id": 133,
+                "word": "come out"
+            },
+            {
+                "topic_id": 134,
+                "word": "bring out"
+            }
+        ]
+    },
+    {
+        "group_id": 24,
+        "group_num": 13,
+        "arr_short_phrase": [
+            {
+                "topic_id": 135,
+                "word": "bring to"
+            },
+            {
+                "topic_id": 136,
+                "word": "make a living by"
+            },
+            {
+                "topic_id": 137,
+                "word": "get down"
+            },
+            {
+                "topic_id": 138,
+                "word": "cross out"
+            },
+            {
+                "topic_id": 139,
+                "word": "get into"
+            },
+            {
+                "topic_id": 140,
+                "word": "take down"
+            },
+            {
+                "topic_id": 141,
+                "word": "attach to"
+            },
+            {
+                "topic_id": 142,
+                "word": "depend on/upon"
+            }
+        ]
+    },
+    {
+        "group_id": 4,
+        "group_num": 14,
+        "arr_short_phrase": [
+            {
+                "topic_id": 15,
+                "word": "send up"
+            },
+            {
+                "topic_id": 16,
+                "word": "send out"
+            },
+            {
+                "topic_id": 17,
+                "word": "send in"
+            },
+            {
+                "topic_id": 18,
+                "word": "point at"
+            },
+            {
+                "topic_id": 19,
+                "word": "point to"
+            }
+        ]
+    },
+    {
+        "group_id": 25,
+        "group_num": 15,
+        "arr_short_phrase": [
+            {
+                "topic_id": 143,
+                "word": "break through"
+            },
+            {
+                "topic_id": 144,
+                "word": "go out"
+            },
+            {
+                "topic_id": 145,
+                "word": "turn around/round"
+            },
+            {
+                "topic_id": 146,
+                "word": "lay down"
+            },
+            {
+                "topic_id": 147,
+                "word": "shut down"
+            },
+            {
+                "topic_id": 148,
+                "word": "build up"
+            },
+            {
+                "topic_id": 149,
+                "word": "drop out of"
+            },
+            {
+                "topic_id": 150,
+                "word": "come to"
+            }
+        ]
+    },
+    {
+        "group_id": 26,
+        "group_num": 16,
+        "arr_short_phrase": [
+            {
+                "topic_id": 151,
+                "word": "turn to"
+            },
+            {
+                "topic_id": 152,
+                "word": "make out"
+            },
+            {
+                "topic_id": 153,
+                "word": "get through"
+            },
+            {
+                "topic_id": 154,
+                "word": "close to"
+            },
+            {
+                "topic_id": 155,
+                "word": "bring in"
+            },
+            {
+                "topic_id": 156,
+                "word": "push over"
+            },
+            {
+                "topic_id": 157,
+                "word": "get in"
+            },
+            {
+                "topic_id": 158,
+                "word": "long for"
+            }
+        ]
+    },
+    {
+        "group_id": 27,
+        "group_num": 17,
+        "arr_short_phrase": [
+            {
+                "topic_id": 159,
+                "word": "get down"
+            },
+            {
+                "topic_id": 160,
+                "word": "build up"
+            },
+            {
+                "topic_id": 161,
+                "word": "call back"
+            },
+            {
+                "topic_id": 162,
+                "word": "set up"
+            },
+            {
+                "topic_id": 163,
+                "word": "rush through"
+            },
+            {
+                "topic_id": 164,
+                "word": "take back"
+            },
+            {
+                "topic_id": 165,
+                "word": "get in"
+            },
+            {
+                "topic_id": 166,
+                "word": "pull down"
+            }
+        ]
+    },
+    {
+        "group_id": 5,
+        "group_num": 18,
+        "arr_short_phrase": [
+            {
+                "topic_id": 20,
+                "word": "knock down/over"
+            },
+            {
+                "topic_id": 21,
+                "word": "knock at/on"
+            },
+            {
+                "topic_id": 22,
+                "word": "knock out"
+            },
+            {
+                "topic_id": 23,
+                "word": "knock into"
+            }
+        ]
+    },
+    {
+        "group_id": 28,
+        "group_num": 19,
+        "arr_short_phrase": [
+            {
+                "topic_id": 167,
+                "word": "pass away"
+            },
+            {
+                "topic_id": 168,
+                "word": "turn away"
+            },
+            {
+                "topic_id": 169,
+                "word": "go out"
+            },
+            {
+                "topic_id": 170,
+                "word": "attach to"
+            },
+            {
+                "topic_id": 171,
+                "word": "bring on"
+            },
+            {
+                "topic_id": 172,
+                "word": "set down"
+            },
+            {
+                "topic_id": 173,
+                "word": "go through"
+            },
+            {
+                "topic_id": 174,
+                "word": "come to"
+            }
+        ]
+    },
+    {
+        "group_id": 29,
+        "group_num": 20,
+        "arr_short_phrase": [
+            {
+                "topic_id": 175,
+                "word": "lay down"
+            },
+            {
+                "topic_id": 176,
+                "word": "come about"
+            },
+            {
+                "topic_id": 177,
+                "word": "get through"
+            },
+            {
+                "topic_id": 178,
+                "word": "tie up"
+            },
+            {
+                "topic_id": 179,
+                "word": "let out"
+            },
+            {
+                "topic_id": 180,
+                "word": "tear down"
+            },
+            {
+                "topic_id": 181,
+                "word": "check out"
+            },
+            {
+                "topic_id": 182,
+                "word": "bring in"
+            }
+        ]
+    },
+    {
+        "group_id": 30,
+        "group_num": 21,
+        "arr_short_phrase": [
+            {
+                "topic_id": 183,
+                "word": "go through"
+            },
+            {
+                "topic_id": 184,
+                "word": "set down"
+            },
+            {
+                "topic_id": 185,
+                "word": "cool off"
+            },
+            {
+                "topic_id": 186,
+                "word": "get around"
+            },
+            {
+                "topic_id": 187,
+                "word": "turn to"
+            },
+            {
+                "topic_id": 188,
+                "word": "bring down"
+            },
+            {
+                "topic_id": 189,
+                "word": "carry on"
+            },
+            {
+                "topic_id": 190,
+                "word": "get back"
+            }
+        ]
+    },
+    {
+        "group_id": 6,
+        "group_num": 22,
+        "arr_short_phrase": [
+            {
+                "topic_id": 24,
+                "word": "hand out"
+            },
+            {
+                "topic_id": 25,
+                "word": "hand down"
+            },
+            {
+                "topic_id": 26,
+                "word": "hand in"
+            },
+            {
+                "topic_id": 27,
+                "word": "die down"
+            },
+            {
+                "topic_id": 28,
+                "word": "die away"
+            }
+        ]
+    },
+    {
+        "group_id": 31,
+        "group_num": 23,
+        "arr_short_phrase": [
+            {
+                "topic_id": 191,
+                "word": "carry out"
+            },
+            {
+                "topic_id": 192,
+                "word": "bring back"
+            },
+            {
+                "topic_id": 193,
+                "word": "take along"
+            },
+            {
+                "topic_id": 194,
+                "word": "live up to"
+            },
+            {
+                "topic_id": 195,
+                "word": "hold on"
+            },
+            {
+                "topic_id": 196,
+                "word": "join up"
+            },
+            {
+                "topic_id": 197,
+                "word": "lay down"
+            },
+            {
+                "topic_id": 198,
+                "word": "keep down"
+            }
+        ]
+    },
+    {
+        "group_id": 32,
+        "group_num": 24,
+        "arr_short_phrase": [
+            {
+                "topic_id": 199,
+                "word": "come across"
+            },
+            {
+                "topic_id": 200,
+                "word": "get in"
+            },
+            {
+                "topic_id": 201,
+                "word": "check out"
+            },
+            {
+                "topic_id": 202,
+                "word": "go in for"
+            },
+            {
+                "topic_id": 203,
+                "word": "make up"
+            },
+            {
+                "topic_id": 204,
+                "word": "talk through"
+            },
+            {
+                "topic_id": 205,
+                "word": "look after"
+            },
+            {
+                "topic_id": 206,
+                "word": "get around"
+            }
+        ]
+    },
+    {
+        "group_id": 33,
+        "group_num": 25,
+        "arr_short_phrase": [
+            {
+                "topic_id": 207,
+                "word": "get through"
+            },
+            {
+                "topic_id": 208,
+                "word": "hold up"
+            },
+            {
+                "topic_id": 209,
+                "word": "live with"
+            },
+            {
+                "topic_id": 210,
+                "word": "turn over"
+            },
+            {
+                "topic_id": 211,
+                "word": "come back"
+            },
+            {
+                "topic_id": 212,
+                "word": "look on"
+            },
+            {
+                "topic_id": 213,
+                "word": "run after"
+            },
+            {
+                "topic_id": 214,
+                "word": "put forward"
+            }
+        ]
+    },
+    {
+        "group_id": 7,
+        "group_num": 26,
+        "arr_short_phrase": [
+            {
+                "topic_id": 29,
+                "word": "die off"
+            },
+            {
+                "topic_id": 30,
+                "word": "die out"
+            },
+            {
+                "topic_id": 31,
+                "word": "give off"
+            },
+            {
+                "topic_id": 32,
+                "word": "give out"
+            }
+        ]
+    },
+    {
+        "group_id": 34,
+        "group_num": 27,
+        "arr_short_phrase": [
+            {
+                "topic_id": 215,
+                "word": "get back"
+            },
+            {
+                "topic_id": 216,
+                "word": "live up to"
+            },
+            {
+                "topic_id": 217,
+                "word": "wonder at"
+            },
+            {
+                "topic_id": 219,
+                "word": "hold on"
+            },
+            {
+                "topic_id": 220,
+                "word": "join up"
+            },
+            {
+                "topic_id": 221,
+                "word": "shut up"
+            },
+            {
+                "topic_id": 222,
+                "word": "live through"
+            },
+            {
+                "topic_id": 223,
+                "word": "fit in"
+            }
+        ]
+    },
+    {
+        "group_id": 35,
+        "group_num": 28,
+        "arr_short_phrase": [
+            {
+                "topic_id": 218,
+                "word": "look for"
+            },
+            {
+                "topic_id": 224,
+                "word": "make up"
+            },
+            {
+                "topic_id": 225,
+                "word": "keep out"
+            },
+            {
+                "topic_id": 226,
+                "word": "pass through"
+            },
+            {
+                "topic_id": 227,
+                "word": "turn over"
+            },
+            {
+                "topic_id": 228,
+                "word": "run after"
+            },
+            {
+                "topic_id": 229,
+                "word": "look back"
+            },
+            {
+                "topic_id": 230,
+                "word": "spread out"
+            }
+        ]
+    },
+    {
+        "group_id": 36,
+        "group_num": 29,
+        "arr_short_phrase": [
+            {
+                "topic_id": 231,
+                "word": "come over to"
+            },
+            {
+                "topic_id": 232,
+                "word": "look on"
+            },
+            {
+                "topic_id": 233,
+                "word": "take in"
+            },
+            {
+                "topic_id": 234,
+                "word": "put forward"
+            },
+            {
+                "topic_id": 235,
+                "word": "wear out"
+            },
+            {
+                "topic_id": 236,
+                "word": "see off"
+            },
+            {
+                "topic_id": 237,
+                "word": "let down"
+            },
+            {
+                "topic_id": 238,
+                "word": "ring back"
+            }
+        ]
+    },
+    {
+        "group_id": 8,
+        "group_num": 30,
+        "arr_short_phrase": [
+            {
+                "topic_id": 33,
+                "word": "give out"
+            },
+            {
+                "topic_id": 34,
+                "word": "give away"
+            },
+            {
+                "topic_id": 35,
+                "word": "fall down"
+            },
+            {
+                "topic_id": 36,
+                "word": "fall over"
+            },
+            {
+                "topic_id": 37,
+                "word": "fall off"
+            }
+        ]
+    },
+    {
+        "group_id": 37,
+        "group_num": 31,
+        "arr_short_phrase": [
+            {
+                "topic_id": 239,
+                "word": "get back"
+            },
+            {
+                "topic_id": 240,
+                "word": "look for"
+            },
+            {
+                "topic_id": 241,
+                "word": "put away"
+            },
+            {
+                "topic_id": 242,
+                "word": "mix up"
+            },
+            {
+                "topic_id": 243,
+                "word": "run at"
+            },
+            {
+                "topic_id": 244,
+                "word": "come up"
+            },
+            {
+                "topic_id": 245,
+                "word": "speak out"
+            },
+            {
+                "topic_id": 246,
+                "word": "take on"
+            }
+        ]
+    },
+    {
+        "group_id": 38,
+        "group_num": 32,
+        "arr_short_phrase": [
+            {
+                "topic_id": 247,
+                "word": "hold on"
+            },
+            {
+                "topic_id": 248,
+                "word": "let down"
+            },
+            {
+                "topic_id": 249,
+                "word": "come in"
+            },
+            {
+                "topic_id": 250,
+                "word": "go in for"
+            },
+            {
+                "topic_id": 251,
+                "word": "go off"
+            },
+            {
+                "topic_id": 252,
+                "word": "come around"
+            },
+            {
+                "topic_id": 253,
+                "word": "look out"
+            },
+            {
+                "topic_id": 254,
+                "word": "make up"
+            }
+        ]
+    },
+    {
+        "group_id": 39,
+        "group_num": 33,
+        "arr_short_phrase": [
+            {
+                "topic_id": 256,
+                "word": "wear out"
+            },
+            {
+                "topic_id": 257,
+                "word": "look into"
+            },
+            {
+                "topic_id": 258,
+                "word": "put away"
+            },
+            {
+                "topic_id": 259,
+                "word": "see to"
+            },
+            {
+                "topic_id": 260,
+                "word": "go about"
+            },
+            {
+                "topic_id": 261,
+                "word": "keep up"
+            },
+            {
+                "topic_id": 262,
+                "word": "run off"
+            },
+            {
+                "topic_id": 255,
+                "word": "take in"
+            }
+        ]
+    },
+    {
+        "group_id": 9,
+        "group_num": 34,
+        "arr_short_phrase": [
+            {
+                "topic_id": 38,
+                "word": "give up"
+            },
+            {
+                "topic_id": 39,
+                "word": "give in"
+            },
+            {
+                "topic_id": 40,
+                "word": "in the front of"
+            },
+            {
+                "topic_id": 41,
+                "word": "in front of"
+            }
+        ]
+    },
+    {
+        "group_id": 40,
+        "group_num": 35,
+        "arr_short_phrase": [
+            {
+                "topic_id": 263,
+                "word": "come up"
+            },
+            {
+                "topic_id": 264,
+                "word": "take on"
+            },
+            {
+                "topic_id": 265,
+                "word": "send for"
+            },
+            {
+                "topic_id": 266,
+                "word": "pick up"
+            },
+            {
+                "topic_id": 267,
+                "word": "look around/about"
+            },
+            {
+                "topic_id": 268,
+                "word": "go on"
+            },
+            {
+                "topic_id": 269,
+                "word": "run into"
+            },
+            {
+                "topic_id": 270,
+                "word": "set about"
+            }
+        ]
+    },
+    {
+        "group_id": 41,
+        "group_num": 36,
+        "arr_short_phrase": [
+            {
+                "topic_id": 271,
+                "word": "go off"
+            },
+            {
+                "topic_id": 272,
+                "word": "pick out"
+            },
+            {
+                "topic_id": 273,
+                "word": "keep from"
+            },
+            {
+                "topic_id": 274,
+                "word": "take off"
+            },
+            {
+                "topic_id": 275,
+                "word": "straight away"
+            },
+            {
+                "topic_id": 276,
+                "word": "put on"
+            },
+            {
+                "topic_id": 277,
+                "word": "thanks for"
+            },
+            {
+                "topic_id": 278,
+                "word": "turn down"
+            }
+        ]
+    },
+    {
+        "group_id": 42,
+        "group_num": 37,
+        "arr_short_phrase": [
+            {
+                "topic_id": 279,
+                "word": "go about"
+            },
+            {
+                "topic_id": 280,
+                "word": "look forward to"
+            },
+            {
+                "topic_id": 281,
+                "word": "take off"
+            },
+            {
+                "topic_id": 282,
+                "word": "send away"
+            },
+            {
+                "topic_id": 283,
+                "word": "refer to"
+            },
+            {
+                "topic_id": 285,
+                "word": "take after"
+            },
+            {
+                "topic_id": 286,
+                "word": "go on"
+            },
+            {
+                "topic_id": 312,
+                "word": "dig up"
+            }
+        ]
+    },
+    {
+        "group_id": 10,
+        "group_num": 38,
+        "arr_short_phrase": [
+            {
+                "topic_id": 42,
+                "word": "tear up"
+            },
+            {
+                "topic_id": 43,
+                "word": "tear at"
+            },
+            {
+                "topic_id": 44,
+                "word": "think out"
+            },
+            {
+                "topic_id": 45,
+                "word": "think over"
+            },
+            {
+                "topic_id": 46,
+                "word": "think up"
+            }
+        ]
+    },
+    {
+        "group_id": 46,
+        "group_num": 39,
+        "arr_short_phrase": [
+            {
+                "topic_id": 284,
+                "word": "keep on"
+            },
+            {
+                "topic_id": 311,
+                "word": "turn on"
+            },
+            {
+                "topic_id": 313,
+                "word": "pull  up"
+            },
+            {
+                "topic_id": 314,
+                "word": "look through"
+            },
+            {
+                "topic_id": 315,
+                "word": "watch over"
+            },
+            {
+                "topic_id": 316,
+                "word": "put up"
+            },
+            {
+                "topic_id": 317,
+                "word": "take off"
+            },
+            {
+                "topic_id": 318,
+                "word": "send away"
+            }
+        ]
+    },
+    {
+        "group_id": 43,
+        "group_num": 40,
+        "arr_short_phrase": [
+            {
+                "topic_id": 287,
+                "word": "pass by"
+            },
+            {
+                "topic_id": 288,
+                "word": "come up"
+            },
+            {
+                "topic_id": 289,
+                "word": "turn down"
+            },
+            {
+                "topic_id": 290,
+                "word": "clear away"
+            },
+            {
+                "topic_id": 291,
+                "word": "turn on"
+            },
+            {
+                "topic_id": 292,
+                "word": "look like"
+            },
+            {
+                "topic_id": 293,
+                "word": "stick with"
+            },
+            {
+                "topic_id": 294,
+                "word": "put into"
+            }
+        ]
+    },
+    {
+        "group_id": 44,
+        "group_num": 41,
+        "arr_short_phrase": [
+            {
+                "topic_id": 295,
+                "word": "go off"
+            },
+            {
+                "topic_id": 296,
+                "word": "pick up"
+            },
+            {
+                "topic_id": 297,
+                "word": "look over"
+            },
+            {
+                "topic_id": 298,
+                "word": "take up"
+            },
+            {
+                "topic_id": 299,
+                "word": "stand out"
+            },
+            {
+                "topic_id": 300,
+                "word": "put on"
+            },
+            {
+                "topic_id": 301,
+                "word": "run over"
+            },
+            {
+                "topic_id": 302,
+                "word": "turn in"
+            }
+        ]
+    },
+    {
+        "group_id": 11,
+        "group_num": 42,
+        "arr_short_phrase": [
+            {
+                "topic_id": 47,
+                "word": "on one's own"
+            },
+            {
+                "topic_id": 48,
+                "word": "of one's own"
+            },
+            {
+                "topic_id": 49,
+                "word": "day by day"
+            },
+            {
+                "topic_id": 50,
+                "word": "day after day"
+            }
+        ]
+    },
+    {
+        "group_id": 45,
+        "group_num": 43,
+        "arr_short_phrase": [
+            {
+                "topic_id": 303,
+                "word": "pick out"
+            },
+            {
+                "topic_id": 304,
+                "word": "refer to"
+            },
+            {
+                "topic_id": 305,
+                "word": "sit up"
+            },
+            {
+                "topic_id": 306,
+                "word": "go without"
+            },
+            {
+                "topic_id": 307,
+                "word": "look in on"
+            },
+            {
+                "topic_id": 308,
+                "word": "stick with"
+            },
+            {
+                "topic_id": 309,
+                "word": "use up"
+            },
+            {
+                "topic_id": 310,
+                "word": "thanks to"
+            }
+        ]
+    },
+    {
+        "group_id": 47,
+        "group_num": 44,
+        "arr_short_phrase": [
+            {
+                "topic_id": 319,
+                "word": "pick up"
+            },
+            {
+                "topic_id": 320,
+                "word": "roll over"
+            },
+            {
+                "topic_id": 321,
+                "word": "look up"
+            },
+            {
+                "topic_id": 322,
+                "word": "take up"
+            },
+            {
+                "topic_id": 323,
+                "word": "put into"
+            },
+            {
+                "topic_id": 324,
+                "word": "turn in"
+            },
+            {
+                "topic_id": 325,
+                "word": "stay up"
+            },
+            {
+                "topic_id": 326,
+                "word": "stick to"
+            }
+        ]
+    },
+    {
+        "group_id": 48,
+        "group_num": 45,
+        "arr_short_phrase": [
+            {
+                "topic_id": 327,
+                "word": "get rid of"
+            },
+            {
+                "topic_id": 328,
+                "word": "throw light upon"
+            },
+            {
+                "topic_id": 329,
+                "word": "turn out"
+            },
+            {
+                "topic_id": 330,
+                "word": "speed by"
+            },
+            {
+                "topic_id": 331,
+                "word": "pull up"
+            },
+            {
+                "topic_id": 332,
+                "word": "on time"
+            },
+            {
+                "topic_id": 333,
+                "word": "stand for"
+            },
+            {
+                "topic_id": 334,
+                "word": "work at"
+            }
+        ]
+    },
+    {
+        "group_id": 12,
+        "group_num": 46,
+        "arr_short_phrase": [
+            {
+                "topic_id": 51,
+                "word": "close up"
+            },
+            {
+                "topic_id": 52,
+                "word": "close down"
+            },
+            {
+                "topic_id": 53,
+                "word": "burn down"
+            },
+            {
+                "topic_id": 54,
+                "word": "burn up"
+            }
+        ]
+    },
+    {
+        "group_id": 49,
+        "group_num": 47,
+        "arr_short_phrase": [
+            {
+                "topic_id": 335,
+                "word": "turn in"
+            },
+            {
+                "topic_id": 336,
+                "word": "look through"
+            },
+            {
+                "topic_id": 337,
+                "word": "fall behind"
+            },
+            {
+                "topic_id": 338,
+                "word": "go by"
+            },
+            {
+                "topic_id": 339,
+                "word": "throw up"
+            },
+            {
+                "topic_id": 340,
+                "word": "keep back"
+            },
+            {
+                "topic_id": 341,
+                "word": "in time"
+            },
+            {
+                "topic_id": 342,
+                "word": "struggle against"
+            }
+        ]
+    },
+    {
+        "group_id": 50,
+        "group_num": 48,
+        "arr_short_phrase": [
+            {
+                "topic_id": 343,
+                "word": "wear away"
+            },
+            {
+                "topic_id": 344,
+                "word": "take up"
+            },
+            {
+                "topic_id": 345,
+                "word": "set off"
+            },
+            {
+                "topic_id": 346,
+                "word": "pull out of"
+            },
+            {
+                "topic_id": 347,
+                "word": "hold out"
+            },
+            {
+                "topic_id": 348,
+                "word": "ring off"
+            },
+            {
+                "topic_id": 349,
+                "word": "put up"
+            },
+            {
+                "topic_id": 350,
+                "word": "turn up"
+            }
+        ]
+    },
+    {
+        "group_id": 51,
+        "group_num": 49,
+        "arr_short_phrase": [
+            {
+                "topic_id": 351,
+                "word": "stick to"
+            },
+            {
+                "topic_id": 352,
+                "word": "come back"
+            },
+            {
+                "topic_id": 353,
+                "word": "turn out"
+            },
+            {
+                "topic_id": 354,
+                "word": "wipe out"
+            },
+            {
+                "topic_id": 355,
+                "word": "work on"
+            },
+            {
+                "topic_id": 356,
+                "word": "light up"
+            },
+            {
+                "topic_id": 357,
+                "word": "hold back"
+            },
+            {
+                "topic_id": 358,
+                "word": "ring up"
+            }
+        ]
+    },
+    {
+        "group_id": 13,
+        "group_num": 50,
+        "arr_short_phrase": [
+            {
+                "topic_id": 55,
+                "word": "break away"
+            },
+            {
+                "topic_id": 56,
+                "word": "break up"
+            },
+            {
+                "topic_id": 57,
+                "word": "break off"
+            },
+            {
+                "topic_id": 58,
+                "word": "break down"
+            }
+        ]
+    },
+    {
+        "group_id": 52,
+        "group_num": 51,
+        "arr_short_phrase": [
+            {
+                "topic_id": 359,
+                "word": "throw up"
+            },
+            {
+                "topic_id": 360,
+                "word": "go by"
+            },
+            {
+                "topic_id": 361,
+                "word": "keep back"
+            },
+            {
+                "topic_id": 362,
+                "word": "slow down"
+            },
+            {
+                "topic_id": 363,
+                "word": "result in"
+            },
+            {
+                "topic_id": 364,
+                "word": "stand for"
+            },
+            {
+                "topic_id": 365,
+                "word": "take apart"
+            },
+            {
+                "topic_id": 366,
+                "word": "work out"
+            }
+        ]
+    },
+    {
+        "group_id": 53,
+        "group_num": 52,
+        "arr_short_phrase": [
+            {
+                "topic_id": 367,
+                "word": "wear away"
+            },
+            {
+                "topic_id": 368,
+                "word": "turn up"
+            },
+            {
+                "topic_id": 369,
+                "word": "set out"
+            },
+            {
+                "topic_id": 370,
+                "word": "result from"
+            },
+            {
+                "topic_id": 371,
+                "word": "put off"
+            },
+            {
+                "topic_id": 372,
+                "word": "take over"
+            },
+            {
+                "topic_id": 373,
+                "word": "hold out"
+            },
+            {
+                "topic_id": 374,
+                "word": "wrap up"
+            }
+        ]
+    },
+    {
+        "group_id": 54,
+        "group_num": 53,
+        "arr_short_phrase": [
+            {
+                "topic_id": 375,
+                "word": "turn out"
+            },
+            {
+                "topic_id": 376,
+                "word": "go over"
+            },
+            {
+                "topic_id": 377,
+                "word": "pay back"
+            },
+            {
+                "topic_id": 378,
+                "word": "lay off"
+            },
+            {
+                "topic_id": 379,
+                "word": "light up"
+            },
+            {
+                "topic_id": 380,
+                "word": "help out"
+            },
+            {
+                "topic_id": 381,
+                "word": "keep off"
+            },
+            {
+                "topic_id": 382,
+                "word": "set aside"
+            }
+        ]
+    },
+    {
+        "group_id": 14,
+        "group_num": 54,
+        "arr_short_phrase": [
+            {
+                "topic_id": 59,
+                "word": "call on"
+            },
+            {
+                "topic_id": 60,
+                "word": "call at"
+            },
+            {
+                "topic_id": 61,
+                "word": "break off"
+            },
+            {
+                "topic_id": 62,
+                "word": "break down"
+            }
+        ]
+    },
+    {
+        "group_id": 55,
+        "group_num": 55,
+        "arr_short_phrase": [
+            {
+                "topic_id": 383,
+                "word": "work on"
+            },
+            {
+                "topic_id": 384,
+                "word": "hold back"
+            },
+            {
+                "topic_id": 385,
+                "word": "stand by"
+            },
+            {
+                "topic_id": 386,
+                "word": "tire out"
+            },
+            {
+                "topic_id": 387,
+                "word": "turn against"
+            },
+            {
+                "topic_id": 388,
+                "word": "pass out"
+            },
+            {
+                "topic_id": 389,
+                "word": "pull on"
+            },
+            {
+                "topic_id": 390,
+                "word": "run for"
+            }
+        ]
+    },
+    {
+        "group_id": 56,
+        "group_num": 56,
+        "arr_short_phrase": [
+            {
+                "topic_id": 391,
+                "word": "be made from"
+            },
+            {
+                "topic_id": 392,
+                "word": "work out"
+            },
+            {
+                "topic_id": 393,
+                "word": "join in"
+            },
+            {
+                "topic_id": 394,
+                "word": "try on"
+            },
+            {
+                "topic_id": 395,
+                "word": "throw about"
+            },
+            {
+                "topic_id": 396,
+                "word": "major in"
+            },
+            {
+                "topic_id": 397,
+                "word": "give back"
+            },
+            {
+                "topic_id": 398,
+                "word": "wrap up"
+            }
+        ]
+    },
+    {
+        "group_id": 57,
+        "group_num": 57,
+        "arr_short_phrase": [
+            {
+                "topic_id": 399,
+                "word": "watch out"
+            },
+            {
+                "topic_id": 400,
+                "word": "speed up"
+            },
+            {
+                "topic_id": 401,
+                "word": "take for"
+            },
+            {
+                "topic_id": 402,
+                "word": "work on"
+            },
+            {
+                "topic_id": 403,
+                "word": "lay off"
+            },
+            {
+                "topic_id": 404,
+                "word": "hold back"
+            },
+            {
+                "topic_id": 405,
+                "word": "sell out"
+            },
+            {
+                "topic_id": 406,
+                "word": "run out"
+            }
+        ]
+    },
+    {
+        "group_id": 58,
+        "group_num": 58,
+        "arr_short_phrase": [
+            {
+                "topic_id": 407,
+                "word": "heart and soul"
+            },
+            {
+                "topic_id": 408,
+                "word": "in a row"
+            },
+            {
+                "topic_id": 409,
+                "word": "be made of"
+            },
+            {
+                "topic_id": 410,
+                "word": "neck and neck"
+            },
+            {
+                "topic_id": 411,
+                "word": "now and then"
+            },
+            {
+                "topic_id": 412,
+                "word": "hang up"
+            },
+            {
+                "topic_id": 413,
+                "word": "end in a tie"
+            },
+            {
+                "topic_id": 414,
+                "word": "hang on"
+            }
+        ]
+    },
+    {
+        "group_id": 59,
+        "group_num": 59,
+        "arr_short_phrase": [
+            {
+                "topic_id": 415,
+                "word": "draw near"
+            },
+            {
+                "topic_id": 416,
+                "word": "at stake"
+            },
+            {
+                "topic_id": 417,
+                "word": "here and there"
+            },
+            {
+                "topic_id": 418,
+                "word": "hang up"
+            },
+            {
+                "topic_id": 419,
+                "word": "on end"
+            },
+            {
+                "topic_id": 420,
+                "word": "on watch"
+            },
+            {
+                "topic_id": 421,
+                "word": "call for"
+            },
+            {
+                "topic_id": 422,
+                "word": "be made by"
+            }
+        ]
+    }
+]

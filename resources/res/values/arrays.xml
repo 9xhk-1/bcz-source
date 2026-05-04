@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="WheelArrayDefault">
+        <item>AigeStudio</item>
+        <item>Aige</item>
+        <item>爱哥</item>
+        <item>الحب  اخي</item>
+        <item>jeg elsker</item>
+        <item>사랑해요 형</item>
+        <item>Amor de irmão</item>
+        <item>armastan</item>
+        <item>愛の兄</item>
+        <item>обичам те</item>
+        <item>любовь - братa</item>
+        <item>miłość bracie</item>
+        <item>Liebe</item>
+        <item>Lamour</item>
+        <item>rakastan sinua</item>
+        <item>láska..</item>
+        <item>dragostea.</item>
+        <item>jag älskar</item>
+        <item>ljubezen, brat.</item>
+        <item>愛哥</item>
+        <item>ชอบพี่</item>
+        <item>αγάπη μου</item>
+        <item>a szerelem.</item>
+        <item>Amore, fratello.</item>
+    </array>
+    <array name="exo_controls_playback_speeds">
+        <item>0.25x</item>
+        <item>0.5x</item>
+        <item>0.75x</item>
+        <item>Normal</item>
+        <item>1.25x</item>
+        <item>1.5x</item>
+        <item>2x</item>
+    </array>
+    <array name="grade">
+        <item />
+        <item>一年级</item>
+        <item>二年级</item>
+        <item>三年级</item>
+        <item>四年级</item>
+        <item>五年级</item>
+        <item>六年级</item>
+        <item>初一</item>
+        <item>初二</item>
+        <item>初三</item>
+        <item>高一</item>
+        <item>高二</item>
+        <item>高三</item>
+        <item>大学</item>
+        <item>大一</item>
+        <item>大二</item>
+        <item>大三</item>
+        <item>大四</item>
+        <item>硕士生</item>
+        <item>博士生</item>
+        <item>小班</item>
+        <item>中班</item>
+        <item>大班</item>
+        <item>工作党</item>
+        <item>其他</item>
+    </array>
+    <array name="main_grade">
+        <item>幼儿园</item>
+        <item>小学</item>
+        <item>初中</item>
+        <item>高中</item>
+        <item>大学</item>
+        <item>成人</item>
+    </array>
+    <array name="main_tabs">
+        <item>单词</item>
+        <item>@string/main_tab_name_training</item>
+        <item>一起背</item>
+        <item>@string/main_tab_name_store</item>
+        <item>我</item>
+    </array>
+    <array name="notice_half_days">
+        <item>@string/setting_everyday_notice_am</item>
+        <item>@string/setting_everyday_notice_pm</item>
+    </array>
+    <array name="study_calendar_month">
+        <item>一月</item>
+        <item>二月</item>
+        <item>三月</item>
+        <item>四月</item>
+        <item>五月</item>
+        <item>六月</item>
+        <item>七月</item>
+        <item>八月</item>
+        <item>九月</item>
+        <item>十月</item>
+        <item>十一月</item>
+        <item>十二月</item>
+    </array>
+    <array name="user_identities">
+        <item>自己学</item>
+        <item>给孩子学</item>
+    </array>
+</resources>

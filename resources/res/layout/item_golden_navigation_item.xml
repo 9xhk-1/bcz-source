@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:textSize="12sp"
+    android:textColor="@color/main_color_word_7e"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:background="@drawable/bg_word_plan_card"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:lines="1"
+    android:drawablePadding="4dp"
+    android:fontFamily="sans-serif-medium"/>

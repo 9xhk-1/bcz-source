@@ -1,0 +1,143 @@
+spine_levelup.png
+size:2048,512
+filter:Linear,Linear
+pma:true
+LevelUp_diban
+bounds:23,24,592,432
+offsets:79,46,765,503
+LevelUp_level
+bounds:1150,279,514,177
+offsets:1,1,516,179
+LevelUp_lihua01
+bounds:1428,21,50,72
+offsets:0,0,51,72
+LevelUp_lihua02
+bounds:1659,30,58,52
+LevelUp_lihua03
+bounds:1711,44,77,38
+LevelUp_lihua04
+bounds:1259,44,83,49
+offsets:0,0,88,49
+LevelUp_lihua05
+bounds:203,441,15,15
+offsets:1,1,18,17
+LevelUp_lihua06
+bounds:982,46,39,38
+offsets:4,1,44,40
+LevelUp_lihua07
+bounds:220,442,13,14
+offsets:1,1,15,16
+LevelUp_lihua08
+bounds:1494,54,38,39
+offsets:1,1,40,41
+LevelUp_lihua09
+bounds:186,441,15,15
+offsets:1,1,17,17
+LevelUp_lihuarong
+bounds:1831,125,139,148
+offsets:2,1,142,150
+LevelUp_lihuarong_front
+bounds:849,115,139,145
+offsets:2,1,142,150
+LevelUp_lihuatong_yingzi
+bounds:1831,275,147,181
+offsets:7,7,160,196
+LevelUp_up
+bounds:1666,84,372,163
+offsets:1,1,374,165
+rotate:90
+LevelUp_yingzi_level
+bounds:617,262,531,194
+offsets:4,4,539,202
+LevelUp_yingzi_up
+bounds:1150,95,391,182
+offsets:3,4,398,190
+caidai_1
+bounds:1146,39,46,54
+offsets:1,0,47,54
+caidai_2
+bounds:1343,51,41,42
+caidai_3
+bounds:1073,60,71,44
+caidai_4
+bounds:1994,40,46,54
+caidai_5
+bounds:1386,50,40,43
+offsets:0,1,40,44
+caidai_6
+bounds:1459,46,33,47
+caidai_7
+bounds:849,68,86,45
+caidai_8
+bounds:41,414,41,42
+caidai_9
+bounds:101,441,21,15
+cross_lizi
+bounds:990,159,102,101
+offsets:13,14,128,128
+firework_trail_zise
+bounds:16,361,23,95
+offsets:0,1,24,96
+glow_ci_3_new
+bounds:1626,35,31,93
+offsets:6,6,37,101
+glow_circle
+bounds:613,26,234,234
+glow_hard_zise
+bounds:1972,176,62,62
+offsets:12,12,86,86
+line
+bounds:0,0,14,456
+offsets:1,5,16,466
+lizi_zise
+bounds:1980,240,62,62
+offsets:12,12,86,86
+star_glow
+bounds:1543,130,90,147
+offsets:8,10,107,167
+sweep light/LevelUp_sweeplight_00001
+bounds:84,425,15,31
+offsets:0,47,187,83
+sweep light/LevelUp_sweeplight_00002
+bounds:1635,221,28,56
+offsets:0,23,187,83
+sweep light/LevelUp_sweeplight_00003
+bounds:1226,26,31,67
+offsets:0,12,187,83
+sweep light/LevelUp_sweeplight_00004
+bounds:1094,186,51,74
+offsets:13,7,187,83
+sweep light/LevelUp_sweeplight_00005
+bounds:1980,304,52,75
+offsets:25,6,187,83
+sweep light/LevelUp_sweeplight_00006
+bounds:1980,381,58,75
+offsets:37,6,187,83
+sweep light/LevelUp_sweeplight_00007
+bounds:1831,57,66,78
+offsets:46,2,187,83
+rotate:90
+sweep light/LevelUp_sweeplight_00008
+bounds:990,86,71,81
+offsets:58,0,187,83
+rotate:90
+sweep light/LevelUp_sweeplight_00009
+bounds:1543,59,69,81
+offsets:74,0,187,83
+rotate:90
+sweep light/LevelUp_sweeplight_00010
+bounds:1911,67,56,81
+offsets:91,0,187,83
+rotate:90
+sweep light/LevelUp_sweeplight_00011
+bounds:937,36,43,77
+offsets:106,1,187,83
+sweep light/LevelUp_sweeplight_00012
+bounds:1094,106,44,78
+offsets:137,5,187,83
+sweep light/LevelUp_sweeplight_00013
+bounds:1994,96,43,78
+offsets:144,5,187,83
+sweep light/LevelUp_sweeplight_00014
+bounds:1194,23,30,70
+offsets:157,5,187,83

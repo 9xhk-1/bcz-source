@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppCompatLight.Fullscreen.WhiteNav" parent="@style/AppCompatLight.Fullscreen">
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    <style name="AppCompatLight.TransparentSysBar.Light" parent="@style/AppCompatLight.TransparentSysBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    <style name="AppCompatStandardDefault" parent="@style/BaseCompatStyle">
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="AppCompatStandardDefault.Fullscreen" parent="@style/AppCompatStandardDefault">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="AppCompatStandardDefault.Fullscreen.VideoPlayer" parent="@style/AppCompatStandardDefault.Fullscreen">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    <style name="AppCompatStandardDefaultDarkStatus" parent="@style/AppCompatStandardDefault">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    <style name="Base.Theme.SplashScreen" parent="@style/Base.v27.Theme.SplashScreen">
+    </style>
+    <style name="Base.Theme.SplashScreen.Light" parent="@style/Base.v27.Theme.SplashScreen.Light">
+    </style>
+    <style name="Base.v27.Theme.SplashScreen" parent="@style/Base.v21.Theme.SplashScreen">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="Base.v27.Theme.SplashScreen.Light" parent="@style/Base.v21.Theme.SplashScreen.Light">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="PrepareLearningStyle" parent="@style/AppCompatLight">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">#fff5f5f4</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    <style name="SplashingPost" parent="@style/AppTheme.Light">
+        <item name="android:windowBackground">@drawable/baicizhan_loading_page</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

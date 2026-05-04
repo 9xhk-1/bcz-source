@@ -1,0 +1,28 @@
+package androidx.navigation;
+
+import android.os.Bundle;
+import androidx.collection.ArrayMap;
+import h10.d;
+import java.lang.reflect.Method;
+import m80.k;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes3.dex */
+public final class NavArgsLazyKt {
+
+    @k
+    private static final Class<Bundle>[] methodSignature = {Bundle.class};
+
+    @k
+    private static final ArrayMap<d<? extends NavArgs>, Method> methodMap = new ArrayMap<>();
+
+    @k
+    public static final ArrayMap<d<? extends NavArgs>, Method> getMethodMap() {
+        return methodMap;
+    }
+
+    @k
+    public static final Class<Bundle>[] getMethodSignature() {
+        return methodSignature;
+    }
+}

@@ -1,0 +1,40 @@
+package org.conscrypt;
+
+import java.math.BigInteger;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyPair;
+import java.security.KeyPairGeneratorSpi;
+import java.security.SecureRandom;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.RSAKeyGenParameterSpec;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes9.dex */
+public final class OpenSSLRSAKeyPairGenerator extends KeyPairGeneratorSpi {
+    private byte[] publicExponent = {1, 0, 1};
+    private int modulusBits = 2048;
+
+    @Override // java.security.KeyPairGeneratorSpi
+    public KeyPair generateKeyPair() {
+        OpenSSLKey openSSLKey = new OpenSSLKey(NativeCrypto.RSA_generate_key_ex(this.modulusBits, this.publicExponent));
+        return new KeyPair(new OpenSSLRSAPublicKey(openSSLKey), OpenSSLRSAPrivateKey.getInstance(openSSLKey));
+    }
+
+    @Override // java.security.KeyPairGeneratorSpi
+    public void initialize(int i11, SecureRandom secureRandom) {
+        this.modulusBits = i11;
+    }
+
+    @Override // java.security.KeyPairGeneratorSpi
+    public void initialize(AlgorithmParameterSpec algorithmParameterSpec, SecureRandom secureRandom) throws InvalidAlgorithmParameterException {
+        if (!(algorithmParameterSpec instanceof RSAKeyGenParameterSpec)) {
+            throw new InvalidAlgorithmParameterException("Only RSAKeyGenParameterSpec supported");
+        }
+        RSAKeyGenParameterSpec rSAKeyGenParameterSpec = (RSAKeyGenParameterSpec) algorithmParameterSpec;
+        BigInteger publicExponent = rSAKeyGenParameterSpec.getPublicExponent();
+        if (publicExponent != null) {
+            this.publicExponent = publicExponent.toByteArray();
+        }
+        this.modulusBits = rSAKeyGenParameterSpec.getKeysize();
+    }
+}

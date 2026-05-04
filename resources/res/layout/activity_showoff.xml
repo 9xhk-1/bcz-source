@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="layout/activity_showoff_0"
+    android:background="#ff5a97ea"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.flipboard.bottomsheet.BottomSheetLayout
+        android:id="@+id/bottomsheet"
+        android:tag="binding_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/show_off_drag_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/showoff_drag_view"/>
+    </com.flipboard.bottomsheet.BottomSheetLayout>
+</FrameLayout>

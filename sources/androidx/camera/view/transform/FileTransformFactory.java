@@ -1,0 +1,78 @@
+package androidx.camera.view.transform;
+
+import android.content.ContentResolver;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.net.Uri;
+import androidx.annotation.NonNull;
+import androidx.camera.core.impl.utils.Exif;
+import androidx.camera.core.impl.utils.TransformUtils;
+import androidx.camera.view.TransformExperimental;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@TransformExperimental
+/* loaded from: classes.dex */
+public final class FileTransformFactory {
+    private boolean mUsingExifOrientation;
+
+    @NonNull
+    public OutputTransform getOutputTransform(@NonNull ContentResolver contentResolver, @NonNull Uri uri) throws IOException {
+        InputStream openInputStream = contentResolver.openInputStream(uri);
+        try {
+            OutputTransform outputTransform = getOutputTransform(openInputStream);
+            if (openInputStream != null) {
+                openInputStream.close();
+            }
+            return outputTransform;
+        } catch (Throwable th2) {
+            if (openInputStream != null) {
+                try {
+                    openInputStream.close();
+                } catch (Throwable th3) {
+                    th2.addSuppressed(th3);
+                }
+            }
+            throw th2;
+        }
+    }
+
+    public boolean isUsingExifOrientation() {
+        return this.mUsingExifOrientation;
+    }
+
+    public void setUsingExifOrientation(boolean z11) {
+        this.mUsingExifOrientation = z11;
+    }
+
+    @NonNull
+    public OutputTransform getOutputTransform(@NonNull File file) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        try {
+            OutputTransform outputTransform = getOutputTransform(fileInputStream);
+            fileInputStream.close();
+            return outputTransform;
+        } catch (Throwable th2) {
+            try {
+                fileInputStream.close();
+            } catch (Throwable th3) {
+                th2.addSuppressed(th3);
+            }
+            throw th2;
+        }
+    }
+
+    @NonNull
+    public OutputTransform getOutputTransform(@NonNull InputStream inputStream) throws IOException {
+        Exif createFromInputStream = Exif.createFromInputStream(inputStream);
+        Rect rect = new Rect(0, 0, createFromInputStream.getWidth(), createFromInputStream.getHeight());
+        Matrix normalizedToBuffer = TransformUtils.getNormalizedToBuffer(rect);
+        if (this.mUsingExifOrientation) {
+            normalizedToBuffer.postConcat(TransformUtils.getExifTransform(createFromInputStream.getOrientation(), createFromInputStream.getWidth(), createFromInputStream.getHeight()));
+        }
+        return new OutputTransform(normalizedToBuffer, TransformUtils.rectToSize(rect));
+    }
+}

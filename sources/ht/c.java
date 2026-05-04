@@ -1,0 +1,76 @@
+package ht;
+
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.collection.SparseArrayCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import java.lang.ref.WeakReference;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes3.dex */
+public class c extends FragmentPagerAdapter {
+
+    /* renamed from: a, reason: collision with root package name */
+    public final FragmentPagerItems f59783a;
+
+    /* renamed from: b, reason: collision with root package name */
+    public final SparseArrayCompat<WeakReference<Fragment>> f59784b;
+
+    public c(FragmentManager fragmentManager, FragmentPagerItems fragmentPagerItems) {
+        super(fragmentManager);
+        this.f59783a = fragmentPagerItems;
+        this.f59784b = new SparseArrayCompat<>(fragmentPagerItems.size());
+    }
+
+    public Fragment a(int i11) {
+        WeakReference<Fragment> weakReference = this.f59784b.get(i11);
+        if (weakReference != null) {
+            return weakReference.get();
+        }
+        return null;
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    public b b(int i11) {
+        return (b) this.f59783a.get(i11);
+    }
+
+    @Override // androidx.fragment.app.FragmentPagerAdapter, androidx.viewpager.widget.PagerAdapter
+    public void destroyItem(@NonNull ViewGroup viewGroup, int i11, @NonNull Object obj) {
+        this.f59784b.remove(i11);
+        super.destroyItem(viewGroup, i11, obj);
+    }
+
+    @Override // androidx.viewpager.widget.PagerAdapter
+    public int getCount() {
+        return this.f59783a.size();
+    }
+
+    @Override // androidx.fragment.app.FragmentPagerAdapter
+    public Fragment getItem(int i11) {
+        return b(i11).e(this.f59783a.getContext(), i11);
+    }
+
+    @Override // androidx.viewpager.widget.PagerAdapter
+    public CharSequence getPageTitle(int i11) {
+        return b(i11).a();
+    }
+
+    @Override // androidx.viewpager.widget.PagerAdapter
+    public float getPageWidth(int i11) {
+        return super.getPageWidth(i11);
+    }
+
+    @Override // androidx.fragment.app.FragmentPagerAdapter, androidx.viewpager.widget.PagerAdapter
+    @NonNull
+    public Object instantiateItem(@NonNull ViewGroup viewGroup, int i11) {
+        Object instantiateItem = super.instantiateItem(viewGroup, i11);
+        if (instantiateItem instanceof Fragment) {
+            this.f59784b.put(i11, new WeakReference<>((Fragment) instantiateItem));
+        }
+        return instantiateItem;
+    }
+}

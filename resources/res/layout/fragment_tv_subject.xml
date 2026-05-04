@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <WebView
+        android:id="@+id/subject_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.baicizhan.client.business.widget.DisguiseProgressBar
+        android:id="@+id/subject_progress"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:progressDrawable="@drawable/business_progress_horizontal"/>
+    <include layout="@layout/empty_view"/>
+</FrameLayout>

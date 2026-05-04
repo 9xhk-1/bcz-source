@@ -1,0 +1,61 @@
+package androidx.media3.extractor.text.ttml;
+
+import androidx.annotation.VisibleForTesting;
+import androidx.media3.common.text.Cue;
+import androidx.media3.common.util.Util;
+import androidx.media3.extractor.text.Subtitle;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes2.dex */
+final class TtmlSubtitle implements Subtitle {
+    private final long[] eventTimesUs;
+    private final Map<String, TtmlStyle> globalStyles;
+    private final Map<String, String> imageMap;
+    private final Map<String, TtmlRegion> regionMap;
+    private final TtmlNode root;
+
+    public TtmlSubtitle(TtmlNode ttmlNode, Map<String, TtmlStyle> map, Map<String, TtmlRegion> map2, Map<String, String> map3) {
+        this.root = ttmlNode;
+        this.regionMap = map2;
+        this.imageMap = map3;
+        this.globalStyles = map != null ? Collections.unmodifiableMap(map) : Collections.EMPTY_MAP;
+        this.eventTimesUs = ttmlNode.getEventTimesUs();
+    }
+
+    @Override // androidx.media3.extractor.text.Subtitle
+    public List<Cue> getCues(long j11) {
+        return this.root.getCues(j11, this.globalStyles, this.regionMap, this.imageMap);
+    }
+
+    @Override // androidx.media3.extractor.text.Subtitle
+    public long getEventTime(int i11) {
+        return this.eventTimesUs[i11];
+    }
+
+    @Override // androidx.media3.extractor.text.Subtitle
+    public int getEventTimeCount() {
+        return this.eventTimesUs.length;
+    }
+
+    @VisibleForTesting
+    public Map<String, TtmlStyle> getGlobalStyles() {
+        return this.globalStyles;
+    }
+
+    @Override // androidx.media3.extractor.text.Subtitle
+    public int getNextEventTimeIndex(long j11) {
+        int binarySearchCeil = Util.binarySearchCeil(this.eventTimesUs, j11, false, false);
+        if (binarySearchCeil < this.eventTimesUs.length) {
+            return binarySearchCeil;
+        }
+        return -1;
+    }
+
+    @VisibleForTesting
+    public TtmlNode getRoot() {
+        return this.root;
+    }
+}

@@ -1,0 +1,27 @@
+package com.mob.secverify.pure.core.ope.wo.c;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes7.dex */
+public class d {
+
+    /* renamed from: a, reason: collision with root package name */
+    private static final char[] f41062a = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+    public static byte[] a(String str) {
+        if (str == null) {
+            return null;
+        }
+        char[] charArray = str.toCharArray();
+        int length = charArray.length / 2;
+        byte[] bArr = new byte[length];
+        for (int i11 = 0; i11 < length; i11++) {
+            int i12 = i11 * 2;
+            int digit = Character.digit(charArray[i12 + 1], 16) | (Character.digit(charArray[i12], 16) << 4);
+            if (digit > 127) {
+                digit -= 256;
+            }
+            bArr[i11] = (byte) digit;
+        }
+        return bArr;
+    }
+}

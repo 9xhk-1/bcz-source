@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/item_wiki_list_tab_0"
+    android:background="@drawable/bg_white_small_corner"
+    android:paddingTop="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/wiki_tab"
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@drawable/bg_wiki_tab_20dp_7e"
+        app:tabGravity="start"
+        app:tabIndicator="@null"
+        app:tabMinWidth="0dp"
+        app:tabMode="scrollable"
+        app:tabPaddingBottom="3dp"
+        app:tabPaddingEnd="16dp"
+        app:tabPaddingStart="8dp"
+        app:tabPaddingTop="3dp"
+        app:tabRippleColor="@color/white_color"
+        app:tabSelectedTextColor="@color/main_color_white"
+        app:tabTextAppearance="@style/style_wiki_tab_text"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

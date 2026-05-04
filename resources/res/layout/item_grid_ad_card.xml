@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.baicizhan.client.business.util.report.ExposureConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+    <com.baicizhan.main.view.AspectRoundImageView
+        android:id="@+id/grid_ad_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:aspectRatio="1.33"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/grid_ad_right"
+        app:riv_corner_radius="@dimen/common_corner_small"/>
+    <com.baicizhan.main.view.AspectRoundImageView
+        android:id="@+id/grid_ad_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:scaleType="centerCrop"
+        app:aspectRatio="1.33"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/grid_ad_left"
+        app:layout_constraintRight_toRightOf="parent"
+        app:riv_corner_radius="@dimen/common_corner_small"/>
+</com.baicizhan.client.business.util.report.ExposureConstraintLayout>

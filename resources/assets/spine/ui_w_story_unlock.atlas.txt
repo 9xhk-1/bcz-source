@@ -1,0 +1,12 @@
+ui_w_story_unlock.png
+size:512,512
+filter:Linear,Linear
+cross_lizi
+bounds:257,5,68,68
+offsets:6,6,80,80
+glow_light_2
+bounds:257,75,212,215
+offsets:19,18,256,256
+lock
+bounds:2,2,253,288
+offsets:14,0,281,288

@@ -1,0 +1,19 @@
+package t80;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.apiguardian.api.API;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@Target({ElementType.TYPE})
+@API(since = "5.10", status = API.Status.STABLE)
+@c("org.junit.platform.engine.support.hierarchical.ExclusiveResource.GLOBAL_KEY")
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: classes9.dex */
+public @interface b {
+    String value() default "";
+}

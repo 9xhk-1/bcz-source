@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.baicizhan.client.business.webview.ui.BczWebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ViewStub
+            android:id="@+id/error_view_stub"
+            android:layout="@layout/layout_bcz_web_error"
+            android:inflatedId="@+id/error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <com.baicizhan.client.business.widget.DisguiseProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:progressDrawable="@drawable/business_progress_horizontal"/>
+    </FrameLayout>
+</LinearLayout>

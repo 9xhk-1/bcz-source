@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:tag="layout/lookup_wiki_error_msg_0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nonetwork_normal_default"/>
+    <TextView
+        android:textSize="16sp"
+        android:textColor="#ff75726d"
+        android:gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/wiki_item_load_error"/>
+    <TextView
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:tag="binding_1"
+        android:background="@drawable/bg_button_main_blue"
+        android:layout_width="120dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/main_alert_no_road_map_confirm"/>
+</LinearLayout>

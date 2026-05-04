@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="daka_days_margin_top">16dp</dimen>
+    <dimen name="learning_tip_sentence_max_height">160dp</dimen>
+    <dimen name="words_learn_bottom_button_instruction_margin_bottom">16dp</dimen>
+    <dimen name="words_learn_bottom_button_others_height">48dp</dimen>
+    <dimen name="words_learn_bottom_button_start_height">60dp</dimen>
+    <dimen name="words_learn_buttons_padding">16dp</dimen>
+    <dimen name="words_learn_content_book_name_guide_top">154dp</dimen>
+    <dimen name="words_learn_content_divider_top">226dp</dimen>
+    <dimen name="words_learn_content_download_divider_padding">16dp</dimen>
+    <dimen name="words_learn_content_height">324dp</dimen>
+    <dimen name="words_learn_content_progress_tag_divider_padding">24dp</dimen>
+    <dimen name="words_learn_content_tag_count_padding">12dp</dimen>
+</resources>

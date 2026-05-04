@@ -1,0 +1,105 @@
+package androidx.databinding.library.baseAdapters;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes2.dex */
+public class BR {
+    public static final int _all = 0;
+    public static final int accentFont = 1;
+    public static final int backClick = 2;
+    public static final int backListener = 3;
+    public static final int backOnclick = 4;
+    public static final int bgColor = 5;
+    public static final int bindPhone = 6;
+    public static final int bindQQ = 7;
+    public static final int bindWx = 8;
+    public static final int btnTitle = 9;
+    public static final int cancel = 10;
+    public static final int chartData = 11;
+    public static final int checked = 12;
+    public static final int click = 13;
+    public static final int clickListener = 14;
+    public static final int collected = 15;
+    public static final int confirm = 16;
+    public static final int content = 17;
+    public static final int currentType = 18;
+    public static final int dakaImageStatus = 19;
+    public static final int dark = 20;
+    public static final int description = 21;
+    public static final int descriptionHighlight = 22;
+    public static final int editmode = 23;
+    public static final int endIcon = 24;
+    public static final int endIconVisibility = 25;
+    public static final int extendedInfo = 26;
+    public static final int floatTop = 27;
+    public static final int hasKilled = 28;
+    public static final int iconLeft = 29;
+    public static final int img = 30;
+    public static final int isReading = 31;
+    public static final int itemClick = 32;
+    public static final int killClick = 33;
+    public static final int killed = 34;
+    public static final int learnWord = 35;
+    public static final int learnWordMean = 36;
+    public static final int leftIcon = 37;
+    public static final int loadClick = 38;
+    public static final int loadFailed = 39;
+    public static final int loading = 40;
+    public static final int loadingModel = 41;
+    public static final int loadingVm = 42;
+    public static final int model = 43;
+    public static final int moreDisabled = 44;
+    public static final int newByIcon = 45;
+    public static final int notificationsModel = 46;
+    public static final int onClick = 47;
+    public static final int onClickListener = 48;
+    public static final int oneKeyModel = 49;
+    public static final int phone = 50;
+    public static final int presenter = 51;
+
+    /* renamed from: qq, reason: collision with root package name */
+    public static final int f4361qq = 52;
+    public static final int reEvaluation = 53;
+    public static final int redDot = 54;
+    public static final int refreshClick = 55;
+    public static final int repairModel = 56;
+    public static final int resultViewModel = 57;
+    public static final int retry = 58;
+    public static final int retryClick = 59;
+    public static final int rightBadge2 = 60;
+    public static final int rightIcon = 61;
+    public static final int rightIcon2 = 62;
+    public static final int rightOnLongClick2 = 63;
+    public static final int rightOnclick = 64;
+    public static final int rightOnclick2 = 65;
+    public static final int rightRedDot = 66;
+    public static final int rightTitle = 67;
+    public static final int rightTitleColor = 68;
+    public static final int selected = 69;
+    public static final int showBack = 70;
+    public static final int showBookUpdate = 71;
+    public static final int showClose = 72;
+    public static final int showCurrent = 73;
+    public static final int showDivider = 74;
+    public static final int showQQ = 75;
+    public static final int showRight = 76;
+    public static final int showRight2 = 77;
+    public static final int state = 78;
+    public static final int status = 79;
+    public static final int stopOnclick = 80;
+    public static final int studymode = 81;
+    public static final int subTitle = 82;
+    public static final int taskVm = 83;
+    public static final int text = 84;
+    public static final int tipsContent = 85;
+    public static final int title = 86;
+    public static final int topic = 87;
+    public static final int viewModel = 88;
+    public static final int viewmodel = 89;
+
+    /* renamed from: vm, reason: collision with root package name */
+    public static final int f4362vm = 90;
+    public static final int wechat = 91;
+    public static final int whiteMode = 92;
+    public static final int word = 93;
+    public static final int wordCount = 94;
+}

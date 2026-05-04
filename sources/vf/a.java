@@ -1,0 +1,16 @@
+package vf;
+
+import android.content.Context;
+import com.baicizhan.client.business.dataset.models.CollectWordRecord;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes4.dex */
+public interface a {
+    CollectWordRecord a();
+
+    void b(boolean enabled);
+
+    void c(boolean collected);
+
+    Context getContext();
+}

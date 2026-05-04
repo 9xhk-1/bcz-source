@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/popup_marked_word_menu_0"
+    android:background="@drawable/white_rounded_bg"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_width="144dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/time_order"
+        android:text="时间顺序"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/show_hide_chinese"
+        android:text="隐藏释义"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_order"
+        style="@style/style_word_book_menu_text"/>
+    <TextView
+        android:id="@+id/collect"
+        android:text="批量收藏"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_hide_chinese"
+        style="@style/style_word_book_menu_text"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

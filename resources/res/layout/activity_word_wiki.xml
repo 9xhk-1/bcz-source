@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:tag="layout/activity_word_wiki_0"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar_basic"/>
+    <fragment
+        android:id="@+id/word_wiki"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/action_bar_height"
+        class="com.baicizhan.main.wikiv2.lookup.WordWikiFragment"/>
+</FrameLayout>

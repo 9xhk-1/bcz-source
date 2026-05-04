@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:textColor="@android:color/white"
+    android:gravity="center"
+    android:id="@+id/confirm"
+    android:background="@drawable/bg_btn_guide_confirm"
+    android:paddingLeft="40dp"
+    android:paddingTop="12dp"
+    android:paddingRight="40dp"
+    android:paddingBottom="12dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/i_know"/>

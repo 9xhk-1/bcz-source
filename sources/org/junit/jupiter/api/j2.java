@@ -1,0 +1,27 @@
+package org.junit.jupiter.api;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.apiguardian.api.API;
+import org.junit.jupiter.api.z1;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@API(since = "5.10", status = API.Status.STABLE)
+@Inherited
+@o1(z1.a.class)
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+/* loaded from: classes9.dex */
+public @interface j2 {
+    public static final String O = ", ";
+    public static final Class<? extends z1> P = z1.d.class;
+
+    Class<? extends z1> generator() default z1.d.class;
+
+    String separator() default ", ";
+}

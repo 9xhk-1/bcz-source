@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.baicizhan.client.business.widget.AspectImageView
+        android:id="@+id/snapshot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+    <me.grantland.widget.AutofitTextView
+        android:textSize="@dimen/T7"
+        android:textColor="@color/C32"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/topic_word"
+        android:background="@color/C50"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:singleLine="true"/>
+</merge>

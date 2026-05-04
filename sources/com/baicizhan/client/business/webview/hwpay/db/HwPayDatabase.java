@@ -1,0 +1,19 @@
+package com.baicizhan.client.business.webview.hwpay.db;
+
+import androidx.compose.runtime.internal.StabilityInferred;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
+import com.baicizhan.client.business.webview.hwpay.db.dao.HwPayOrderDao;
+import com.baicizhan.client.business.webview.hwpay.db.entity.HwPayOrderInfo;
+import m80.k;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@StabilityInferred(parameters = 0)
+@Database(entities = {HwPayOrderInfo.class}, exportSchema = false, version = 3)
+/* loaded from: classes4.dex */
+public abstract class HwPayDatabase extends RoomDatabase {
+    public static final int $stable = 8;
+
+    @k
+    public abstract HwPayOrderDao getHwPayOrderDao();
+}

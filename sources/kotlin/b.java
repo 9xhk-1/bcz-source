@@ -1,0 +1,19 @@
+package kotlin;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import kotlin.RequiresOptIn;
+import kotlin.annotation.AnnotationRetention;
+import yz.y0;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@y0(version = "2.2")
+@zz.a
+@zz.c(AnnotationRetention.BINARY)
+@RequiresOptIn(level = RequiresOptIn.Level.ERROR, message = "The API is related to the experimental feature \"context parameters\" (see KEEP-367) and may be changed or removed in any future release.")
+@Documented
+@Retention(RetentionPolicy.CLASS)
+/* loaded from: classes8.dex */
+public @interface b {
+}

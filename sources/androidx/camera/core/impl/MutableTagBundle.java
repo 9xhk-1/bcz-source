@@ -1,0 +1,40 @@
+package androidx.camera.core.impl;
+
+import android.util.ArrayMap;
+import androidx.annotation.NonNull;
+import java.util.Map;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes.dex */
+public class MutableTagBundle extends TagBundle {
+    private MutableTagBundle(Map<String, Object> map) {
+        super(map);
+    }
+
+    @NonNull
+    public static MutableTagBundle create() {
+        return new MutableTagBundle(new ArrayMap());
+    }
+
+    @NonNull
+    public static MutableTagBundle from(@NonNull TagBundle tagBundle) {
+        ArrayMap arrayMap = new ArrayMap();
+        for (String str : tagBundle.listKeys()) {
+            arrayMap.put(str, tagBundle.getTag(str));
+        }
+        return new MutableTagBundle(arrayMap);
+    }
+
+    public void addTagBundle(@NonNull TagBundle tagBundle) {
+        Map<String, Object> map;
+        Map<String, Object> map2 = this.mTagMap;
+        if (map2 == null || (map = tagBundle.mTagMap) == null) {
+            return;
+        }
+        map2.putAll(map);
+    }
+
+    public void putTag(@NonNull String str, @NonNull Object obj) {
+        this.mTagMap.put(str, obj);
+    }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.baicizhan.client.business.util.report.ExposureFrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.baicizhan.main.view.AspectRoundImageView
+        android:id="@+id/ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:aspectRatio="4.64"
+        app:riv_corner_radius="@dimen/common_corner_small"/>
+</com.baicizhan.client.business.util.report.ExposureFrameLayout>

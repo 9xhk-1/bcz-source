@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wordlist_user_guider_part_1"
+    android:background="#cc000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/hint1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="257.5dp"
+        android:src="@drawable/wordlist_hint1_normal_default"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wordlist_hint2_normal_default"
+        android:layout_alignTop="@+id/hint1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="67dp"
+        android:src="@drawable/wordlist_hint4_normal_default"
+        android:layout_below="@+id/hint1"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

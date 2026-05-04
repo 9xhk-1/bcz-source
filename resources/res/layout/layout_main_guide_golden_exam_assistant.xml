@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_guide_exam_assistant"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/anchor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/anchor"
+        app:layout_constraintEnd_toEndOf="@+id/anchor"
+        app:layout_constraintStart_toStartOf="@+id/anchor"
+        app:srcCompat="@drawable/ic_guide_golden_nav_exam_assistant_line"/>
+    <TextView
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:id="@+id/tip"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/anchor"
+        android:lineSpacingExtra="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="@+id/anchor"
+        app:layout_constraintStart_toStartOf="@+id/anchor"/>
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/anchor"
+        android:layout_alignLeft="@+id/anchor"
+        android:layout_alignRight="@+id/anchor"
+        app:layout_constraintEnd_toEndOf="@+id/anchor"
+        app:layout_constraintStart_toStartOf="@+id/anchor"
+        app:layout_constraintTop_toBottomOf="@+id/anchor"
+        layout="@layout/layout_guide_confirm"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

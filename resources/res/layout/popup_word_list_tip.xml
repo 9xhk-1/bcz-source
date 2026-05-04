@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/map_learn_tip"
+    android:tag="layout/popup_word_list_tip_0"
+    android:visibility="visible"
+    android:layout_width="254dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="@+id/iv_tip"
+    app:layout_constraintTop_toBottomOf="@+id/iv_tip">
+    <ImageView
+        android:background="@drawable/ic_pop_angle"
+        android:layout_width="12dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="39dp"/>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_round_ffffff_4dp"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2e3039">
+        <TextView
+            android:textSize="14dp"
+            android:textColor="@color/main_color_white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="通过多轮复习检测，系统判定你已掌握，无需再复习的单词。"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/tip_close"
+            android:background="@drawable/ic_close_white"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,19 @@
+package p10;
+
+import e30.f2;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes8.dex */
+public interface l1 extends i1 {
+    boolean B0();
+
+    boolean E();
+
+    @Override // p10.z0
+    kotlin.reflect.jvm.internal.impl.descriptors.a c(@m80.k f2 f2Var);
+
+    boolean isConst();
+
+    @m80.l
+    s20.g<?> t0();
+}

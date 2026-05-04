@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/item_pager_template_0"
+    android:background="@drawable/bg_daka_shadow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.baicizhan.main.view.AspectRoundImageView
+        android:id="@+id/template_img"
+        android:background="@drawable/bg_stroke_e6e9ee_1dp_4dp"
+        android:padding="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:aspectRatio="0.707"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

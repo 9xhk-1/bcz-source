@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/item_wiki_mnemonic_info_0"
+    android:background="@drawable/bg_white_small_corner"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="12dp"
+        android:textColor="@color/main_color_main_word"
+        android:id="@+id/mnemonic_type"
+        android:background="@drawable/bg_round_e6d9ee_2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:textSize="14dp"
+        android:textColor="@color/main_color_word_822"
+        android:id="@+id/mnemonic_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:lineHeight="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_type"/>
+    <ImageView
+        android:id="@+id/mnemonic_img"
+        android:background="@drawable/bg_stroke_e6e9ee_1dp"
+        android:padding="17dp"
+        android:layout_width="216dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_type"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

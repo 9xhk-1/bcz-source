@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/titles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="@dimen/T10"
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="December "/>
+        <TextView
+            android:textSize="@dimen/T10"
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015"/>
+    </LinearLayout>
+    <include layout="@layout/calendar_weeks_title"/>
+    <include layout="@layout/calendar_week_row_1"/>
+    <include layout="@layout/calendar_week_row_2"/>
+    <include layout="@layout/calendar_week_row_3"/>
+    <include layout="@layout/calendar_week_row_4"/>
+    <include layout="@layout/calendar_week_row_5"/>
+    <include layout="@layout/calendar_week_row_6"/>
+</LinearLayout>

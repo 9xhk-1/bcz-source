@@ -1,0 +1,44 @@
+package tv;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+/* loaded from: classes8.dex */
+public final class d {
+
+    /* renamed from: a, reason: collision with root package name */
+    public static final int f90960a = 1073741824;
+
+    public static int a(int expectedSize) {
+        if (expectedSize < 3) {
+            return expectedSize + 1;
+        }
+        if (expectedSize < 1073741824) {
+            return (int) ((expectedSize / 0.75f) + 1.0f);
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    public static <T> boolean b(List<T> list) {
+        if (list.size() < 2) {
+            return false;
+        }
+        return list.size() != new HashSet(list).size();
+    }
+
+    public static <T> HashSet<T> c(int expectedSize) {
+        return new HashSet<>(a(expectedSize));
+    }
+
+    public static <K, V> LinkedHashMap<K, V> d(int expectedSize) {
+        return new LinkedHashMap<>(a(expectedSize));
+    }
+
+    public static <T> List<T> e(int size) {
+        return size == 0 ? Collections.EMPTY_LIST : new ArrayList(size);
+    }
+}

@@ -1,0 +1,7 @@
+package hb0;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@ib0.c(dependencies = {"purchasedBookRepo:com.baicizhan.app.biz.game.repo.monetization.IPurchasedBookRepo", "fetchEntitlementsUC:com.baicizhan.app.biz.game.uc.sync.atomic.FetchEntitlementsUC", "checkFetchPromotionUC:com.baicizhan.app.biz.game.uc.monetization.CheckFetchPromotionUC"}, moduleTagId = "pee0tk:ComBaicizhanAppBizGameUcGameUcModule", value = "com.baicizhan.app.biz.game.uc.sync.compose.UpdateUserEntitlementsUC")
+/* loaded from: classes9.dex */
+public final class bq {
+}

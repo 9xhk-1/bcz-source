@@ -1,0 +1,6 @@
+ui_w_newbook.png
+size:128,128
+filter:Linear,Linear
+cross_lizi
+bounds:2,2,80,79
+offsets:10,11,100,100

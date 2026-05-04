@@ -1,0 +1,141 @@
+package androidx.emoji2.viewsintegration;
+
+import android.os.Handler;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RestrictTo;
+import androidx.emoji2.text.EmojiCompat;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+
+/* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+@RequiresApi(19)
+@RestrictTo({RestrictTo.Scope.LIBRARY})
+/* loaded from: classes2.dex */
+final class EmojiTextWatcher implements TextWatcher {
+    private final EditText mEditText;
+    private final boolean mExpectInitializedEmojiCompat;
+    private EmojiCompat.InitCallback mInitCallback;
+    private int mMaxEmojiCount = Integer.MAX_VALUE;
+    private int mEmojiReplaceStrategy = 0;
+    private boolean mEnabled = true;
+
+    /* compiled from: r8-map-id-edd0706d8ade6e5fa050dcf48a624fb4468a151a6c9a3ed423de0572ab36a89c */
+    @RequiresApi(19)
+    @RestrictTo({RestrictTo.Scope.LIBRARY})
+    public static class InitCallbackImpl extends EmojiCompat.InitCallback implements Runnable {
+        private final Reference<EditText> mViewRef;
+
+        public InitCallbackImpl(EditText editText) {
+            this.mViewRef = new WeakReference(editText);
+        }
+
+        @Override // androidx.emoji2.text.EmojiCompat.InitCallback
+        public void onInitialized() {
+            Handler handler;
+            super.onInitialized();
+            EditText editText = this.mViewRef.get();
+            if (editText == null || (handler = editText.getHandler()) == null) {
+                return;
+            }
+            handler.post(this);
+        }
+
+        @Override // java.lang.Runnable
+        public void run() {
+            EmojiTextWatcher.processTextOnEnablingEvent(this.mViewRef.get(), 1);
+        }
+    }
+
+    public EmojiTextWatcher(EditText editText, boolean z11) {
+        this.mEditText = editText;
+        this.mExpectInitializedEmojiCompat = z11;
+    }
+
+    public static void processTextOnEnablingEvent(@Nullable EditText editText, int i11) {
+        if (i11 == 1 && editText != null && editText.isAttachedToWindow()) {
+            Editable editableText = editText.getEditableText();
+            int selectionStart = Selection.getSelectionStart(editableText);
+            int selectionEnd = Selection.getSelectionEnd(editableText);
+            EmojiCompat.get().process(editableText);
+            EmojiInputFilter.updateSelection(editableText, selectionStart, selectionEnd);
+        }
+    }
+
+    private boolean shouldSkipForDisabledOrNotConfigured() {
+        if (this.mEnabled) {
+            return (this.mExpectInitializedEmojiCompat || EmojiCompat.isConfigured()) ? false : true;
+        }
+        return true;
+    }
+
+    public int getEmojiReplaceStrategy() {
+        return this.mEmojiReplaceStrategy;
+    }
+
+    @RestrictTo({RestrictTo.Scope.LIBRARY})
+    public EmojiCompat.InitCallback getInitCallback() {
+        if (this.mInitCallback == null) {
+            this.mInitCallback = new InitCallbackImpl(this.mEditText);
+        }
+        return this.mInitCallback;
+    }
+
+    public int getMaxEmojiCount() {
+        return this.mMaxEmojiCount;
+    }
+
+    public boolean isEnabled() {
+        return this.mEnabled;
+    }
+
+    @Override // android.text.TextWatcher
+    public void onTextChanged(CharSequence charSequence, int i11, int i12, int i13) {
+        if (this.mEditText.isInEditMode() || shouldSkipForDisabledOrNotConfigured() || i12 > i13 || !(charSequence instanceof Spannable)) {
+            return;
+        }
+        int loadState = EmojiCompat.get().getLoadState();
+        if (loadState != 0) {
+            if (loadState == 1) {
+                EmojiCompat.get().process((Spannable) charSequence, i11, i11 + i13, this.mMaxEmojiCount, this.mEmojiReplaceStrategy);
+                return;
+            } else if (loadState != 3) {
+                return;
+            }
+        }
+        EmojiCompat.get().registerInitCallback(getInitCallback());
+    }
+
+    public void setEmojiReplaceStrategy(int i11) {
+        this.mEmojiReplaceStrategy = i11;
+    }
+
+    public void setEnabled(boolean z11) {
+        if (this.mEnabled != z11) {
+            if (this.mInitCallback != null) {
+                EmojiCompat.get().unregisterInitCallback(this.mInitCallback);
+            }
+            this.mEnabled = z11;
+            if (z11) {
+                processTextOnEnablingEvent(this.mEditText, EmojiCompat.get().getLoadState());
+            }
+        }
+    }
+
+    public void setMaxEmojiCount(int i11) {
+        this.mMaxEmojiCount = i11;
+    }
+
+    @Override // android.text.TextWatcher
+    public void afterTextChanged(Editable editable) {
+    }
+
+    @Override // android.text.TextWatcher
+    public void beforeTextChanged(CharSequence charSequence, int i11, int i12, int i13) {
+    }
+}

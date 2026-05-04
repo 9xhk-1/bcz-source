@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/fragment_base_main_0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:id="@+id/app_bar"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+        <FrameLayout
+            android:id="@+id/top_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <TextView
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/top_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"/>
+            <com.baicizhan.client.business.widget.RedDotImageView
+                android:layout_gravity="center"
+                android:id="@+id/button_right"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="14dp"
+                android:scaleType="center"
+                app:redDotPadding="6dp"
+                app:redDotRadius="3dp"/>
+        </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

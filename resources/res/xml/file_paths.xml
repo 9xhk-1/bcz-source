@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="my_images"
+        path="Android/data/com.jiongji.andriod.card/files/Pictures"/>
+    <external-cache-path
+        name="."
+        path="/"/>
+    <root-path
+        name="opensdk_root"
+        path=""/>
+    <external-files-path
+        name="daka_image"
+        path="baicizhan/imagedaka"/>
+    <external-files-path
+        name="share_files"
+        path="."/>
+</paths>

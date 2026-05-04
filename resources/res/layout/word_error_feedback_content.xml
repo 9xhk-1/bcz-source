@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:showDividers="middle">
+    <TextView
+        android:textSize="25sp"
+        android:textColor="#ff202224"
+        android:gravity="center"
+        android:id="@+id/word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:maxLines="1"
+        android:layout_marginStart="24dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/select_area"
+        android:background="@color/C205"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle">
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/main_color_link_blue"
+            android:gravity="top|left"
+            android:paddingLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:text="@string/error_fb_hint"
+            android:maxLines="1"
+            android:paddingStart="24dp"/>
+        <include layout="@layout/word_error_feedback_selection_divider"/>
+    </LinearLayout>
+</LinearLayout>

@@ -8,56 +8,89 @@
 
 ## 快速开始
 
-以下是使用短信验证码登录并获取 access_token 的最小示例：
+以下是使用短信验证码登录并获取 access_token 的最小示例（**无需安装 thrift 库**）：
 
 ```python
-import time, struct, requests
-from thrift.transport import TTransport
-from thrift.protocol import TCompactProtocol
+import struct, time, requests
 
-BASE_COOKIES = {
-    "device_id":   "aabbccdd1234abcd",
-    "app_name":    "7081400",
-    "channel":     "official",
-    "version":     "14",
-    "client_time": str(int(time.time())),
-    "time_zone":   "Asia/Shanghai",
-    "serial":      "aabbb12345" + time.strftime("%d%H%M%S"),
-    "device_name": "android/Pixel6-Google",
-}
+# ── Cookie 构造 ───────────────────────────────────────────────────────────────
+def make_cookie(device_id="aabbccdd1234abcd", access_token=None):
+    ts = int(time.time())
+    serial = device_id[:5] + device_id[-5:] + time.strftime("%d%H%M%S")
+    parts = [
+        f"device_name=android%2FPixel6-Google", f"version=14",
+        f"app_name=7081400", f"channel=official",
+        f"client_time={ts}", f"device_id={device_id}",
+        f"serial={serial}", f"time_zone=Asia%2FShanghai",
+    ]
+    if access_token:
+        parts.append(f"access_token={access_token}")
+    return "; ".join(parts)
 
-def thrift_call(host, service, method, write_fn, extra_cookies=None):
-    url = f"https://{host}/rpc/{service}/{method}/{int(time.time()*1000)}"
-    buf = TTransport.TMemoryBuffer()
-    proto = TCompactProtocol.TCompactProtocol(buf)
-    proto.writeMessageBegin(method, 1, 0)
-    write_fn(proto)
-    proto.writeMessageEnd()
-    payload = buf.getvalue()
-    body = struct.pack(">I", len(payload)) + payload
-    cookies = {**BASE_COOKIES, **(extra_cookies or {})}
-    r = requests.post(url, data=body, cookies=cookies,
-                      headers={"Content-Type": "application/x-thrift"})
-    rbuf = TTransport.TMemoryBuffer(r.content[4:])
-    rproto = TCompactProtocol.TCompactProtocol(rbuf)
-    rproto.readMessageBegin()
-    return rproto
+# ── TCompact 手动编码 ──────────────────────────────────────────────────────────
+def varint(n):
+    buf = b''
+    while True:
+        if n & ~0x7f == 0: buf += bytes([n]); break
+        buf += bytes([(n & 0x7f) | 0x80]); n >>= 7
+    return buf
 
-# 步骤1：发送短信验证码
-def send_sms(phone: str):
-    def write(p):
-        p.writeStructBegin("send_sms_verify_code_args")
-        p.writeFieldBegin("phone", 11, 1); p.writeString(phone.encode()); p.writeFieldEnd()
-        p.writeFieldBegin("verify_type", 8, 2); p.writeI32(5); p.writeFieldEnd()
-        p.writeFieldStop(); p.writeStructEnd()
-    thrift_call("passport.baicizhan.com", "unified_user_service", "send_sms_verify_code", write)
+def encode_str(s):   b = s.encode(); return varint(len(b)) + b
+def encode_i32(n):   n = (n<<1)^(n>>31); return varint(n)
+def fstr(fid, prev): d=fid-prev; return bytes([(d<<4)|8]) if 1<=d<=15 else bytes([8])+struct.pack('<h',fid)
+def fi32(fid, prev): d=fid-prev; return bytes([(d<<4)|5]) if 1<=d<=15 else bytes([5])+struct.pack('<h',fid)
 
-# 步骤2：使用验证码登录，获取 access_token
-# 详见 docs/login.md
-send_sms("13800138000")
+def call(host, svc, method, args, cookie):
+    url = f"https://{host}/rpc/{svc}/{method}/{int(time.time()*1000)}"
+    hdr = b'\x82\x21' + varint(0) + encode_str(method)
+    body = hdr + args + b'\x00'
+    payload = struct.pack('>I', len(body)) + body
+    r = requests.post(url, data=payload,
+                      headers={'Content-Type':'application/x-thrift','Cookie':cookie})
+    return r.content[4:]  # 去掉 TFramed 4字节头
+
+# ── 步骤 1：发送短信验证码 ────────────────────────────────────────────────────
+def send_sms(phone, device_id="aabbccdd1234abcd"):
+    args = fstr(1,0)+encode_str(phone) + fi32(2,1)+encode_i32(5)  # verify_type=5
+    call("passport.baicizhan.com", "unified_user_service", "send_sms_verify_code", args,
+         make_cookie(device_id))
+    print(f"短信已发送至 {phone}")
+
+# ── 步骤 2：验证码登录 ────────────────────────────────────────────────────────
+def login(phone, code, device_id="aabbccdd1234abcd"):
+    # PhoneVerifyCodeRequest struct
+    vcr = fstr(1,0)+encode_str(phone) + fstr(2,1)+encode_str(code) + b'\x00'
+    # PhoneLoginRequest: field1=vcr(struct), field3=device(string)
+    plr = bytes([(1<<4)|12])+vcr + bytes([(2<<4)|8])+encode_str(device_id) + b'\x00'
+    # 外层 args: field1=PhoneLoginRequest(struct)
+    args = bytes([(1<<4)|12]) + plr
+    resp = call("passport.baicizhan.com", "unified_user_service", "login_with_phone", args,
+                make_cookie(device_id))
+    # 简单提取 access_token（field 1，string）
+    pos = 2
+    while pos < len(resp):  # 跳过消息头
+        b = resp[pos]; pos += 1
+        if b == 0: break
+        ftype, delta = b & 0x0f, (b >> 4) & 0x0f
+        if delta == 0: pos += 2
+        if ftype == 8:  # string
+            l, pos = (lambda d,p: (d[p], p+1) if d[p] < 128 else (d[p]&0x7f|(d[p+1]<<7), p+2))(resp, pos)
+            val = resp[pos:pos+l].decode(); pos += l
+            return val  # access_token is the first string field
+    return None
+
+# ── 使用 ─────────────────────────────────────────────────────────────────────
+PHONE = "13800138000"
+DEVICE_ID = "aabbccdd1234abcd"
+
+send_sms(PHONE, DEVICE_ID)
+code = input("请输入收到的验证码：")
+access_token = login(PHONE, code, DEVICE_ID)
+print(f"登录成功！access_token = {access_token}")
 ```
 
-> 完整登录流程见 [docs/login.md](docs/login.md)
+> 完整登录流程（包含所有登录方式）见 [docs/flow_login.md](docs/flow_login.md)  
+> 完整 TCompact 客户端实现（含响应解析）见 [docs/thrift_client.md](docs/thrift_client.md)
 
 ---
 
@@ -69,12 +102,19 @@ send_sms("13800138000")
 |------|------|
 | [docs/thrift_client.md](docs/thrift_client.md) | ⭐ **必读！** Python Thrift 客户端完整实现，含 Cookie 构造、序列化、调用封装 |
 
+### 参考文件
+
+| 文件 | 说明 |
+|------|------|
+| [docs/bcz_api_reference.json](docs/bcz_api_reference.json) | 机器可读的全量 API 参考（服务/方法/结构体 JSON 格式） |
+
 ### 流程文档
 
 | 文档 | 说明 |
 |------|------|
-| [docs/login.md](docs/login.md) | 完整登录流程（短信/手机号登录、access_token 获取） |
-| [docs/flow_study.md](docs/flow_study.md) | 完整学习流程（选书、开始学习、提交结果） |
+| [docs/login.md](docs/login.md) | 短信验证码登录协议详解（Thrift 结构拆解） |
+| [docs/flow_login.md](docs/flow_login.md) | **所有登录方式完整流程**（短信/密码/游客/微信/Apple/Google，含 Python 代码） |
+| [docs/flow_study.md](docs/flow_study.md) | 完整学习流程（登录→选书→学习→同步进度→打卡，含 Python 代码） |
 
 ### 服务文档
 
@@ -95,7 +135,7 @@ send_sms("13800138000")
 | **PkApiService** | `https://pk.baicizhan.com/rpc/pk` | 2 | PK对战WebSocket地址获取 | [📄 文档](docs/mall_avatar_pk.md#pkapiservicepk-对战) |
 | **UserAssistantApiService** | `https://assistant.baicizhan.com/rpc/assistant` | 9 | 探索页内容、积分、Beta权限、学习统计 | [📄 文档](docs/user_assistant_activity.md#userassistantapiservice用户助手) |
 | **UserActivityApiService** | `https://activity.baicizhan.com/rpc/activity` | 3 | 单词导出活动、配额购买 | [📄 文档](docs/user_assistant_activity.md#useractivityapiservice活动--导出) |
-| **CourseApiService** | `https://learn.baicizhan.com/rpc/course` | 9 | 词汇直播、课程反馈、UGC评论 | [📄 文档](docs/other_services.md#courseapiservice) |
+| **CourseApiService** | `https://learn.baicizhan.com/rpc/course` | 9 | 词汇直播、视频课程、随堂答题、UGC评论 | [📄 文档](docs/other_services.md) |
 
 ---
 
@@ -148,7 +188,7 @@ Body: [4字节大端uint32: payload长度][TCompactProtocol编码的Thrift消息
 ③ 后续所有请求在 Cookie 中携带 access_token
 ```
 
-详见 [docs/login.md](docs/login.md)
+详见 [docs/flow_login.md](docs/flow_login.md)（所有登录方式）及 [docs/login.md](docs/login.md)（短信登录协议详解）
 
 ---
 

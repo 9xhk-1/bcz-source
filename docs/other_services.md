@@ -1,309 +1,570 @@
-# 其他服务 API 文档
+# CourseApiService API 文档
 
-> 逆向来源：APK 7.8.14 逆向分析，仅供网络安全研究目的。
+> 逆向来源：APK 7.8.14 逆向分析，仅供网络安全研究目的。  
+> 协议：Apache Thrift TCompactProtocol + TFramedTransport over HTTPS  
+> Python 客户端基础实现见 [thrift_client.md](thrift_client.md)
 
-> **说明：** 部分服务已拆分至独立文档：
-> - UserBookService → [docs/user_book.md](user_book.md)
-> - AdvertiseApiService → [docs/advertise_api.md](advertise_api.md)
-> - MallProxyService / AvatarApiService / PkApiService → [docs/mall_avatar_pk.md](mall_avatar_pk.md)
-> - UserAssistantApiService / UserActivityApiService → [docs/user_assistant_activity.md](user_assistant_activity.md)
->
-> 本文件保留 CourseApiService 及系统类服务的完整文档。
+**服务端点：** `https://learn.baicizhan.com/rpc/course`  
+**备用端点：** `https://learn.bczeducation.cn/rpc/course`
 
----
-
-## CourseApiService
-
-**端点：** `https://learn.baicizhan.com/rpc/course`  
-**备用：** `https://learn.bczeducation.cn/rpc/course`
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_vocab_live_info` | `course_id: int, article_id: int` | `VocabLiveInfo` | 获取词汇直播信息 |
-| `polling_info` | `course_id: int, article_id: int` | `Message` | 轮询课程直播状态 |
-| `livedone` | `course_id: int, article_id: int` | `void` | 标记直播已完成 |
-| `get_mark_book_list` | `paper_id: int` | `List<MarkTopicInfo>` | 获取标记词书列表 |
-| `delete_mark_word` | `topic_id: int, paper_id: int` | `void` | 删除标记单词 |
-| `get_improve_video_info` | `chapter_id: long` | `ImproveVideoInfo` | 获取提升视频信息 |
-| `submit_improve_chapter_done` | `chapter_done_info: ImproveChapterDoneReq` | `void` | 提交提升章节完成状态 |
-| `feedback` | `req: FeedBackReq` | `void` | 提交课程反馈 |
-| `submitugc` | `req: CommentReq` | `void` | 提交用户评论 |
+> **其他服务文档：**
+> - UserBookService → [user_book.md](user_book.md)
+> - AdvertiseApiService → [advertise_api.md](advertise_api.md)
+> - MallProxyService / AvatarApiService / PkApiService → [mall_avatar_pk.md](mall_avatar_pk.md)
+> - UserAssistantApiService / UserActivityApiService → [user_assistant_activity.md](user_assistant_activity.md)
+> - BczSystemApiService / NotifyService / StrategyApiService / BczReportApiService → [system_api.md](system_api.md)
 
 ---
 
-## UserBookService
+## 接口概览
 
-**端点：** `https://booklist.baicizhan.com/rpc/user_book`  
-**备用：** `https://booklist.bczeducation.cn/rpc/user_book`
-
-词书管理和设备绑定服务。
-
-### 词书管理
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_user_books` | — | `UserBookInfo` | 获取用户自建词书列表 |
-| `add_user_book` | `book_name: String` | `UserBookItem` | 创建自建词书 |
-| `add_user_book_v2` | `req: AddBookReq` | `UserBookItem` | 创建自建词书 v2 |
-| `add_user_book_by_code` | `share_code: String` | `UserBookItem` | 通过分享码添加词书 |
-| `delete_user_book` | `user_book_id: long` | `long` | 删除自建词书 |
-| `update_user_book_name` | `book_name: String, user_book_id: long` | `UserBookItem` | 重命名词书 |
-| `update_user_book_info` | `req: UpdateBookReq` | `UserBookItem` | 更新词书信息 |
-| `get_user_book_words` | `user_book_id: long` | `List<UserBookWordDetail>` | 获取词书中的单词 |
-| `add_word_to_books` | `word: UserBookWord, user_book_ids: List<Long>` | `AddSingleWordRsp` | 向多个词书添加单词 |
-| `add_words_to_book` | `user_book_id: long, words: List<UserBookWord>` | `AddWordsRsp` | 向词书批量添加单词 |
-| `add_words_to_books` | `user_book_ids: List<Long>, words: List<UserBookWord>` | `AddWordsToBooksRsp` | 批量向多个词书添加单词 |
-| `delete_user_book_words` | `user_book_id: long, topic_ids: List<Integer>` | `UserBookItem` | 从词书删除单词 |
-| `get_user_book_share_code` | `user_book_id: long` | `String` | 获取词书分享码 |
-| `get_share_code_info` | `share_code: String` | `ShareBookInfo` | 获取分享码对应词书信息 |
-
-### 单词匹配
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `match_words` | `content: String` | `List<UserBookWord>` | 从文本中匹配单词 |
-| `match_words_v2` | `req: MatchWordReq` | `List<UserBookWord>` | 从文本匹配单词 v2 |
-| `match_words_ocr` | `img: ByteBuffer` | `List<UserBookWord>` | OCR 识别图片中的单词 |
-| `match_words_ocr_draw` | `img: ByteBuffer` | `List<UserBookWord>` | OCR 识别并标注图片中的单词 |
-
-### 设备绑定（多端同步）
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_user_machine_infos` | — | `List<UserMachineInfo>` | 获取绑定设备列表 |
-| `get_user_machine_infos_v2` | — | `List<UserMachineInfo>` | 获取绑定设备列表 v2 |
-| `get_user_plan_book` | `device_id: long` | `UserSelectedBookInfo` | 获取指定设备的选书计划 |
-| `select_user_book` | `device_id: long, user_book_id: long, daily_plan_count: int` | `void` | 为设备设置学习词书 |
-| `remove_bind_machine` | `device_id: long` | `void` | 解绑设备 |
-| `remove_bind_machine_v2` | `device_id: long, device_type: int` | `void` | 解绑设备 v2 |
-| `rename_machine` | `device_id: long, device_name: String` | `void` | 重命名设备 |
-| `rename_machine_v2` | `device_id: long, device_name: String, device_type: int` | `void` | 重命名设备 v2 |
-| `get_machine_bind_hint` | — | `List<MachineBindHint>` | 获取设备绑定提示 |
-| `get_device_sku_info` | — | `List<DeviceAdvInfo>` | 获取设备 SKU 广告信息 |
+| 方法名 | 说明 |
+|--------|------|
+| [get_vocab_live_info](#get_vocab_live_info) | 获取词汇直播课程信息 |
+| [polling_info](#polling_info) | 轮询直播课程最新状态 |
+| [livedone](#livedone) | 标记直播课程已完成 |
+| [get_mark_book_list](#get_mark_book_list) | 获取标记词书（收藏单词）列表 |
+| [delete_mark_word](#delete_mark_word) | 从标记词书删除单词 |
+| [get_improve_video_info](#get_improve_video_info) | 获取提升视频课程信息 |
+| [submit_improve_chapter_done](#submit_improve_chapter_done) | 提交提升章节完成状态 |
+| [feedback](#feedback) | 提交课程反馈答题 |
+| [submitugc](#submitugc) | 提交用户评论（UGC） |
 
 ---
 
-## BczSystemApiService
+## 通用 Python 工具函数
 
-**端点：** `https://system.baicizhan.com/rpc/bcz_system`  
-**备用：** `https://system.bczeducation.cn/rpc/bcz_system`
+以下辅助函数在本文档所有示例中使用：
 
-系统配置与版本检查服务。
+```python
+import struct, time, requests
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `check_new_version` | `app_info: BczAppInfo` | `BczVersionInfo` | 检查 App 新版本 |
-| `check_dict_new_version` | `app_info: BczAppInfo` | `BczVersionInfo` | 检查词典包新版本 |
-| `check_ireading_new_version` | `app_info: BczAppInfo` | `BczVersionInfo` | 检查 iReading 新版本 |
-| `get_app_new_version_info` | `request: AppBetaUpdateRequest` | `AppNewVersionResult` | 获取新版本详情 |
-| `get_app_beta_update_info` | `request: AppBetaUpdateRequest` | `AppBetaUpdateResult` | 获取 Beta 版更新信息 |
-| `check_infos` | — | `BczSystemInfos` | 批量检查系统信息 |
-| `check_nav_tabs` | — | `BczNavTabs` | 检查导航栏标签配置 |
-| `get_switches` | — | `BczAppSwitch` | 获取功能开关配置 |
-| `get_test_flags` | — | `Map<String, Integer>` | 获取 A/B 测试标志 |
-| `get_static_config` | — | `List<StaticConfig>` | 获取静态配置列表 |
-| `get_guide_for_new_strategy` | — | `GuideForNewStrategy` | 获取新策略引导 |
-| `get_privacy_agreement_version` | — | `PrivacyAgreementInfo` | 获取隐私协议版本 |
-| `get_domain_whitelist` | — | `List<String>` | 获取域名白名单 |
-| `get_domain_blacklist` | — | `List<String>` | 获取域名黑名单 |
-| `get_app_feedback_info` | — | `Map<String, String>` | 获取应用反馈信息 |
-| `qrcode_scan` | `qrcode: String` | `QRCodeResp` | 处理二维码扫描结果 |
-| `report_event` | `jsons: List<String>` | `void` | 上报系统事件（需登录） |
-| `report_event_without_login` | `jsons: List<String>` | `void` | 上报系统事件（无需登录） |
+COURSE_URL = "https://learn.baicizhan.com/rpc/course"
 
-**BczAppInfo 字段：**
+def make_cookie(access_token: str, device_id: str = "aabbccdd1234abcd") -> str:
+    ts = int(time.time())
+    serial = device_id[:5] + device_id[-5:] + time.strftime("%d%H%M%S")
+    return (
+        f"device_name=android%2FPixel6-Google; version=14; app_name=7081400; "
+        f"channel=official; client_time={ts}; device_id={device_id}; "
+        f"serial={serial}; time_zone=Asia%2FShanghai; access_token={access_token}"
+    )
+
+def varint(n):
+    buf = b''
+    while True:
+        if n & ~0x7f == 0: buf += bytes([n]); break
+        buf += bytes([(n & 0x7f) | 0x80]); n >>= 7
+    return buf
+
+def encode_string(s):
+    b = s.encode('utf-8'); return varint(len(b)) + b
+
+def encode_i32(n):
+    n = (n << 1) ^ (n >> 31); return varint(n)
+
+def encode_i64(n):
+    n = (n << 1) ^ (n >> 63); return varint(n)
+
+def fhdr(fid, prev, ftype):
+    """字段头：delta 编码"""
+    d = fid - prev
+    if 1 <= d <= 15: return bytes([(d << 4) | ftype])
+    return bytes([ftype]) + struct.pack('<h', fid)
+
+def build_call(method, args, seq=0):
+    hdr = b'\x82\x21' + varint(seq) + encode_string(method)
+    body = hdr + args + b'\x00'
+    return struct.pack('>I', len(body)) + body
+
+def call_course(method, args, access_token, device_id="aabbccdd1234abcd"):
+    url = f"{COURSE_URL}/{method}/{int(time.time()*1000)}"
+    cookie = make_cookie(access_token, device_id)
+    r = requests.post(url, data=build_call(method, args),
+                      headers={'Content-Type': 'application/x-thrift', 'Cookie': cookie})
+    return r.content[4:]
+
+# 简单响应解析
+def read_varint(data, pos):
+    r, s = 0, 0
+    while True:
+        b = data[pos]; pos += 1
+        r |= (b & 0x7f) << s
+        if not (b & 0x80): break
+        s += 7
+    return r, pos
+
+def read_string(data, pos):
+    l, pos = read_varint(data, pos)
+    return data[pos:pos+l].decode('utf-8'), pos+l
+
+def read_i32(data, pos):
+    v, pos = read_varint(data, pos); return (v >> 1) ^ -(v & 1), pos
+
+def read_i64(data, pos):
+    v, pos = read_varint(data, pos); return (v >> 1) ^ -(v & 1), pos
+```
+
+---
+
+## get_vocab_live_info
+
+> `POST https://learn.baicizhan.com/rpc/course/get_vocab_live_info/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 获取指定词汇直播课程的完整信息，包括课程讲师昵称、课程标题、内容文本行、答题选项、课程时长等。在直播/录播页面中用于加载课程内容。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `course_id` | i32 | **必须** | `1001` | 课程 ID，由课程列表接口获取 |
+| 2 | `article_id` | i32 | **必须** | `2001` | 文章/章节 ID |
+
+**返回值：VocabLiveInfo 结构体**
+
+来源：`VocabLiveInfo.java`
+
+| 字段 ID | 字段名 | 类型 | 说明 |
+|---------|--------|------|------|
+| 1 | `nickname` | string | 讲师昵称 |
+| 2 | `line_infos` | list\<LineInfo\> | 课程内容文本行列表 |
+| 3 | `duration` | i32 | 课程时长（秒） |
+| 4 | `title` | string | 课程标题 |
+| 5 | `discount_coupon` | struct DiscountCoupon | 优惠券信息（可选） |
+| 6 | `answers` | list\<LiveAnswerItem\> | 课程答题选项列表 |
+| 7 | `sents` | list\<string\> | 课程例句列表 |
+| 8 | `study_done` | i32 | 是否已完成学习（1=已完成，0=未完成） |
+| 9 | `emojis` | list\<string\> | 互动 emoji 列表 |
+
+**Python 代码：**
+
+```python
+def get_vocab_live_info(course_id: int, article_id: int, access_token: str) -> bytes:
+    """获取词汇直播课程信息"""
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(course_id)   # field 1: course_id (i32)
+    args += fhdr(2, 1, 5) + encode_i32(article_id)  # field 2: article_id (i32)
+    return call_course("get_vocab_live_info", args, access_token)
+
+# 使用示例
+resp = get_vocab_live_info(course_id=1001, article_id=2001, access_token="your_token")
+# resp 为 TCompact 编码的 VocabLiveInfo，需进一步解析
+```
+
+<details>
+<summary>查看响应结构示例：</summary>
+
+响应为 TCompact 二进制，解码后逻辑结构如下：
+
+```
+VocabLiveInfo {
+    nickname: "英语老师小王",
+    title: "高频词汇 Day 1",
+    duration: 1200,        // 20分钟
+    study_done: 0,         // 未完成
+    line_infos: [
+        LineInfo { content: "abandon 抛弃，放弃" },
+        ...
+    ],
+    answers: [
+        LiveAnswerItem { ... },
+    ],
+    sents: ["She abandoned her old car.", ...]
+}
+```
+
+</details>
+
+---
+
+## polling_info
+
+> `POST https://learn.baicizhan.com/rpc/course/polling_info/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 轮询直播课程的实时状态更新，例如新弹幕消息、互动内容等。在直播过程中客户端定期调用此接口获取最新内容，实现类似长轮询的效果。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `course_id` | i32 | **必须** | `1001` | 课程 ID |
+| 2 | `article_id` | i32 | **必须** | `2001` | 文章/章节 ID |
+
+**返回值：Message 结构体**
+
+| 字段 ID | 字段名 | 类型 | 说明 |
+|---------|--------|------|------|
+| — | `content` | string | 最新消息内容（JSON 格式的互动数据） |
+
+**Python 代码：**
+
+```python
+def polling_info(course_id: int, article_id: int, access_token: str) -> bytes:
+    """轮询课程直播状态（建议每 3-5 秒调用一次）"""
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(course_id)
+    args += fhdr(2, 1, 5) + encode_i32(article_id)
+    return call_course("polling_info", args, access_token)
+
+# 轮询示例
+import time as time_module
+while True:
+    resp = polling_info(1001, 2001, access_token="your_token")
+    # 解析 resp 获取新消息
+    time_module.sleep(3)
+```
+
+---
+
+## livedone
+
+> `POST https://learn.baicizhan.com/rpc/course/livedone/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 通知服务端用户已完成直播课程的观看，服务端会记录学习完成状态，并可能触发学习积分奖励。在用户看完直播/录播后调用。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `course_id` | i32 | **必须** | `1001` | 课程 ID |
+| 2 | `article_id` | i32 | **必须** | `2001` | 文章/章节 ID |
+
+**返回值：** void（无返回体）
+
+**Python 代码：**
+
+```python
+def livedone(course_id: int, article_id: int, access_token: str):
+    """标记直播课程已完成"""
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(course_id)
+    args += fhdr(2, 1, 5) + encode_i32(article_id)
+    call_course("livedone", args, access_token)
+    print(f"课程 {course_id}-{article_id} 已标记完成")
+```
+
+---
+
+## get_mark_book_list
+
+> `POST https://learn.baicizhan.com/rpc/course/get_mark_book_list/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 获取指定课程试卷（paper）中被用户标记收藏的单词列表。在课程学习完成后，用户可将课程中的生词加入标记词书，此接口用于查看这些已标记的单词。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `paper_id` | i32 | **必须** | `5001` | 试卷/课程资源 ID |
+
+**返回值：** list\<MarkTopicInfo\>
+
+**MarkTopicInfo 字段（来源：`MarkTopicInfo.java`）：**
+
+| 字段 ID | 字段名 | 类型 | 说明 |
+|---------|--------|------|------|
+| 1 | `topic_id` | i32 | 单词 topic ID |
+| 2 | `word` | string | 英文单词 |
+| 3 | `meaning` | string | 中文释义 |
+
+**Python 代码：**
+
+```python
+def get_mark_book_list(paper_id: int, access_token: str) -> bytes:
+    """获取课程标记词书中的单词列表"""
+    args = fhdr(1, 0, 5) + encode_i32(paper_id)
+    return call_course("get_mark_book_list", args, access_token)
+
+resp = get_mark_book_list(paper_id=5001, access_token="your_token")
+```
+
+<details>
+<summary>查看响应结构示例：</summary>
+
+```
+List<MarkTopicInfo> = [
+    { topic_id: 10001, word: "abandon",   meaning: "抛弃，放弃" },
+    { topic_id: 10002, word: "abolish",   meaning: "废除，废止" },
+    { topic_id: 10003, word: "abrupt",    meaning: "突然的，意外的" },
+]
+```
+
+</details>
+
+---
+
+## delete_mark_word
+
+> `POST https://learn.baicizhan.com/rpc/course/delete_mark_word/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 从课程标记词书中删除指定单词。用户在课程标记词书管理页中可批量删除不需要的单词。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `topic_id` | i32 | **必须** | `10001` | 要删除的单词 topic ID |
+| 2 | `paper_id` | i32 | **必须** | `5001` | 所属试卷/课程资源 ID |
+
+**返回值：** void
+
+**Python 代码：**
+
+```python
+def delete_mark_word(topic_id: int, paper_id: int, access_token: str):
+    """从课程标记词书删除单词"""
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(topic_id)
+    args += fhdr(2, 1, 5) + encode_i32(paper_id)
+    call_course("delete_mark_word", args, access_token)
+    print(f"已删除单词 topic_id={topic_id} 从 paper_id={paper_id}")
+```
+
+---
+
+## get_improve_video_info
+
+> `POST https://learn.baicizhan.com/rpc/course/get_improve_video_info/{timestamp_ms}`
+
+*请求方式：POST*
+
+**作用：** 获取"提升"功能中视频课程的详细信息，包括视频 URL、课程大纲、学习进度等。百词斩 App 中的"提升"模块提供视频教学内容，此接口获取指定章节的视频课程数据。
+
+**认证方式：** 需要 `access_token` Cookie
+
+**请求参数：**
+
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `chapter_id` | i64 | **必须** | `100001` | 视频课程章节 ID（64位整数） |
+
+**返回值：ImproveVideoInfo 结构体**
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `version_code` | int | App versionCode |
-| `channel` | String | 渠道号 |
-| `platform` | String | 平台（`android`） |
+| 视频URL | string | 视频播放地址 |
+| 章节标题 | string | 视频章节标题 |
+| 时长 | i32 | 视频时长（秒） |
+| 进度 | i32 | 学习进度（0-100） |
+
+**Python 代码：**
+
+```python
+def get_improve_video_info(chapter_id: int, access_token: str) -> bytes:
+    """获取提升视频课程信息"""
+    args = fhdr(1, 0, 6) + encode_i64(chapter_id)  # i64, type=6
+    return call_course("get_improve_video_info", args, access_token)
+```
 
 ---
 
-## AdvertiseApiService
+## submit_improve_chapter_done
 
-**端点：** `https://advertise.baicizhan.com/rpc/advertise`  
-**备用：** `https://advertise.bczeducation.cn/rpc/advertise`
+> `POST https://learn.baicizhan.com/rpc/course/submit_improve_chapter_done/{timestamp_ms}`
 
-广告与推广内容服务。
+*请求方式：POST*
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_launch_ad` | — | `BczLaunchAd` | 获取启动页广告 |
-| `get_startup_ad` | `request: StartupAdRequest` | `List<StartupAd>` | 获取开屏广告列表 |
-| `get_startup_ad_v2` | `request: StartupAdRequest, device_info: AdDeviceInfo` | `List<StartupAd>` | 获取开屏广告 v2（含设备信息） |
-| `report_launch_ad` | `rp2: BczLaunchAdReport` | `void` | 上报启动广告展示事件 |
-| `report_startup_ad_event` | `events: List<AdEvent>` | `void` | 上报开屏广告事件 |
-| `get_loading_ad_info` | — | `List<AdvertiseLoadingInfo>` | 获取加载广告信息 |
-| `get_loading_ad_items` | — | `List<AdvertiseLoadingItem>` | 获取加载广告条目 |
-| `get_loading_imgs` | — | `List<LoadingImgInfo>` | 获取加载图片列表 |
-| `get_books_ad` | — | `List<BookAd>` | 获取词书广告 |
-| `get_books_ad_v2` | — | `BookAdV2` | 获取词书广告 v2 |
-| `get_shopping_ad` | — | `ShoppingAd` | 获取购物广告 |
-| `get_shopping_imgs` | — | `List<ShoppingImgInfo>` | 获取购物图片 |
-| `get_main_view_top_banner_advs` | — | `List<MainViewTopBannerAdv>` | 获取首页顶部横幅广告 |
-| `get_main_view_bottom_advs` | — | `List<MainViewBottomAdv>` | 获取首页底部广告 |
-| `get_main_view_bottom_advs_v2` | — | `BottomAdvInfos` | 获取首页底部广告 v2 |
-| `get_main_view_bottom_advs_v3` | `device_info: AdDeviceInfo` | `BottomAdvInfos` | 获取首页底部广告 v3 |
-| `get_main_game_top_banner` | — | `MainViewGameTopAdv` | 获取游戏首页顶部横幅 |
-| `get_practice_banner_adv` | — | `PracticeBannerAdv` | 获取练习横幅广告 |
-| `get_practice_popup_adv` | — | `PracticePopupAdv` | 获取练习弹窗广告 |
-| `get_explore_popup_adv` | — | `ExplorePopupAdv` | 获取探索弹窗广告 |
-| `get_live_streaming_info` | — | `LiveStreamingInfo` | 获取直播信息 |
-| `get_promotion_info` | — | `AdvertisePromotionInfo` | 获取促销信息 |
-| `get_mall_tab_icon_info` | — | `MallTabInfo` | 获取商城Tab图标信息 |
-| `get_third_ad` | — | `ThirdAd` | 获取第三方广告 |
-| `get_custom_ads_config` | — | `int` | 获取自定义广告配置状态 |
-| `set_custom_ads_config` | `state: int` | `void` | 设置自定义广告配置 |
+**作用：** 提交视频课程章节的完成状态和学习进度。用户观看完一个视频章节后调用，服务端记录进度并可能发放学习奖励。
 
----
+**认证方式：** 需要 `access_token` Cookie
 
-## NotifyService
+**请求参数（Thrift Args → ImproveChapterDoneReq）：**
 
-**端点：** `https://notify.baicizhan.com/rpc/notify`  
-**备用：** `https://notify.bczeducation.cn/rpc/notify`
+来源：`ImproveChapterDoneReq.java`
 
-消息推送与提醒服务。
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `chapter_id` | i64 | **必须** | `100001` | 章节 ID（与 get_improve_video_info 一致） |
+| 2 | `progress` | i32 | **必须** | `100` | 完成进度（0-100，100 表示完整观看） |
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_latest_notify` | — | `NotifyResult` | 获取最新通知 |
-| `get_latest_notify_v2` | `device_info: AdDeviceInfo` | `NotifyResult` | 获取最新通知 v2（含设备信息） |
-| `get_remind_info` | — | `UserRemindInfo` | 获取提醒设置信息 |
-| `set_remind_info` | `remind: UserRemindInfo` | `void` | 设置提醒信息 |
-| `get_remind_msgs` | — | `List<UserRemindMsg>` | 获取提醒消息列表 |
-| `push_confirm` | `params: PushConfirmParams` | `void` | 确认推送消息已读 |
+**返回值：** void
+
+**Python 代码：**
+
+```python
+def submit_improve_chapter_done(chapter_id: int, progress: int, access_token: str):
+    """提交视频章节学习进度（progress=100表示看完）"""
+    args = b''
+    args += fhdr(1, 0, 6) + encode_i64(chapter_id)  # field 1: chapter_id (i64, type=6)
+    args += fhdr(2, 1, 5) + encode_i32(progress)    # field 2: progress (i32, type=5)
+    call_course("submit_improve_chapter_done", args, access_token)
+    print(f"已提交章节 {chapter_id} 进度 {progress}%")
+
+# 使用示例：观看完整视频后提交
+submit_improve_chapter_done(chapter_id=100001, progress=100, access_token="your_token")
+```
 
 ---
 
-## StrategyApiService
+## feedback
 
-**端点：** `https://strategy.baicizhan.com/rpc/strategy`  
-**备用：** 无
+> `POST https://learn.baicizhan.com/rpc/course/feedback/{timestamp_ms}`
 
-会员策略与权益服务。
+*请求方式：POST*
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_user_member_info` | — | `UserEntitlement` | 获取用户会员信息 |
-| `get_user_entitlement_infos` | — | `UserEntitlementInfos` | 获取用户权益信息 |
-| `get_user_entitlement_sale_info` | `source: int` | `UserEntitlementSaleInfo` | 获取权益销售信息 |
-| `get_member_popup_sale_info` | — | `MemberPopupSaleInfo` | 获取会员弹窗销售信息 |
-| `get_app_home_page_member_stage_info` | — | `AppHomePageMemberStageInfo` | 获取首页会员阶段信息 |
-| `get_free_member` | `member_type: int` | `UserEntitlement` | 获取免费会员信息 |
-| `get_user_word_energy_info` | — | `UserEntitlement` | 获取单词能量信息 |
-| `get_user_sentence_energy_info` | — | `UserEntitlement` | 获取句子能量信息 |
+**作用：** 提交课程中随堂测验/答题的反馈结果。课程中穿插答题环节，用户作答后通过此接口提交答案，服务端会记录答题情况。
 
----
+**认证方式：** 需要 `access_token` Cookie
 
-## UserAssistantApiService
+**请求参数（Thrift Args → FeedBackReq）：**
 
-**端点：** `https://assistant.baicizhan.com/rpc/assistant`  
-**备用：** `https://assistant.bczeducation.cn/rpc/assistant`
+来源：`FeedBackReq.java`
 
-用户助手与辅助功能服务。
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `article_id` | i32 | **必须** | `2001` | 文章/章节 ID |
+| 2 | `qs_id` | i32 | **必须** | `3001` | 题目 ID（question ID） |
+| 3 | `choice` | i32 | **必须** | `2` | 用户选择的选项编号（从 1 开始） |
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_exploration_items` | — | `List<ExplorationItem>` | 获取探索页面内容 |
-| `analyze_clipboard` | `code: String` | `ClipboardResp` | 分析剪贴板内容（识别单词/句子） |
-| `get_beta_user_types` | — | `List<Integer>` | 获取 Beta 用户类型列表 |
-| `get_beta_user_types_v2` | — | `UserBetaInfo` | 获取 Beta 用户信息 v2 |
-| `get_activity_updated_time` | — | `int` | 获取活动更新时间 |
-| `check_feedback_msg` | `device_id: String` | `int` | 检查反馈消息状态 |
-| `done_word_stat` | `book_id: int, stat_logs: List<DoneWordStatLog>` | `int` | 上报单词学习统计 |
-| `get_credit` | — | `int` | 获取积分数量 |
-| `huawei_pay` | `pay_info: HuaweiPayInfo` | `PayResp` | 华为支付 |
+**返回值：** void
 
----
+**Python 代码：**
 
-## MallProxyService
+```python
+def feedback(article_id: int, qs_id: int, choice: int, access_token: str):
+    """
+    提交课程随堂测验答案
+    
+    :param article_id: 文章/章节 ID
+    :param qs_id: 题目 ID
+    :param choice: 用户选择的选项（1、2、3 或 4）
+    """
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(article_id)  # field 1: article_id
+    args += fhdr(2, 1, 5) + encode_i32(qs_id)       # field 2: qs_id
+    args += fhdr(3, 2, 5) + encode_i32(choice)      # field 3: choice
+    call_course("feedback", args, access_token)
+    print(f"已提交题目 {qs_id} 答案：选项 {choice}")
 
-**端点：** `https://learn.baicizhan.com/rpc/mall/proxy`  
-**备用：** 无
-
-商城地址代理服务。
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_user_address` | `status: int` | `List<UserAddress>` | 获取用户收货地址列表 |
-| `create_user_address` | `user_address_req: UserAddressReq` | `UserAddress` | 创建收货地址 |
-| `update_user_address` | `user_address_req: UserAddressReq` | `UserAddress` | 更新收货地址 |
-| `delete_user_address` | `address_id: int` | `void` | 删除收货地址 |
-| `choice_address` | `address_id: int` | `void` | 选择默认收货地址 |
-| `get_child_address` | `parent_id: int` | `List<ChildAddress>` | 获取子地区列表 |
-| `match_address` | `req: AddressMatchReq` | `AddressMatchResp` | 匹配地址 |
+# 使用示例
+feedback(article_id=2001, qs_id=3001, choice=2, access_token="your_token")
+```
 
 ---
 
-## AvatarApiService
+## submitugc
 
-**端点：** `https://ip-avatar.baicizhan.com/rpc/avatar`  
-**备用：** 无
+> `POST https://learn.baicizhan.com/rpc/course/submitugc/{timestamp_ms}`
 
-IP 形象与头像服务。
+*请求方式：POST*
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_ip` | — | `AvatarBasicInfo` | 获取 IP 形象基本信息 |
-| `get_app_home_page_info` | — | `AvatarAppHomePageInfo` | 获取首页 IP 形象信息 |
-| `get_gift` | — | `TravelRewardInfo` | 获取旅行奖励礼物 |
-| `travel` | — | `AvatarAppHomePageInfo` | 旅行（触发 IP 形象动作） |
+**作用：** 提交用户对课程的评论（UGC = User Generated Content）。用户在课程页面发表的评论或笔记通过此接口上传至服务端。
 
----
+**认证方式：** 需要 `access_token` Cookie
 
-## PkApiService
+**请求参数（Thrift Args → CommentReq）：**
 
-**端点：** `https://pk.baicizhan.com/rpc/pk`  
-**备用：** `https://pk.bczeducation.cn/rpc/pk`
+来源：`CommentReq.java`
 
-PK 对战服务（获取 PK 服务器地址）。
+| 字段 ID | 字段名 | 类型 | 必要性 | 示例值 | 说明 |
+|---------|--------|------|--------|--------|------|
+| 1 | `course_id` | i32 | **必须** | `1001` | 课程 ID |
+| 2 | `article_id` | i32 | **必须** | `2001` | 文章/章节 ID |
+| 3 | `content` | string | **必须** | `"很好的课程！"` | 评论内容文本（UTF-8） |
+| 4 | `time` | i64 | **必须** | `1716000000000` | 客户端发评论的时间（毫秒时间戳） |
 
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_pk_address` | — | `String` | 获取 PK 服务器 WebSocket 地址 |
-| `get_rank_pk_address` | — | `RankPkEntry` | 获取排行 PK 服务器信息 |
+**返回值：** void
 
----
+**Python 代码：**
 
-## UserActivityApiService
+```python
+def submitugc(course_id: int, article_id: int, content: str, access_token: str):
+    """
+    提交课程用户评论
+    
+    :param course_id: 课程 ID
+    :param article_id: 文章/章节 ID
+    :param content: 评论内容
+    :param access_token: 登录令牌
+    """
+    ts_ms = int(time.time() * 1000)
+    args = b''
+    args += fhdr(1, 0, 5) + encode_i32(course_id)      # field 1: course_id
+    args += fhdr(2, 1, 5) + encode_i32(article_id)     # field 2: article_id
+    args += fhdr(3, 2, 8) + encode_string(content)     # field 3: content (string, type=8)
+    args += fhdr(4, 3, 6) + encode_i64(ts_ms)          # field 4: time (i64, type=6)
+    call_course("submitugc", args, access_token)
+    print(f"评论已提交：{content[:20]}...")
 
-**端点：** `https://activity.baicizhan.com/rpc/activity`  
-**备用：** `https://activity.bczeducation.cn/rpc/activity`
-
-用户活动与导出服务。
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `get_export_activity_info` | — | `ExportActivityInfo` | 获取单词导出活动信息 |
-| `buy_export_quota` | — | `ExportQuota` | 购买单词导出配额 |
-| `export_words` | `param: ExportParam` | `void` | 导出单词 |
-
----
-
-## BczReportApiService
-
-**端点：** `https://events.baicizhan.com/rpc/bcz_report`  
-**备用：** `https://events.bczeducation.cn/rpc/bcz_report`
-
-埋点事件上报服务。
-
-| 方法名 | 参数 | 返回类型 | 说明 |
-|--------|------|----------|------|
-| `report_event` | `jsons: List<String>` | `void` | 批量上报事件（需登录） |
-| `report_event_without_login` | `jsons: List<String>` | `void` | 批量上报事件（无需登录） |
-
-**说明：** 事件数据为 JSON 字符串列表，每个字符串为一个事件对象的序列化结果。
+# 使用示例
+submitugc(
+    course_id=1001,
+    article_id=2001,
+    content="这个单词解析很到位，学到了很多！",
+    access_token="your_token"
+)
+```
 
 ---
 
-## 异常说明（通用）
+## 完整调用流程示例
 
-所有服务的所有方法均可能抛出：
+以下展示从进入课程到完成学习的完整流程：
+
+```python
+import time
+
+ACCESS_TOKEN = "your_access_token"
+COURSE_ID = 1001
+ARTICLE_ID = 2001
+
+# 步骤 1：加载课程内容
+resp = get_vocab_live_info(COURSE_ID, ARTICLE_ID, ACCESS_TOKEN)
+print("课程内容已加载")
+
+# 步骤 2：课程进行中，轮询新内容（每 5 秒）
+for _ in range(3):
+    resp = polling_info(COURSE_ID, ARTICLE_ID, ACCESS_TOKEN)
+    time.sleep(5)
+
+# 步骤 3：遇到答题环节，提交答案
+feedback(article_id=ARTICLE_ID, qs_id=3001, choice=2, access_token=ACCESS_TOKEN)
+
+# 步骤 4：课程结束，标记完成
+livedone(COURSE_ID, ARTICLE_ID, ACCESS_TOKEN)
+print("课程已完成！")
+
+# 步骤 5（可选）：提交评论
+submitugc(COURSE_ID, ARTICLE_ID, "讲得很好，受益匪浅！", ACCESS_TOKEN)
+```
+
+---
+
+## 异常说明
 
 | 异常类型 | 说明 |
 |----------|------|
-| `SystemException` | 系统级错误（来自 `com/baicizhan/online/thrift/basic/SystemException.java`） |
-| `LogicException` | 业务逻辑错误（来自 `com/baicizhan/online/thrift/basic/LogicException.java`） |
+| `LogicException` | 业务错误（课程 ID 不存在、无权限访问等） |
+| `SystemException` | 系统级错误（服务不可用） |
 | `TException` | Thrift 传输/协议错误 |
+
+---
+
+## 相关文档
+
+- [thrift_client.md](thrift_client.md) — Python TCompact 客户端实现
+- [unified_user_service.md](unified_user_service.md) — 登录认证
+- [user_study_api.md](user_study_api.md) — 主要学习进度 API
+
+---
+

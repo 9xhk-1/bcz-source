@@ -2,6 +2,14 @@
 
 > 逆向来源：APK 7.8.14 逆向分析，仅供网络安全研究目的。
 
+> **说明：** 部分服务已拆分至独立文档：
+> - UserBookService → [docs/user_book.md](user_book.md)
+> - AdvertiseApiService → [docs/advertise_api.md](advertise_api.md)
+> - MallProxyService / AvatarApiService / PkApiService → [docs/mall_avatar_pk.md](mall_avatar_pk.md)
+> - UserAssistantApiService / UserActivityApiService → [docs/user_assistant_activity.md](user_assistant_activity.md)
+>
+> 本文件保留 CourseApiService 及系统类服务的完整文档。
+
 ---
 
 ## CourseApiService

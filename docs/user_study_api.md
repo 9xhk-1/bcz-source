@@ -45,7 +45,6 @@
 | `get_books_japan` | — | `UserBookInfoJapan` | 获取日语词书信息 |
 | `get_all_selected_book_plan_info` | — | `List<SelectBookPlanInfo>` | 获取所有已选词书计划 |
 | `get_payed_books` | — | `List<Integer>` | 获取已购词书列表 |
-| `get_books_replace_info` | — | `List<BookReplaceInfo>` | 获取词书替换信息 |
 | `get_word_list_status` | `book_id: int` | `List<WordListItem>` | 获取词表状态 |
 | `cut_word_list` | `book_id: int, topic_ids: List<Integer>` | `List<WordListItem>` | 裁剪词表（标记已知单词） |
 | `cancel_cut_word_list` | `book_id: int, topic_ids: List<Integer>` | `List<WordListItem>` | 取消裁剪词表 |

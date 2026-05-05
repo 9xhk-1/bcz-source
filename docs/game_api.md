@@ -27,7 +27,7 @@
 | `home` | — | `StudyHomeInfo` | 获取游戏首页信息 |
 | `game_home` | `book_id: int` | `GameHomeInfo` | 获取指定词书的游戏首页 |
 | `select_game_book` | `book_id: int, group_count: int` | `UserPlanInfo` | 选择游戏词书 |
-| `switch_game_mode` | `mode: int` | `void` | 切换游戏模式 |
+| `switch_game_mode` | `mode: int` | `int` | 切换游戏模式，返回当前模式值 |
 | `get_roadmap` | `book_id: int` | `RoadmapInfo` | 获取词书进度路线图 |
 | `get_island_roadmap` | `book_id: int` | `IslandInfo` | 获取岛屿路线图 |
 | `sync_info` | `book_id: int` | `SyncInfo` | 同步游戏信息 |

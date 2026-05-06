@@ -108,7 +108,7 @@ class CourseApiService(_BaseService):
 
         self._call("feedback", _write)
 
-    def submitugc(self, course_id: int, article_id: int, content: str) -> None:
+    def submit_ugc(self, course_id: int, article_id: int, content: str) -> None:
         """提交 UGC 内容 / Submit user-generated content."""
         self._session.require_auth()
 

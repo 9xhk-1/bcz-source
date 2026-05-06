@@ -11,7 +11,7 @@ Reference:
 from __future__ import annotations
 
 import struct
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Type constants
@@ -241,7 +241,7 @@ class CompactReader:
         # Stack of last field IDs for delta-field decoding
         self._last_field_ids: List[int] = [0]
         # Pending bool value (bool is encoded in the field-type nibble)
-        self._bool_value: bool | None = None
+        self._bool_value: Optional[bool] = None
 
     # ------------------------------------------------------------------
     # Low-level helpers

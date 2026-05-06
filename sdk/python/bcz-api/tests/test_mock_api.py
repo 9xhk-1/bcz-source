@@ -1113,12 +1113,6 @@ class TestArgumentEncoding(unittest.TestCase):
         self.assertEqual(result["access_token"], "new_access_token_ABC")
 
 
-        self.assertTrue(bcz.is_authenticated)
-        self.assertEqual(bcz.access_token, "new_access_token_ABC")
-        self.assertEqual(bcz.unique_id, 99999)
-        self.assertEqual(result["access_token"], "new_access_token_ABC")
-
-
 # ---------------------------------------------------------------------------
 # Field mapping tests — verify all response keys are English strings
 # ---------------------------------------------------------------------------
@@ -1183,6 +1177,7 @@ class TestFieldMapping(_MockApiTestBase):
         result = self._call_and_return(lambda: self.bcz.study.get_study_home(), resp)
         self._assert_string_keys(result)
         self.assertEqual(result["progress"], 10)
+        # Note: 'today_progresss' (3 s's) is the exact field name in the original IDL
         self.assertEqual(result["today_progresss"], 5)
 
     # ------------------------------------------------------------------

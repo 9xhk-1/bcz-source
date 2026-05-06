@@ -22,7 +22,10 @@ _SVC = "user_study"
 
 # user_study_api.StudyHome
 _STUDY_HOME_FIELDS = {
-    1: "progress", 2: "today_progresss", 3: "learning_button", 4: "review_button",
+    1: "progress",
+    2: "today_progresss",  # note: 3 s's — preserved from original IDL typo
+    3: "learning_button",
+    4: "review_button",
 }
 
 

@@ -7,7 +7,7 @@ Service: course
 
 from __future__ import annotations
 
-from .._protocol import TYPE_I32, CompactWriter
+from .._protocol import TYPE_I32, TYPE_I64, CompactWriter
 from .._session import BczSession
 from ._base import _BaseService
 
@@ -33,7 +33,7 @@ class CourseApiService(_BaseService):
             self._write_i32(w, 1, course_id)
             self._write_i32(w, 2, article_id)
 
-        raw = self._call("getVocabLiveInfo", _write)
+        raw = self._call("get_vocab_live_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def polling_info(self, course_id: int, article_id: int) -> dict:
@@ -44,7 +44,7 @@ class CourseApiService(_BaseService):
             self._write_i32(w, 1, course_id)
             self._write_i32(w, 2, article_id)
 
-        raw = self._call("pollingInfo", _write)
+        raw = self._call("polling_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def livedone(self, course_id: int, article_id: int) -> None:
@@ -64,7 +64,7 @@ class CourseApiService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, paper_id)
 
-        result = self._call("getMarkBookList", _write)
+        result = self._call("get_mark_book_list", _write)
         return result if isinstance(result, list) else []
 
     def delete_mark_word(self, topic_id: int, paper_id: int) -> None:
@@ -75,16 +75,16 @@ class CourseApiService(_BaseService):
             self._write_i32(w, 1, topic_id)
             self._write_i32(w, 2, paper_id)
 
-        self._call("deleteMarkWord", _write)
+        self._call("delete_mark_word", _write)
 
     def get_improve_video_info(self, chapter_id: int) -> dict:
         """获取强化视频章节信息 / Get improve video chapter info."""
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
-            self._write_i32(w, 1, chapter_id)
+            self._write_i64(w, 1, chapter_id)
 
-        raw = self._call("getImproveVideoInfo", _write)
+        raw = self._call("get_improve_video_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def submit_improve_chapter_done(self, chapter_id: int, progress: int) -> None:
@@ -92,10 +92,10 @@ class CourseApiService(_BaseService):
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
-            self._write_i32(w, 1, chapter_id)
+            self._write_i64(w, 1, chapter_id)
             self._write_i32(w, 2, progress)
 
-        self._call("submitImproveChapterDone", _write)
+        self._call("submit_improve_chapter_done", _write)
 
     def feedback(self, article_id: int, qs_id: int, choice: int) -> None:
         """提交课程反馈 / Submit course feedback."""

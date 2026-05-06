@@ -32,7 +32,7 @@ class UserAssistantApiService(_BaseService):
     def get_exploration_items(self) -> list:
         """获取探索功能项 / Get exploration feature items."""
         self._session.require_auth()
-        result = self._call("getExplorationItems", lambda w: None)
+        result = self._call("get_exploration_items", lambda w: None)
         return result if isinstance(result, list) else []
 
     def analyze_clipboard(self, code: str) -> dict:
@@ -42,19 +42,19 @@ class UserAssistantApiService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, code)
 
-        raw = self._call("analyzeClipboard", _write)
+        raw = self._call("analyze_clipboard", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_beta_user_types_v2(self) -> dict:
         """获取 Beta 用户类型（v2）/ Get beta user types (v2)."""
         self._session.require_auth()
-        raw = self._call("getBetaUserTypesV2", lambda w: None)
+        raw = self._call("get_beta_user_types_v2", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_activity_updated_time(self) -> int:
         """获取活动更新时间戳 / Get activity updated timestamp."""
         self._session.require_auth()
-        result = self._call("getActivityUpdatedTime", lambda w: None)
+        result = self._call("get_activity_updated_time", lambda w: None)
         return int(result) if result is not None else 0
 
     def check_feedback_msg(self, device_id: str) -> int:
@@ -64,7 +64,7 @@ class UserAssistantApiService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, device_id)
 
-        result = self._call("checkFeedbackMsg", _write)
+        result = self._call("check_feedback_msg", _write)
         return int(result) if result is not None else 0
 
     def done_word_stat(self, book_id: int, stat_logs: list) -> int:
@@ -83,13 +83,13 @@ class UserAssistantApiService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_list_struct(w, 2, stat_logs, _write_log)
 
-        result = self._call("doneWordStat", _write)
+        result = self._call("done_word_stat", _write)
         return int(result) if result is not None else 0
 
     def get_credit(self) -> int:
         """获取用户积分 / Get user credit balance."""
         self._session.require_auth()
-        result = self._call("getCredit", lambda w: None)
+        result = self._call("get_credit", lambda w: None)
         return int(result) if result is not None else 0
 
     def huawei_pay(
@@ -103,13 +103,13 @@ class UserAssistantApiService(_BaseService):
             self._write_string(w, 2, purchase_token)
             self._write_string(w, 3, product_id)
 
-        raw = self._call("huaweiPay", _write)
+        raw = self._call("huawei_pay", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_learning_stats(self) -> dict:
         """获取学习统计数据 / Get detailed learning statistics."""
         self._session.require_auth()
-        raw = self._call("getLearningStats", lambda w: None)
+        raw = self._call("get_learning_stats", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
 
@@ -126,13 +126,13 @@ class UserActivityApiService(_BaseService):
     def get_export_activity_info(self) -> dict:
         """获取导出活动信息 / Get export activity info."""
         self._session.require_auth()
-        raw = self._call("getExportActivityInfo", lambda w: None)
+        raw = self._call("get_export_activity_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def buy_export_quota(self) -> dict:
         """购买导出配额 / Purchase export quota."""
         self._session.require_auth()
-        raw = self._call("buyExportQuota", lambda w: None)
+        raw = self._call("buy_export_quota", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def export_words(self, email: str, book_id: int, fmt: int = 1) -> None:
@@ -149,4 +149,4 @@ class UserActivityApiService(_BaseService):
             self._write_i32(w, 2, book_id)
             self._write_i32(w, 3, fmt)
 
-        self._call("exportWords", _write)
+        self._call("export_words", _write)

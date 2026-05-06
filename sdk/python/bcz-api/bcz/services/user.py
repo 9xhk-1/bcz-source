@@ -63,17 +63,17 @@ class UnifiedUserService(_BaseService):
 
     def have_a_try(self) -> dict:
         """以游客身份登录（v1）/ Guest login (v1)."""
-        raw = self._call("haveATry", lambda w: None)
+        raw = self._call("have_a_try", lambda w: None)
         return _map_login_result(raw)
 
     def have_a_try_v2(self) -> dict:
         """以游客身份登录（v2）/ Guest login (v2)."""
-        raw = self._call("haveATryV2", lambda w: None)
+        raw = self._call("have_a_try_v2", lambda w: None)
         return _map_login_result(raw)
 
     def have_a_try_v3(self) -> dict:
         """以游客身份登录（v3）/ Guest login (v3)."""
-        raw = self._call("haveATryV3", lambda w: None)
+        raw = self._call("have_a_try_v3", lambda w: None)
         return _map_login_result(raw)
 
     # ------------------------------------------------------------------
@@ -90,7 +90,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, phone)
             self._write_i32(w, 2, verify_type)
 
-        self._call("sendSmsVerifyCode", _write)
+        self._call("send_sms_verify_code", _write)
 
     def send_captcha(self, phone: str, action: int = 0) -> None:
         """发送图形验证码 / Send captcha.
@@ -101,7 +101,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, phone)
             self._write_i32(w, 2, action)
 
-        self._call("sendCaptcha", _write)
+        self._call("send_captcha", _write)
 
     # ------------------------------------------------------------------
     # Phone login
@@ -132,7 +132,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("loginWithPhone", _write)
+        raw = self._call("login_with_phone", _write)
         return _map_login_result(raw)
 
     # ------------------------------------------------------------------
@@ -152,7 +152,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("bczLogin", _write)
+        raw = self._call("bcz_login", _write)
         return _map_login_result(raw)
 
     def register_user(self, account: str, password: str) -> dict:
@@ -168,7 +168,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("registerUser", _write)
+        raw = self._call("register_user", _write)
         return _map_login_result(raw)
 
     # ------------------------------------------------------------------
@@ -197,7 +197,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("thirdPartyLogin", _write)
+        raw = self._call("third_party_login", _write)
         return _map_login_result(raw)
 
     def apple_login(self, identity_token: str, authorization_code: str) -> dict:
@@ -210,7 +210,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("appleLogin", _write)
+        raw = self._call("apple_login", _write)
         return _map_login_result(raw)
 
     def google_login(self, id_token: str) -> dict:
@@ -222,7 +222,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("googleLogin", _write)
+        raw = self._call("google_login", _write)
         return _map_login_result(raw)
 
     # ------------------------------------------------------------------
@@ -243,7 +243,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("bczBindTryUser", _write)
+        raw = self._call("bcz_bind_try_user", _write)
         return _map_login_result(raw)
 
     def third_party_bind_try_user(
@@ -269,7 +269,7 @@ class UnifiedUserService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("thirdPartyBindTryUser", _write)
+        raw = self._call("third_party_bind_try_user", _write)
         return _map_login_result(raw)
 
     # ------------------------------------------------------------------
@@ -281,7 +281,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, watch_uuid)
 
-        result = self._call("watchPollLogin", _write)
+        result = self._call("watch_poll_login", _write)
         return result if isinstance(result, str) else ""
 
     def scan_for_watch_login(self, watch_uuid: str) -> None:
@@ -291,7 +291,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, watch_uuid)
 
-        self._call("scanForWatchLogin", _write)
+        self._call("scan_for_watch_login", _write)
 
     # ------------------------------------------------------------------
     # Profile
@@ -300,7 +300,7 @@ class UnifiedUserService(_BaseService):
     def get_profile(self) -> dict:
         """获取当前用户的公开资料 / Get current user's public profile."""
         self._session.require_auth()
-        raw = self._call("getProfile", lambda w: None)
+        raw = self._call("get_profile", lambda w: None)
         if not isinstance(raw, dict):
             return {}
         return {
@@ -327,18 +327,18 @@ class UnifiedUserService(_BaseService):
             if avatar is not None:
                 self._write_string(w, 3, avatar)
 
-        self._call("updateProfile", _write)
+        self._call("update_profile", _write)
 
     def get_user_info(self) -> dict:
         """获取用户详细信息（v1）/ Get detailed user info (v1)."""
         self._session.require_auth()
-        raw = self._call("getUserInfo", lambda w: None)
+        raw = self._call("get_user_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_user_info_v2(self) -> dict:
         """获取用户详细信息（v2）/ Get detailed user info (v2)."""
         self._session.require_auth()
-        raw = self._call("getUserInfoV2", lambda w: None)
+        raw = self._call("get_user_info_v2", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -361,7 +361,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 2, captcha)
             self._write_string(w, 3, new_password)
 
-        self._call("resetPassword", _write)
+        self._call("reset_password", _write)
 
     def change_password(self, old_password: str, new_password: str) -> None:
         """修改密码 / Change password."""
@@ -371,7 +371,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, old_password)
             self._write_string(w, 2, new_password)
 
-        self._call("changePassword", _write)
+        self._call("change_password", _write)
 
     # ------------------------------------------------------------------
     # Phone / email binding
@@ -385,7 +385,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, phone)
             self._write_string(w, 2, captcha)
 
-        self._call("bindPhone", _write)
+        self._call("bind_phone", _write)
 
     def bind_email(self, email: str, captcha: str) -> None:
         """绑定邮箱 / Bind an email address to the account."""
@@ -395,7 +395,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, email)
             self._write_string(w, 2, captcha)
 
-        self._call("bindEmail", _write)
+        self._call("bind_email", _write)
 
     def unbind_third_party(self, provider: str) -> None:
         """解绑第三方账号 / Unbind third-party account."""
@@ -404,7 +404,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, provider)
 
-        self._call("unbindThirdParty", _write)
+        self._call("unbind_third_party", _write)
 
     # ------------------------------------------------------------------
     # Username check
@@ -415,7 +415,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, username)
 
-        result = self._call("checkUsername", _write)
+        result = self._call("check_username", _write)
         return bool(result)
 
     # ------------------------------------------------------------------
@@ -430,7 +430,7 @@ class UnifiedUserService(_BaseService):
             self._write_i32(w, 1, page)
             self._write_i32(w, 2, page_size)
 
-        result = self._call("getFollowerList", _write)
+        result = self._call("get_follower_list", _write)
         return result if isinstance(result, list) else []
 
     def get_following_list(self, page: int = 1, page_size: int = 20) -> list:
@@ -441,7 +441,7 @@ class UnifiedUserService(_BaseService):
             self._write_i32(w, 1, page)
             self._write_i32(w, 2, page_size)
 
-        result = self._call("getFollowingList", _write)
+        result = self._call("get_following_list", _write)
         return result if isinstance(result, list) else []
 
     def follow_user(self, target_uid: int) -> None:
@@ -451,7 +451,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i64(w, 1, target_uid)
 
-        self._call("followUser", _write)
+        self._call("follow_user", _write)
 
     def unfollow_user(self, target_uid: int) -> None:
         """取消关注用户 / Unfollow a user."""
@@ -460,14 +460,14 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i64(w, 1, target_uid)
 
-        self._call("unfollowUser", _write)
+        self._call("unfollow_user", _write)
 
     def get_user_public_info(self, unique_id: int) -> dict:
         """获取用户公开信息 / Get public info for a user by unique_id."""
         def _write(w: CompactWriter) -> None:
             self._write_i64(w, 1, unique_id)
 
-        raw = self._call("getUserPublicInfo", _write)
+        raw = self._call("get_user_public_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def search_user(self, keyword: str) -> list:
@@ -477,7 +477,7 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, keyword)
 
-        result = self._call("searchUser", _write)
+        result = self._call("search_user", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -487,13 +487,13 @@ class UnifiedUserService(_BaseService):
     def get_rank_info(self) -> dict:
         """获取排行榜信息 / Get rank information."""
         self._session.require_auth()
-        raw = self._call("getRankInfo", lambda w: None)
+        raw = self._call("get_rank_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_sign_info(self) -> dict:
         """获取签到信息 / Get sign-in information."""
         self._session.require_auth()
-        raw = self._call("getSignInfo", lambda w: None)
+        raw = self._call("get_sign_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -506,7 +506,7 @@ class UnifiedUserService(_BaseService):
             self._write_string(w, 1, phone)
             self._write_string(w, 2, uaid)
 
-        raw = self._call("uaidLogin", _write)
+        raw = self._call("uaid_login", _write)
         return _map_login_result(raw)
 
     def uaid_send_sms(self, phone: str) -> None:
@@ -514,4 +514,4 @@ class UnifiedUserService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, phone)
 
-        self._call("uaidSendSms", _write)
+        self._call("uaid_send_sms", _write)

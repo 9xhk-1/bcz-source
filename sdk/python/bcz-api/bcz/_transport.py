@@ -43,8 +43,8 @@ def build_cookie(
 
     parts = [
         f"device_name={_enc('android/' + device_model)}",
-        f"version={_enc(app_version_code)}",
-        f"app_name={_enc('baicizhan')}",
+        f"version={_enc(os_version)}",
+        f"app_name={_enc(app_version_code)}",
         f"channel={_enc(channel)}",
         f"client_time={_enc(client_time)}",
         f"device_id={_enc(device_id)}",

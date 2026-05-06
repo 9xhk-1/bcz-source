@@ -66,7 +66,7 @@ class ResourceService(_BaseService):
             self._write_bool(w, 6, need_root)
             self._write_bool(w, 7, need_synonym)
 
-        raw = self._call("getTopicResourceV2", _write)
+        raw = self._call("get_topic_resource_v2", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_topic_resource_v3(self, topic_id: int) -> str:
@@ -74,7 +74,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, topic_id)
 
-        result = self._call("getTopicResourceV3", _write)
+        result = self._call("get_topic_resource_v3", _write)
         return result if isinstance(result, str) else ""
 
     # ------------------------------------------------------------------
@@ -93,7 +93,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_list_struct(w, 1, topic_keys, _write_key)
 
-        result = self._call("getWordListWordMetaV2", _write)
+        result = self._call("get_word_list_word_meta_v2", _write)
         return result if isinstance(result, list) else []
 
     def get_word_list_word_meta_v3(self, book_id: int) -> list:
@@ -101,7 +101,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("getWordListWordMetaV3", _write)
+        result = self._call("get_word_list_word_meta_v3", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -113,7 +113,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, word)
 
-        raw = self._call("getDictByWordV2", _write)
+        raw = self._call("get_dict_by_word_v2", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_dict_wiki_by_word(self, word: str) -> dict:
@@ -121,7 +121,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, word)
 
-        raw = self._call("getDictWikiByWord", _write)
+        raw = self._call("get_dict_wiki_by_word", _write)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -133,7 +133,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, query_str)
 
-        result = self._call("searchWordV2", _write)
+        result = self._call("search_word_v2", _write)
         return result if isinstance(result, list) else []
 
     def translate_v2(self, source: str) -> dict:
@@ -141,7 +141,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, source)
 
-        raw = self._call("translateV2", _write)
+        raw = self._call("translate_v2", _write)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -155,7 +155,7 @@ class ResourceService(_BaseService):
             self._write_string(w, 2, trans)
             self._write_string(w, 3, provider)
 
-        self._call("submitTranslateBug", _write)
+        self._call("submit_translate_bug", _write)
 
     def word_bug_report(
         self, topic_id: int, word_level_id: int, bug_types: list
@@ -166,7 +166,7 @@ class ResourceService(_BaseService):
             self._write_i32(w, 2, word_level_id)
             self._write_list_i32(w, 3, bug_types)
 
-        self._call("wordBugReport", _write)
+        self._call("word_bug_report", _write)
 
     # ------------------------------------------------------------------
     # Media
@@ -177,7 +177,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_list_i32(w, 1, topic_ids)
 
-        result = self._call("getMediaByTopicIds", _write)
+        result = self._call("get_media_by_topic_ids", _write)
         return result if isinstance(result, list) else []
 
     def get_zpk_infos(self, topic_keys: list) -> list:
@@ -189,7 +189,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_list_struct(w, 1, topic_keys, _write_key)
 
-        result = self._call("getZpkInfos", _write)
+        result = self._call("get_zpk_infos", _write)
         return result if isinstance(result, list) else []
 
     def get_zpk_md5s(self, topic_keys: list) -> list:
@@ -201,7 +201,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_list_struct(w, 1, topic_keys, _write_key)
 
-        result = self._call("getZpkMd5s", _write)
+        result = self._call("get_zpk_md5s", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -213,7 +213,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, topic_id)
 
-        raw = self._call("getWordRoot", _write)
+        raw = self._call("get_word_root", _write)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -225,7 +225,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, word_level_id)
 
-        raw = self._call("getBookResourceUpdateInfo", _write)
+        raw = self._call("get_book_resource_update_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_word_media_update_info(self, book_id: int) -> list:
@@ -233,7 +233,7 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("getWordMediaUpdateInfo", _write)
+        result = self._call("get_word_media_update_info", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -246,7 +246,7 @@ class ResourceService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_i32(w, 2, chapter)
 
-        result = self._call("getGameWordList", _write)
+        result = self._call("get_game_word_list", _write)
         return result if isinstance(result, list) else []
 
     def get_game_word_update_info(self, book_id: int) -> list:
@@ -254,5 +254,5 @@ class ResourceService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("getGameWordUpdateInfo", _write)
+        result = self._call("get_game_word_update_info", _write)
         return result if isinstance(result, list) else []

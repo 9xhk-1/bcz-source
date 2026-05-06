@@ -33,7 +33,7 @@ class AdvertiseApiService(_BaseService):
 
     def get_launch_ad(self) -> dict:
         """获取启动广告（v1）/ Get launch screen ad (v1)."""
-        raw = self._call("getLaunchAd", lambda w: None)
+        raw = self._call("get_launch_ad", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_startup_ad_v2(
@@ -50,7 +50,7 @@ class AdvertiseApiService(_BaseService):
             self._write_i32(w, 3, screen_height)
             self._write_double(w, 4, pixel_ratio)
 
-        result = self._call("getStartupAdV2", _write)
+        result = self._call("get_startup_ad_v2", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -63,7 +63,7 @@ class AdvertiseApiService(_BaseService):
             self._write_string(w, 1, ad_id)
             self._write_i32(w, 2, action)
 
-        self._call("reportLaunchAd", _write)
+        self._call("report_launch_ad", _write)
 
     def report_startup_ad_event(self, events: list) -> None:
         """批量上报启动广告事件 / Batch report startup ad events.
@@ -78,7 +78,7 @@ class AdvertiseApiService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_list_struct(w, 1, events, _write_event)
 
-        self._call("reportStartupAdEvent", _write)
+        self._call("report_startup_ad_event", _write)
 
     # ------------------------------------------------------------------
     # Banners / popups (no auth)
@@ -86,7 +86,7 @@ class AdvertiseApiService(_BaseService):
 
     def get_main_view_top_banner_advs(self) -> list:
         """获取首页顶部横幅广告 / Get main view top banner ads."""
-        result = self._call("getMainViewTopBannerAdvs", lambda w: None)
+        result = self._call("get_main_view_top_banner_advs", lambda w: None)
         return result if isinstance(result, list) else []
 
     def get_main_view_bottom_advs_v3(
@@ -101,62 +101,62 @@ class AdvertiseApiService(_BaseService):
             self._write_i32(w, 2, screen_height)
             self._write_double(w, 3, pixel_ratio)
 
-        raw = self._call("getMainViewBottomAdvsV3", _write)
+        raw = self._call("get_main_view_bottom_advs_v3", _write)
         return raw if isinstance(raw, dict) else {}
 
     def get_main_game_top_banner(self) -> dict:
         """获取游戏首页顶部横幅 / Get main game top banner."""
-        raw = self._call("getMainGameTopBanner", lambda w: None)
+        raw = self._call("get_main_game_top_banner", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_practice_banner_adv(self) -> dict:
         """获取练习页横幅广告 / Get practice page banner ad."""
-        raw = self._call("getPracticeBannerAdv", lambda w: None)
+        raw = self._call("get_practice_banner_adv", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_practice_popup_adv(self) -> dict:
         """获取练习页弹窗广告 / Get practice page popup ad."""
-        raw = self._call("getPracticePopupAdv", lambda w: None)
+        raw = self._call("get_practice_popup_adv", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_explore_popup_adv(self) -> dict:
         """获取探索页弹窗广告 / Get explore page popup ad."""
-        raw = self._call("getExplorePopupAdv", lambda w: None)
+        raw = self._call("get_explore_popup_adv", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_books_ad_v2(self) -> dict:
         """获取词书页广告（v2）/ Get books page ad (v2)."""
-        raw = self._call("getBooksAdV2", lambda w: None)
+        raw = self._call("get_books_ad_v2", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_mall_tab_icon_info(self) -> dict:
         """获取商城图标信息 / Get mall tab icon info."""
-        raw = self._call("getMallTabIconInfo", lambda w: None)
+        raw = self._call("get_mall_tab_icon_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_promotion_info(self) -> dict:
         """获取促销信息 / Get promotion info."""
-        raw = self._call("getPromotionInfo", lambda w: None)
+        raw = self._call("get_promotion_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_loading_ad_items(self) -> list:
         """获取加载页广告列表 / Get loading screen ad items."""
-        result = self._call("getLoadingAdItems", lambda w: None)
+        result = self._call("get_loading_ad_items", lambda w: None)
         return result if isinstance(result, list) else []
 
     def get_loading_imgs(self) -> list:
         """获取加载图片列表 / Get loading screen images."""
-        result = self._call("getLoadingImgs", lambda w: None)
+        result = self._call("get_loading_imgs", lambda w: None)
         return result if isinstance(result, list) else []
 
     def get_live_streaming_info(self) -> dict:
         """获取直播信息 / Get live streaming info."""
-        raw = self._call("getLiveStreamingInfo", lambda w: None)
+        raw = self._call("get_live_streaming_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_third_ad(self) -> dict:
         """获取第三方广告 / Get third-party ad."""
-        raw = self._call("getThirdAd", lambda w: None)
+        raw = self._call("get_third_ad", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -166,7 +166,7 @@ class AdvertiseApiService(_BaseService):
     def get_custom_ads_config(self) -> int:
         """获取自定义广告配置状态 / Get custom ads config state."""
         self._session.require_auth()
-        result = self._call("getCustomAdsConfig", lambda w: None)
+        result = self._call("get_custom_ads_config", lambda w: None)
         return int(result) if result is not None else 0
 
     def set_custom_ads_config(self, state: int) -> None:
@@ -176,4 +176,4 @@ class AdvertiseApiService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, state)
 
-        self._call("setCustomAdsConfig", _write)
+        self._call("set_custom_ads_config", _write)

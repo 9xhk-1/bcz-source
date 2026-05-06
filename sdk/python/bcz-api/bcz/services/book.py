@@ -34,7 +34,7 @@ class UserBookService(_BaseService):
     def get_user_book_list(self) -> list:
         """获取用户词书列表 / Get personal book list."""
         self._session.require_auth()
-        result = self._call("getUserBookList", lambda w: None)
+        result = self._call("get_user_book_list", lambda w: None)
         return result if isinstance(result, list) else []
 
     def create_user_book(self, name: str, description: str = "") -> dict:
@@ -45,7 +45,7 @@ class UserBookService(_BaseService):
             self._write_string(w, 1, name)
             self._write_string(w, 2, description)
 
-        raw = self._call("createUserBook", _write)
+        raw = self._call("create_user_book", _write)
         return raw if isinstance(raw, dict) else {}
 
     def delete_user_book(self, book_id: int) -> None:
@@ -55,7 +55,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        self._call("deleteUserBook", _write)
+        self._call("delete_user_book", _write)
 
     def update_user_book(
         self,
@@ -73,7 +73,7 @@ class UserBookService(_BaseService):
             if description is not None:
                 self._write_string(w, 3, description)
 
-        self._call("updateUserBook", _write)
+        self._call("update_user_book", _write)
 
     # ------------------------------------------------------------------
     # Words within a book
@@ -88,7 +88,7 @@ class UserBookService(_BaseService):
             self._write_string(w, 2, word)
             self._write_string(w, 3, meaning)
 
-        self._call("addWordToBook", _write)
+        self._call("add_word_to_book", _write)
 
     def delete_word_from_book(self, book_id: int, topic_id: int) -> None:
         """从词书删除单词 / Delete a word from a personal book."""
@@ -98,7 +98,7 @@ class UserBookService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_i32(w, 2, topic_id)
 
-        self._call("deleteWordFromBook", _write)
+        self._call("delete_word_from_book", _write)
 
     def get_book_words(self, book_id: int) -> list:
         """获取词书中的单词列表 / Get all words in a book."""
@@ -107,7 +107,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("getBookWords", _write)
+        result = self._call("get_book_words", _write)
         return result if isinstance(result, list) else []
 
     def batch_add_words(self, book_id: int, words: list) -> dict:
@@ -125,7 +125,7 @@ class UserBookService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_list_struct(w, 2, words, _write_word)
 
-        raw = self._call("batchAddWords", _write)
+        raw = self._call("batch_add_words", _write)
         return raw if isinstance(raw, dict) else {}
 
     def reorder_words(self, book_id: int, topic_ids: list) -> None:
@@ -136,7 +136,7 @@ class UserBookService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_list_i32(w, 2, topic_ids)
 
-        self._call("reorderWords", _write)
+        self._call("reorder_words", _write)
 
     def get_word_count(self, book_id: int) -> int:
         """获取词书中的单词数量 / Get word count in a book."""
@@ -145,7 +145,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("getWordCount", _write)
+        result = self._call("get_word_count", _write)
         return int(result) if result is not None else 0
 
     # ------------------------------------------------------------------
@@ -162,7 +162,7 @@ class UserBookService(_BaseService):
             w.write_field_begin(TYPE_BINARY, 1)
             w.write_bytes(image_data)
 
-        result = self._call("ocrMatchWords", _write)
+        result = self._call("ocr_match_words", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -177,7 +177,7 @@ class UserBookService(_BaseService):
             self._write_string(w, 1, device_sn)
             self._write_i32(w, 2, device_type)
 
-        self._call("bindSmartDevice", _write)
+        self._call("bind_smart_device", _write)
 
     def unbind_smart_device(self, device_sn: str) -> None:
         """解绑智能设备 / Unbind a smart device."""
@@ -186,12 +186,12 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, device_sn)
 
-        self._call("unbindSmartDevice", _write)
+        self._call("unbind_smart_device", _write)
 
     def get_smart_device_list(self) -> list:
         """获取已绑定智能设备列表 / Get list of bound smart devices."""
         self._session.require_auth()
-        result = self._call("getSmartDeviceList", lambda w: None)
+        result = self._call("get_smart_device_list", lambda w: None)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -205,7 +205,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("shareBook", _write)
+        result = self._call("share_book", _write)
         return result if isinstance(result, str) else ""
 
     def import_shared_book(self, share_code: str) -> dict:
@@ -215,7 +215,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, share_code)
 
-        raw = self._call("importSharedBook", _write)
+        raw = self._call("import_shared_book", _write)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -228,7 +228,7 @@ class UserBookService(_BaseService):
             self._write_i32(w, 1, category)
             self._write_i32(w, 2, page)
 
-        result = self._call("getPublicBookList", _write)
+        result = self._call("get_public_book_list", _write)
         return result if isinstance(result, list) else []
 
     def get_book_detail(self, book_id: int) -> dict:
@@ -236,7 +236,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        raw = self._call("getBookDetail", _write)
+        raw = self._call("get_book_detail", _write)
         return raw if isinstance(raw, dict) else {}
 
     def search_books(self, keyword: str) -> list:
@@ -244,12 +244,12 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, keyword)
 
-        result = self._call("searchBooks", _write)
+        result = self._call("search_books", _write)
         return result if isinstance(result, list) else []
 
     def get_book_categories(self) -> list:
         """获取词书分类列表 / Get book category list."""
-        result = self._call("getBookCategories", lambda w: None)
+        result = self._call("get_book_categories", lambda w: None)
         return result if isinstance(result, list) else []
 
     def get_recommended_books(self, book_type: int = 0) -> list:
@@ -257,7 +257,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_type)
 
-        result = self._call("getRecommendedBooks", _write)
+        result = self._call("get_recommended_books", _write)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -271,7 +271,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        self._call("starBook", _write)
+        self._call("star_book", _write)
 
     def unstar_book(self, book_id: int) -> None:
         """取消收藏词书 / Unstar a book."""
@@ -280,12 +280,12 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        self._call("unstarBook", _write)
+        self._call("unstar_book", _write)
 
     def get_starred_books(self) -> list:
         """获取已收藏词书列表 / Get starred books."""
         self._session.require_auth()
-        result = self._call("getStarredBooks", lambda w: None)
+        result = self._call("get_starred_books", lambda w: None)
         return result if isinstance(result, list) else []
 
     # ------------------------------------------------------------------
@@ -299,7 +299,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        result = self._call("exportBookWords", _write)
+        result = self._call("export_book_words", _write)
         return result if isinstance(result, list) else []
 
     def import_words_from_csv(self, book_id: int, csv_data: str) -> dict:
@@ -310,7 +310,7 @@ class UserBookService(_BaseService):
             self._write_i32(w, 1, book_id)
             self._write_string(w, 2, csv_data)
 
-        raw = self._call("importWordsFromCsv", _write)
+        raw = self._call("import_words_from_csv", _write)
         return raw if isinstance(raw, dict) else {}
 
     # ------------------------------------------------------------------
@@ -324,7 +324,7 @@ class UserBookService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, book_id)
 
-        raw = self._call("getBookSyncInfo", _write)
+        raw = self._call("get_book_sync_info", _write)
         return raw if isinstance(raw, dict) else {}
 
     def sync_book_progress(self, book_id: int, progress: dict) -> None:
@@ -342,4 +342,4 @@ class UserBookService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        self._call("syncBookProgress", _write)
+        self._call("sync_book_progress", _write)

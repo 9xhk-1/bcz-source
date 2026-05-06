@@ -35,7 +35,7 @@ class MallProxyService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, status)
 
-        result = self._call("getUserAddress", _write)
+        result = self._call("get_user_address", _write)
         return result if isinstance(result, list) else []
 
     def create_user_address(
@@ -64,7 +64,7 @@ class MallProxyService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("createUserAddress", _write)
+        raw = self._call("create_user_address", _write)
         return raw if isinstance(raw, dict) else {}
 
     def update_user_address(
@@ -95,7 +95,7 @@ class MallProxyService(_BaseService):
             w.write_field_stop()
             w.write_struct_end()
 
-        raw = self._call("updateUserAddress", _write)
+        raw = self._call("update_user_address", _write)
         return raw if isinstance(raw, dict) else {}
 
     def delete_user_address(self, address_id: int) -> None:
@@ -105,7 +105,7 @@ class MallProxyService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, address_id)
 
-        self._call("deleteUserAddress", _write)
+        self._call("delete_user_address", _write)
 
     def choice_address(self, address_id: int) -> None:
         """选择默认收货地址 / Choose default shipping address."""
@@ -114,7 +114,7 @@ class MallProxyService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, address_id)
 
-        self._call("choiceAddress", _write)
+        self._call("choice_address", _write)
 
     def get_child_address(self, parent_id: int = 0) -> list:
         """获取子区域地址列表 / Get child address area list."""
@@ -123,7 +123,7 @@ class MallProxyService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, parent_id)
 
-        result = self._call("getChildAddress", _write)
+        result = self._call("get_child_address", _write)
         return result if isinstance(result, list) else []
 
     def match_address(self, text: str) -> dict:
@@ -133,7 +133,7 @@ class MallProxyService(_BaseService):
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, text)
 
-        raw = self._call("matchAddress", _write)
+        raw = self._call("match_address", _write)
         return raw if isinstance(raw, dict) else {}
 
 
@@ -150,13 +150,13 @@ class AvatarApiService(_BaseService):
     def get_ip(self) -> dict:
         """获取 IP 头像信息 / Get IP avatar info."""
         self._session.require_auth()
-        raw = self._call("getIp", lambda w: None)
+        raw = self._call("get_ip", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def get_app_home_page_info(self) -> dict:
         """获取首页 IP 信息 / Get home page IP info."""
         self._session.require_auth()
-        raw = self._call("getAppHomePageInfo", lambda w: None)
+        raw = self._call("get_app_home_page_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
     def travel(self) -> dict:
@@ -168,7 +168,7 @@ class AvatarApiService(_BaseService):
     def get_gift(self) -> dict:
         """领取 IP 礼物 / Receive IP gift."""
         self._session.require_auth()
-        raw = self._call("getGift", lambda w: None)
+        raw = self._call("get_gift", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
 
@@ -185,11 +185,11 @@ class PkApiService(_BaseService):
     def get_pk_address(self) -> str:
         """获取 PK 服务器地址 / Get PK server address."""
         self._session.require_auth()
-        result = self._call("getPkAddress", lambda w: None)
+        result = self._call("get_pk_address", lambda w: None)
         return result if isinstance(result, str) else ""
 
     def get_rank_pk_address(self) -> dict:
         """获取排名 PK 服务器地址 / Get ranked PK server address."""
         self._session.require_auth()
-        raw = self._call("getRankPkAddress", lambda w: None)
+        raw = self._call("get_rank_pk_address", lambda w: None)
         return raw if isinstance(raw, dict) else {}

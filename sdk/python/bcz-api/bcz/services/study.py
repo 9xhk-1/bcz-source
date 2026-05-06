@@ -11,10 +11,19 @@ from typing import List, Optional
 
 from .._protocol import TYPE_I32, TYPE_I64, TYPE_LIST, TYPE_STRUCT, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService
+from ._base import _BaseService, _map_fields
 
 _HOST = "https://learn.baicizhan.com"
 _SVC = "user_study"
+
+# ---------------------------------------------------------------------------
+# Result field maps  (verified against user_study_api Java source)
+# ---------------------------------------------------------------------------
+
+# user_study_api.StudyHome
+_STUDY_HOME_FIELDS = {
+    1: "progress", 2: "today_progresss", 3: "learning_button", 4: "review_button",
+}
 
 
 class UserStudyApiService(_BaseService):
@@ -32,10 +41,10 @@ class UserStudyApiService(_BaseService):
     # ------------------------------------------------------------------
 
     def get_study_home(self) -> dict:
-        """获取学习首页数据 / Get study home page data."""
+        """获取学习首页数据 / Get study home page data. Returns StudyHome."""
         self._session.require_auth()
         raw = self._call("get_study_home", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _STUDY_HOME_FIELDS)
 
     def get_study_plan(self) -> dict:
         """获取当前学习计划 / Get current study plan."""

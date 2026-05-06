@@ -18,33 +18,47 @@ from .._protocol import (
     CompactWriter,
 )
 from .._session import BczSession
-from ._base import _BaseService
+from ._base import _BaseService, _map_fields
 
 _HOST = "https://passport.baicizhan.com"
 _SVC = "unified_user_service"
 
 # ---------------------------------------------------------------------------
-# Result field maps
+# Result field maps  (verified against unified_user_service Java source)
 # ---------------------------------------------------------------------------
 
+# unified_user_service.UserLoginResult
 _LOGIN_RESULT_FIELDS = {
     1: "access_token",
     2: "is_new_user",
     3: "email",
-    4: "public_key",
+    # field 4 (public_key) does not exist in UserLoginResult
     5: "last_device",
     6: "unique_id",
     7: "phone",
     8: "force_bind_phone",
     9: "role_new",
+    10: "role",
     11: "game_mode",
 }
 
+# unified_user_service.UserProfile
+_PROFILE_FIELDS = {
+    1: "nickname",
+    2: "gender_id",
+    # field 3 does not exist in UserProfile
+    4: "unique_id",
+}
+
+# unified_user_service.UserTryResult
+_TRY_RESULT_FIELDS = {1: "email"}
+
+# unified_user_service.UserTryResultForWatch
+_TRY_RESULT_WATCH_FIELDS = {1: "token"}
+
 
 def _map_login_result(raw: Optional[dict]) -> dict:
-    if not isinstance(raw, dict):
-        return {}
-    return {name: raw[fid] for fid, name in _LOGIN_RESULT_FIELDS.items() if fid in raw}
+    return _map_fields(raw, _LOGIN_RESULT_FIELDS)
 
 
 class UnifiedUserService(_BaseService):
@@ -67,14 +81,14 @@ class UnifiedUserService(_BaseService):
         return _map_login_result(raw)
 
     def have_a_try_v2(self) -> dict:
-        """以游客身份登录（v2）/ Guest login (v2)."""
+        """以游客身份登录（v2）/ Guest login (v2). Returns UserTryResult {email}."""
         raw = self._call("have_a_try_v2", lambda w: None)
-        return _map_login_result(raw)
+        return _map_fields(raw, _TRY_RESULT_FIELDS)
 
     def have_a_try_v3(self) -> dict:
-        """以游客身份登录（v3）/ Guest login (v3)."""
+        """以游客身份登录（v3）/ Guest login (v3). Returns UserTryResultForWatch {token}."""
         raw = self._call("have_a_try_v3", lambda w: None)
-        return _map_login_result(raw)
+        return _map_fields(raw, _TRY_RESULT_WATCH_FIELDS)
 
     # ------------------------------------------------------------------
     # SMS / captcha
@@ -298,17 +312,13 @@ class UnifiedUserService(_BaseService):
     # ------------------------------------------------------------------
 
     def get_profile(self) -> dict:
-        """获取当前用户的公开资料 / Get current user's public profile."""
+        """获取当前用户的公开资料 / Get current user's public profile.
+
+        Returns UserProfile: {nickname, gender_id, unique_id}
+        """
         self._session.require_auth()
         raw = self._call("get_profile", lambda w: None)
-        if not isinstance(raw, dict):
-            return {}
-        return {
-            "nickname": raw.get(1, ""),
-            "gender_id": raw.get(2, 0),
-            "avatar": raw.get(3, ""),
-            "unique_id": raw.get(4, 0),
-        }
+        return _map_fields(raw, _PROFILE_FIELDS)
 
     def update_profile(
         self,

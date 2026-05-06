@@ -14,7 +14,83 @@ from typing import List, Optional
 
 from .._protocol import TYPE_I32, TYPE_LIST, TYPE_MAP, TYPE_STRUCT, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService
+from ._base import _BaseService, _map_fields
+
+
+# ---------------------------------------------------------------------------
+# Result field maps  (verified against bcz_system/notify/strategy Java sources)
+# ---------------------------------------------------------------------------
+
+# bcz_system.BczVersionInfo
+_BCZ_VERSION_INFO_FIELDS = {
+    1: "has_new_version", 2: "new_version", 3: "version_url",
+    4: "version_md5", 5: "version_description",
+}
+
+# bcz_system.AppNewVersionResult
+_APP_NEW_VERSION_RESULT_FIELDS = {
+    1: "type", 2: "version_description", 3: "new_version",
+}
+
+# bcz_system.AppBetaUpdateResult
+_APP_BETA_UPDATE_RESULT_FIELDS = {
+    1: "type", 2: "version_description", 3: "version_url",
+    4: "version_apk_md5", 5: "new_version", 6: "action_type", 8: "image_index",
+}
+
+# bcz_system.BczSystemInfos
+_BCZ_SYSTEM_INFOS_FIELDS = {
+    1: "res_dns", 2: "data_dns", 3: "other_dns", 4: "tls_dns",
+}
+
+# bcz_system.BczNavTabs
+_BCZ_NAV_TABS_FIELDS = {1: "tabs"}
+
+# bcz_system.BczAppSwitch
+_BCZ_APP_SWITCH_FIELDS = {1: "allow_try_user", 2: "allow_fast_login"}
+
+# bcz_system.PrivacyAgreementInfo
+_PRIVACY_AGREEMENT_INFO_FIELDS = {
+    1: "content", 2: "privacy_version", 3: "privacy_urls",
+}
+
+# bcz_system.GuideForNewStrategy
+_GUIDE_FOR_NEW_STRATEGY_FIELDS = {
+    1: "user_group", 2: "actionSequence", 3: "role_strategy", 4: "action_urls",
+}
+
+# bcz_system.QRCodeResp
+_QRCODE_RESP_FIELDS = {1: "action", 2: "message", 3: "redirect_info"}
+
+# notify.UserRemindInfo
+_USER_REMIND_INFO_FIELDS = {
+    2: "hour", 4: "wx_enable", 5: "task_enable",
+    6: "social_enable", 7: "sentence_enable",
+}
+
+# strategy.UserEntitlement
+_USER_ENTITLEMENT_FIELDS = {
+    1: "entitlement_key", 3: "max_value", 4: "current_value",
+    5: "next_recovery_time", 6: "next_recovery_amount",
+    7: "recovery_interval", 8: "member_type",
+}
+
+# strategy.UserEntitlementSaleInfo
+_USER_ENTITLEMENT_SALE_INFO_FIELDS = {
+    1: "member_sale_info", 2: "word_energy_sale_info", 3: "word_energy_ad_info",
+    4: "red_heart_sale_info", 5: "sentence_energy_sale_info",
+    6: "sentence_energy_ad_info", 7: "member_sale_info_list",
+}
+
+# strategy.MemberPopupSaleInfo
+_MEMBER_POPUP_SALE_INFO_FIELDS = {
+    1: "member_sale_stage", 2: "stage_end_time", 3: "member_sale_info",
+}
+
+# strategy.AppHomePageMemberStageInfo
+_APP_HOME_PAGE_MEMBER_STAGE_INFO_FIELDS = {
+    1: "activity_icon_member_sale_info", 2: "popup_member_sale_info",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -36,51 +112,51 @@ class BczSystemApiService(_BaseService):
     # ------------------------------------------------------------------
 
     def check_new_version(self) -> dict:
-        """检查 App 更新 / Check for a new app version."""
+        """检查 App 更新 / Check for a new app version. Returns BczVersionInfo."""
         raw = self._call("check_new_version", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_VERSION_INFO_FIELDS)
 
     def check_dict_new_version(self) -> dict:
-        """检查词典更新 / Check for dictionary updates."""
+        """检查词典更新 / Check for dictionary updates. Returns BczVersionInfo."""
         raw = self._call("check_dict_new_version", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_VERSION_INFO_FIELDS)
 
     def get_app_new_version_info(self) -> dict:
-        """获取新版本信息 / Get new version info."""
+        """获取新版本信息 / Get new version info. Returns AppNewVersionResult."""
         raw = self._call("get_app_new_version_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _APP_NEW_VERSION_RESULT_FIELDS)
 
     def get_app_beta_update_info(self) -> dict:
-        """获取 Beta 版更新信息 / Get beta update info."""
+        """获取 Beta 版更新信息 / Get beta update info. Returns AppBetaUpdateResult."""
         raw = self._call("get_app_beta_update_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _APP_BETA_UPDATE_RESULT_FIELDS)
 
     def check_ireading_new_version(self) -> dict:
-        """检查 iReading 更新 / Check iReading version."""
+        """检查 iReading 更新 / Check iReading version. Returns BczVersionInfo."""
         raw = self._call("check_ireading_new_version", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_VERSION_INFO_FIELDS)
 
     # ------------------------------------------------------------------
     # Config (no auth)
     # ------------------------------------------------------------------
 
     def check_infos(self) -> dict:
-        """获取系统状态信息 / Check system infos."""
+        """获取系统状态信息 / Check system infos. Returns BczSystemInfos."""
         raw = self._call("check_infos", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_SYSTEM_INFOS_FIELDS)
 
     def check_nav_tabs(self) -> dict:
-        """获取导航栏配置 / Get navigation tab configuration."""
+        """获取导航栏配置 / Get navigation tab configuration. Returns BczNavTabs."""
         raw = self._call("check_nav_tabs", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_NAV_TABS_FIELDS)
 
     def get_switches(self) -> dict:
-        """获取功能开关配置 / Get feature toggle switches."""
+        """获取功能开关配置 / Get feature toggle switches. Returns BczAppSwitch."""
         raw = self._call("get_switches", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BCZ_APP_SWITCH_FIELDS)
 
     def get_test_flags(self) -> dict:
-        """获取测试标志 / Get test/experiment flags."""
+        """获取测试标志 / Get test/experiment flags. Returns Map<String, Integer>."""
         raw = self._call("get_test_flags", lambda w: None)
         return raw if isinstance(raw, dict) else {}
 
@@ -90,9 +166,9 @@ class BczSystemApiService(_BaseService):
         return raw if isinstance(raw, dict) else {}
 
     def get_privacy_agreement_version(self) -> dict:
-        """获取隐私协议版本 / Get privacy policy agreement version."""
+        """获取隐私协议版本 / Get privacy policy agreement version. Returns PrivacyAgreementInfo."""
         raw = self._call("get_privacy_agreement_version", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _PRIVACY_AGREEMENT_INFO_FIELDS)
 
     # ------------------------------------------------------------------
     # Domain lists (no auth)
@@ -113,23 +189,23 @@ class BczSystemApiService(_BaseService):
     # ------------------------------------------------------------------
 
     def get_guide_for_new_strategy(self) -> dict:
-        """获取新策略引导信息 / Get new strategy guide."""
+        """获取新策略引导信息 / Get new strategy guide. Returns GuideForNewStrategy."""
         self._session.require_auth()
         raw = self._call("get_guide_for_new_strategy", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _GUIDE_FOR_NEW_STRATEGY_FIELDS)
 
     def qrcode_scan(self, qr_content: str) -> dict:
-        """扫描二维码 / Scan a QR code."""
+        """扫描二维码 / Scan a QR code. Returns QRCodeResp."""
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, qr_content)
 
         raw = self._call("qrcode_scan", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _QRCODE_RESP_FIELDS)
 
     def get_app_feedback_info(self) -> dict:
-        """获取反馈信息 / Get app feedback information."""
+        """获取反馈信息 / Get app feedback information. Returns Map<String, String>."""
         self._session.require_auth()
         raw = self._call("get_app_feedback_info", lambda w: None)
         return raw if isinstance(raw, dict) else {}
@@ -178,10 +254,10 @@ class NotifyService(_BaseService):
     _service = "notify"
 
     def get_remind_info(self) -> dict:
-        """获取提醒设置 / Get reminder settings."""
+        """获取提醒设置 / Get reminder settings. Returns UserRemindInfo."""
         self._session.require_auth()
         raw = self._call("get_remind_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_REMIND_INFO_FIELDS)
 
     def set_remind_info(self, remind_time: str, enabled: bool) -> None:
         """设置提醒时间和开关 / Set reminder time and enable/disable."""
@@ -232,22 +308,22 @@ class StrategyApiService(_BaseService):
     _service = "strategy"
 
     def get_user_member_info(self) -> dict:
-        """获取用户会员信息 / Get user membership info."""
+        """获取用户会员信息 / Get user membership info. Returns UserEntitlement."""
         self._session.require_auth()
         raw = self._call("get_user_member_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_ENTITLEMENT_FIELDS)
 
     def get_user_word_energy_info(self) -> dict:
-        """获取单词能量信息 / Get word energy info."""
+        """获取单词能量信息 / Get word energy info. Returns UserEntitlement."""
         self._session.require_auth()
         raw = self._call("get_user_word_energy_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_ENTITLEMENT_FIELDS)
 
     def get_user_sentence_energy_info(self) -> dict:
-        """获取句子能量信息 / Get sentence energy info."""
+        """获取句子能量信息 / Get sentence energy info. Returns UserEntitlement."""
         self._session.require_auth()
         raw = self._call("get_user_sentence_energy_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_ENTITLEMENT_FIELDS)
 
     def get_user_entitlement_infos(self) -> list:
         """获取用户权益列表 / Get user entitlement list."""
@@ -256,28 +332,28 @@ class StrategyApiService(_BaseService):
         return result if isinstance(result, list) else []
 
     def get_user_entitlement_sale_info(self) -> dict:
-        """获取权益销售信息 / Get entitlement sale info."""
+        """获取权益销售信息 / Get entitlement sale info. Returns UserEntitlementSaleInfo."""
         self._session.require_auth()
         raw = self._call("get_user_entitlement_sale_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_ENTITLEMENT_SALE_INFO_FIELDS)
 
     def get_member_popup_sale_info(self) -> dict:
-        """获取会员弹窗销售信息 / Get member popup sale info."""
+        """获取会员弹窗销售信息 / Get member popup sale info. Returns MemberPopupSaleInfo."""
         self._session.require_auth()
         raw = self._call("get_member_popup_sale_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _MEMBER_POPUP_SALE_INFO_FIELDS)
 
     def get_app_home_page_member_stage_info(self) -> dict:
-        """获取首页会员状态信息 / Get home page member stage info."""
+        """获取首页会员状态信息 / Get home page member stage info. Returns AppHomePageMemberStageInfo."""
         self._session.require_auth()
         raw = self._call("get_app_home_page_member_stage_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _APP_HOME_PAGE_MEMBER_STAGE_INFO_FIELDS)
 
     def get_free_member(self) -> dict:
-        """获取免费会员信息 / Get free member details."""
+        """获取免费会员信息 / Get free member details. Returns UserEntitlement."""
         self._session.require_auth()
         raw = self._call("get_free_member", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _USER_ENTITLEMENT_FIELDS)
 
 
 # ---------------------------------------------------------------------------

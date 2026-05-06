@@ -1113,5 +1113,292 @@ class TestArgumentEncoding(unittest.TestCase):
         self.assertEqual(result["access_token"], "new_access_token_ABC")
 
 
+        self.assertTrue(bcz.is_authenticated)
+        self.assertEqual(bcz.access_token, "new_access_token_ABC")
+        self.assertEqual(bcz.unique_id, 99999)
+        self.assertEqual(result["access_token"], "new_access_token_ABC")
+
+
+# ---------------------------------------------------------------------------
+# Field mapping tests — verify all response keys are English strings
+# ---------------------------------------------------------------------------
+
+class TestFieldMapping(_MockApiTestBase):
+    """Verify that API response dicts have English string keys, not integer IDs."""
+
+    def _call_and_return(self, callable_, response_content: bytes):
+        """Call a service method with a mocked response; return the method's return value."""
+        with patch("bcz._transport.requests.post", _make_mock_post(response_content)):
+            return callable_()
+
+    def _assert_string_keys(self, result: dict):
+        """Assert every key in *result* is a str."""
+        self.assertIsInstance(result, dict)
+        for k in result:
+            self.assertIsInstance(k, str, f"Key {k!r} is {type(k).__name__}, expected str")
+
+    # ------------------------------------------------------------------
+    # User service
+    # ------------------------------------------------------------------
+
+    def test_login_keys_are_strings(self):
+        resp = _struct_reply("login_with_phone", {1: "tok", 2: 0, 6: 12345, 10: 1, 11: 0})
+        result = self._call_and_return(
+            lambda: self.bcz.login("13900000000", "123456"), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["access_token"], "tok")
+        self.assertEqual(result["unique_id"], 12345)
+        self.assertEqual(result["role"], 1)
+        self.assertNotIn("public_key", result)
+
+    def test_have_a_try_v2_keys_are_strings(self):
+        resp = _struct_reply("have_a_try_v2", {1: "user@example.com"})
+        result = self._call_and_return(lambda: self.bcz.user.have_a_try_v2(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["email"], "user@example.com")
+
+    def test_have_a_try_v3_keys_are_strings(self):
+        resp = _struct_reply("have_a_try_v3", {1: "watch_token_xyz"})
+        result = self._call_and_return(lambda: self.bcz.user.have_a_try_v3(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["token"], "watch_token_xyz")
+
+    def test_get_profile_keys_are_strings(self):
+        resp = _struct_reply("get_profile", {1: "Alice", 2: 1, 4: 999})
+        result = self._call_and_return(lambda: self.bcz.get_profile(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["nickname"], "Alice")
+        self.assertEqual(result["gender_id"], 1)
+        self.assertEqual(result["unique_id"], 999)
+        # field 3 (avatar) does not exist in UserProfile
+        self.assertNotIn("avatar", result)
+
+    # ------------------------------------------------------------------
+    # Study service
+    # ------------------------------------------------------------------
+
+    def test_get_study_home_keys_are_strings(self):
+        resp = _struct_reply("get_study_home", {1: 10, 2: 5, 3: 1, 4: 0})
+        result = self._call_and_return(lambda: self.bcz.study.get_study_home(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["progress"], 10)
+        self.assertEqual(result["today_progresss"], 5)
+
+    # ------------------------------------------------------------------
+    # Resource service
+    # ------------------------------------------------------------------
+
+    def test_translate_v2_keys_are_strings(self):
+        resp = _struct_reply("translate_v2", {1: 1, 2: "你好", 4: "baidu"})
+        result = self._call_and_return(lambda: self.bcz.translate("Hello"), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["type"], 1)
+        self.assertEqual(result["trans"], "你好")
+        self.assertEqual(result["trans_provider"], "baidu")
+
+    def test_get_dict_by_word_v2_keys_are_strings(self):
+        resp = _struct_reply("get_dict_by_word_v2", {1: "abandon", 2: "放弃"})
+        result = self._call_and_return(lambda: self.bcz.get_word("abandon"), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["word_basic_info"], "abandon")
+
+    def test_get_word_root_keys_are_strings(self):
+        resp = _struct_reply("get_word_root", {1: "ab-", 4: "pack"})
+        result = self._call_and_return(
+            lambda: self.bcz.resource.get_word_root(10001), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["roots"], "ab-")
+        self.assertEqual(result["word_pack_list"], "pack")
+
+    def test_get_book_resource_update_info_keys_are_strings(self):
+        resp = _struct_reply("get_book_resource_update_info", {1: 42, 2: 1234567890})
+        result = self._call_and_return(
+            lambda: self.bcz.resource.get_book_resource_update_info(1), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["book_id"], 42)
+        self.assertEqual(result["zpk_updated_at"], 1234567890)
+
+    # ------------------------------------------------------------------
+    # Game service
+    # ------------------------------------------------------------------
+
+    def test_game_home_keys_are_strings(self):
+        resp = _struct_reply("game_home", {1: 100, 2: 200, 3: 300})
+        result = self._call_and_return(lambda: self.bcz.game.game_home(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["user_data_info"], 100)
+        self.assertEqual(result["plan_info"], 200)
+        self.assertEqual(result["basic_info"], 300)
+
+    def test_sync_info_keys_are_strings(self):
+        resp = _struct_reply("sync_info", {1: 7, 2: 3, 5: 1700000000, 6: 999})
+        result = self._call_and_return(lambda: self.bcz.game.sync_info(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["island_version"], 7)
+        self.assertEqual(result["server_time"], 1700000000)
+        self.assertEqual(result["current_book_id"], 999)
+
+    def test_get_worth_keys_are_strings(self):
+        resp = _struct_reply("get_worth", {1: 30, 2: 100, 3: 500, 4: 10, 5: 2})
+        result = self._call_and_return(lambda: self.bcz.game.get_worth(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["win_streak_days"], 30)
+        self.assertEqual(result["word_done_count"], 500)
+
+    def test_upgrade_sentence_building_v2_keys_are_strings(self):
+        resp = _struct_reply("upgrade_sentence_building_v2", {1: 50, 2: 30, 3: 1})
+        result = self._call_and_return(
+            lambda: self.bcz.game.upgrade_sentence_building_v2(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["totalCoin"], 50)
+        self.assertEqual(result["spentCoin"], 30)
+
+    # ------------------------------------------------------------------
+    # System service
+    # ------------------------------------------------------------------
+
+    def test_check_new_version_keys_are_strings(self):
+        resp = _struct_reply("check_new_version", {1: 1, 2: "8.0.1", 5: "New features"})
+        result = self._call_and_return(
+            lambda: self.bcz.system.check_new_version(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["has_new_version"], 1)
+        self.assertEqual(result["new_version"], "8.0.1")
+        self.assertEqual(result["version_description"], "New features")
+
+    def test_get_switches_keys_are_strings(self):
+        resp = _struct_reply("get_switches", {1: 1, 2: 0})
+        result = self._call_and_return(lambda: self.bcz.system.get_switches(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["allow_try_user"], 1)
+        self.assertEqual(result["allow_fast_login"], 0)
+
+    def test_get_remind_info_keys_are_strings(self):
+        resp = _struct_reply("get_remind_info", {2: 8, 5: 1})
+        result = self._call_and_return(lambda: self.bcz.notify.get_remind_info(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["hour"], 8)
+        self.assertEqual(result["task_enable"], 1)
+
+    def test_get_user_member_info_keys_are_strings(self):
+        resp = _struct_reply("get_user_member_info", {1: "word_energy", 4: 50})
+        result = self._call_and_return(
+            lambda: self.bcz.strategy.get_user_member_info(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["entitlement_key"], "word_energy")
+        self.assertEqual(result["current_value"], 50)
+
+    def test_qrcode_scan_keys_are_strings(self):
+        resp = _struct_reply("qrcode_scan", {1: 1, 2: "OK"})
+        result = self._call_and_return(
+            lambda: self.bcz.system.qrcode_scan("qr_text"), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["action"], 1)
+        self.assertEqual(result["message"], "OK")
+
+    # ------------------------------------------------------------------
+    # Advertise service
+    # ------------------------------------------------------------------
+
+    def test_get_launch_ad_keys_are_strings(self):
+        resp = _struct_reply("get_launch_ad", {1: "own_ad_data", 2: "third_ad_data"})
+        result = self._call_and_return(
+            lambda: self.bcz.advertise.get_launch_ad(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["own_ad"], "own_ad_data")
+        self.assertEqual(result["third_ad"], "third_ad_data")
+
+    def test_get_live_streaming_info_keys_are_strings(self):
+        resp = _struct_reply("get_live_streaming_info", {1: 1700000000, 2: 1700001000})
+        result = self._call_and_return(
+            lambda: self.bcz.advertise.get_live_streaming_info(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["current_timestamp"], 1700000000)
+        self.assertEqual(result["start_timestamp"], 1700001000)
+
+    # ------------------------------------------------------------------
+    # Mall / Avatar service
+    # ------------------------------------------------------------------
+
+    def test_get_ip_keys_are_strings(self):
+        resp = _struct_reply("get_ip", {1: 2, 2: "长安", 3: "Chang'an", 4: "古城"})
+        result = self._call_and_return(lambda: self.bcz.avatar.get_ip(), resp)
+        self._assert_string_keys(result)
+        self.assertEqual(result["ip_type"], 2)
+        self.assertEqual(result["ip_cn"], "长安")
+        self.assertEqual(result["ip_en"], "Chang'an")
+
+    def test_get_rank_pk_address_keys_are_strings(self):
+        resp = _struct_reply("get_rank_pk_address", {1: "wss://rank.example.com", 2: 1000, 3: 2000})
+        result = self._call_and_return(
+            lambda: self.bcz.pk.get_rank_pk_address(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["url"], "wss://rank.example.com")
+        self.assertEqual(result["beginTime"], 1000)
+
+    # ------------------------------------------------------------------
+    # Assistant / Activity service
+    # ------------------------------------------------------------------
+
+    def test_analyze_clipboard_keys_are_strings(self):
+        resp = _struct_reply("analyze_clipboard", {1: 3, 2: '{"word":"abandon"}'})
+        result = self._call_and_return(
+            lambda: self.bcz.assistant.analyze_clipboard("abandon"), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["style"], 3)
+        self.assertEqual(result["json"], '{"word":"abandon"}')
+
+    def test_buy_export_quota_keys_are_strings(self):
+        resp = _struct_reply("buy_export_quota", {1: 5})
+        result = self._call_and_return(
+            lambda: self.bcz.activity.buy_export_quota(), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["balance"], 5)
+
+    # ------------------------------------------------------------------
+    # Course service
+    # ------------------------------------------------------------------
+
+    def test_get_vocab_live_info_keys_are_strings(self):
+        resp = _struct_reply("get_vocab_live_info", {1: "Teacher Li", 3: 3600, 4: "Lesson 1"})
+        result = self._call_and_return(
+            lambda: self.bcz.course.get_vocab_live_info(1001, 2001), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["nickname"], "Teacher Li")
+        self.assertEqual(result["duration"], 3600)
+        self.assertEqual(result["title"], "Lesson 1")
+
+    def test_polling_info_keys_are_strings(self):
+        resp = _struct_reply("polling_info", {1: 1, 2: "pro", 3: "user"})
+        result = self._call_and_return(
+            lambda: self.bcz.course.polling_info(1001, 2001), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["heart_beat"], 1)
+        self.assertEqual(result["pro_contents"], "pro")
+
+    def test_get_improve_video_info_keys_are_strings(self):
+        resp = _struct_reply("get_improve_video_info", {1: "https://video.example.com/v.mp4", 2: 120})
+        result = self._call_and_return(
+            lambda: self.bcz.course.get_improve_video_info(100001), resp
+        )
+        self._assert_string_keys(result)
+        self.assertEqual(result["video_url"], "https://video.example.com/v.mp4")
+        self.assertEqual(result["duration"], 120)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

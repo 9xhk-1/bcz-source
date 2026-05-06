@@ -9,10 +9,29 @@ from __future__ import annotations
 
 from .._protocol import TYPE_I32, TYPE_I64, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService
+from ._base import _BaseService, _map_fields
 
 _HOST = "https://learn.baicizhan.com"
 _SVC = "course"
+
+# ---------------------------------------------------------------------------
+# Result field maps  (verified against course_api Java source)
+# ---------------------------------------------------------------------------
+
+# course_api.VocabLiveInfo
+_VOCAB_LIVE_INFO_FIELDS = {
+    1: "nickname", 2: "line_infos", 3: "duration", 4: "title",
+    5: "discountcoupon", 6: "answers", 7: "emojis", 8: "sents",
+    9: "qs", 10: "study_done",
+}
+
+# course_api.Message
+_MESSAGE_FIELDS = {1: "heart_beat", 2: "pro_contents", 3: "user_contents"}
+
+# course_api.ImproveVideoInfo
+_IMPROVE_VIDEO_INFO_FIELDS = {
+    1: "video_url", 2: "duration", 3: "questions", 4: "next_url", 5: "video_status",
+}
 
 
 class CourseApiService(_BaseService):
@@ -26,7 +45,7 @@ class CourseApiService(_BaseService):
     _service = _SVC
 
     def get_vocab_live_info(self, course_id: int, article_id: int) -> dict:
-        """获取词汇直播课信息 / Get vocab live course info."""
+        """获取词汇直播课信息 / Get vocab live course info. Returns VocabLiveInfo."""
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
@@ -34,10 +53,10 @@ class CourseApiService(_BaseService):
             self._write_i32(w, 2, article_id)
 
         raw = self._call("get_vocab_live_info", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _VOCAB_LIVE_INFO_FIELDS)
 
     def polling_info(self, course_id: int, article_id: int) -> dict:
-        """轮询课程信息 / Poll for course progress info."""
+        """轮询课程信息 / Poll for course progress info. Returns Message."""
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
@@ -45,7 +64,7 @@ class CourseApiService(_BaseService):
             self._write_i32(w, 2, article_id)
 
         raw = self._call("polling_info", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _MESSAGE_FIELDS)
 
     def livedone(self, course_id: int, article_id: int) -> None:
         """标记直播课已完成 / Mark a live course as done."""
@@ -78,14 +97,14 @@ class CourseApiService(_BaseService):
         self._call("delete_mark_word", _write)
 
     def get_improve_video_info(self, chapter_id: int) -> dict:
-        """获取强化视频章节信息 / Get improve video chapter info."""
+        """获取强化视频章节信息 / Get improve video chapter info. Returns ImproveVideoInfo."""
         self._session.require_auth()
 
         def _write(w: CompactWriter) -> None:
             self._write_i64(w, 1, chapter_id)
 
         raw = self._call("get_improve_video_info", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _IMPROVE_VIDEO_INFO_FIELDS)
 
     def submit_improve_chapter_done(self, chapter_id: int, progress: int) -> None:
         """提交强化章节完成状态 / Submit improve chapter completion."""

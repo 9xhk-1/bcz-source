@@ -110,6 +110,21 @@ def _check_response(reader: CompactReader, method_name: str) -> None:
         raise BczApiError(err_code, err_msg or f"Exception in {method_name}")
 
 
+def _map_fields(raw: Any, field_map: dict) -> dict:
+    """Map integer Thrift field IDs to English parameter names.
+
+    将整数 Thrift 字段 ID 映射为英文参数名。
+    Only fields present in *raw* **and** listed in *field_map* are included.
+
+    :param raw: Raw ``{field_id: value}`` dict returned by ``_parse_struct``.
+    :param field_map: Mapping of ``{int field_id: str field_name}``.
+    :returns: ``{str field_name: value}`` dict.
+    """
+    if not isinstance(raw, dict):
+        return {}
+    return {field_map[fid]: raw[fid] for fid in field_map if fid in raw}
+
+
 def _parse_response_result(reader: CompactReader) -> Any:
     """Parse the reply struct.
 

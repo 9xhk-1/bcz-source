@@ -18,10 +18,40 @@ from .._protocol import (
     CompactWriter,
 )
 from .._session import BczSession
-from ._base import _BaseService
+from ._base import _BaseService, _map_fields
 
 _HOST = "https://resource.baicizhan.com"
 _SVC = "resource_api"
+
+# ---------------------------------------------------------------------------
+# Result field maps  (verified against resource_api Java source)
+# ---------------------------------------------------------------------------
+
+# resource_api.TopicResourceV2
+_TOPIC_RESOURCE_V2_FIELDS = {
+    1: "zpk_info", 2: "dict", 3: "dict_wiki", 5: "similar_words",
+}
+
+# resource_api.WordDictV2
+_WORD_DICT_V2_FIELDS = {
+    1: "word_basic_info", 2: "chn_means", 3: "en_means", 4: "sentences",
+    5: "short_phrases", 6: "antonyms", 7: "synonyms", 8: "variant_info", 9: "exams",
+}
+
+# resource_api.DictWiki
+_DICT_WIKI_FIELDS = {1: "dict", 2: "origin_word", 3: "variant_type"}
+
+# resource_api.TransResultV2
+_TRANS_RESULT_V2_FIELDS = {1: "type", 2: "trans", 4: "trans_provider"}
+
+# resource_api.WordRootRes
+_WORD_ROOT_RES_FIELDS = {1: "roots", 4: "word_pack_list"}
+
+# resource_api.BookResourceUpdateInfo
+_BOOK_RESOURCE_UPDATE_INFO_FIELDS = {
+    1: "book_id", 2: "zpk_updated_at", 3: "word_fm_updated_at",
+    4: "poster_updated_at", 5: "roadmap_version", 6: "tv_topic_updated_at",
+}
 
 
 class ResourceService(_BaseService):
@@ -67,7 +97,7 @@ class ResourceService(_BaseService):
             self._write_bool(w, 7, need_synonym)
 
         raw = self._call("get_topic_resource_v2", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _TOPIC_RESOURCE_V2_FIELDS)
 
     def get_topic_resource_v3(self, topic_id: int) -> str:
         """获取单词资源（v3，返回 JSON 字符串）/ Get word resource v3 (JSON)."""
@@ -109,20 +139,20 @@ class ResourceService(_BaseService):
     # ------------------------------------------------------------------
 
     def get_dict_by_word_v2(self, word: str) -> dict:
-        """查词典（v2）/ Dictionary lookup (v2)."""
+        """查词典（v2）/ Dictionary lookup (v2). Returns WordDictV2."""
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, word)
 
         raw = self._call("get_dict_by_word_v2", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _WORD_DICT_V2_FIELDS)
 
     def get_dict_wiki_by_word(self, word: str) -> dict:
-        """获取单词 Wiki 信息 / Get word Wiki information."""
+        """获取单词 Wiki 信息 / Get word Wiki information. Returns DictWiki."""
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, word)
 
         raw = self._call("get_dict_wiki_by_word", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _DICT_WIKI_FIELDS)
 
     # ------------------------------------------------------------------
     # Search / translate
@@ -137,12 +167,12 @@ class ResourceService(_BaseService):
         return result if isinstance(result, list) else []
 
     def translate_v2(self, source: str) -> dict:
-        """翻译文本（v2）/ Translate text (v2)."""
+        """翻译文本（v2）/ Translate text (v2). Returns TransResultV2."""
         def _write(w: CompactWriter) -> None:
             self._write_string(w, 1, source)
 
         raw = self._call("translate_v2", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _TRANS_RESULT_V2_FIELDS)
 
     # ------------------------------------------------------------------
     # Bug reports
@@ -209,24 +239,24 @@ class ResourceService(_BaseService):
     # ------------------------------------------------------------------
 
     def get_word_root(self, topic_id: int) -> dict:
-        """获取词根信息 / Get word root information."""
+        """获取词根信息 / Get word root information. Returns WordRootRes."""
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, topic_id)
 
         raw = self._call("get_word_root", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _WORD_ROOT_RES_FIELDS)
 
     # ------------------------------------------------------------------
     # Update info
     # ------------------------------------------------------------------
 
     def get_book_resource_update_info(self, word_level_id: int) -> dict:
-        """获取词书资源更新信息 / Get book resource update info."""
+        """获取词书资源更新信息 / Get book resource update info. Returns BookResourceUpdateInfo."""
         def _write(w: CompactWriter) -> None:
             self._write_i32(w, 1, word_level_id)
 
         raw = self._call("get_book_resource_update_info", _write)
-        return raw if isinstance(raw, dict) else {}
+        return _map_fields(raw, _BOOK_RESOURCE_UPDATE_INFO_FIELDS)
 
     def get_word_media_update_info(self, book_id: int) -> list:
         """获取单词媒体更新信息 / Get word media update info."""

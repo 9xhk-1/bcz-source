@@ -218,7 +218,6 @@ class Bcz:
 
     def logout(self) -> None:
         """登出当前账号并清除本地令牌 / Logout and clear local token."""
-        self._user.logout()
         self._session.access_token = None
         self._session.unique_id = None
 
@@ -236,7 +235,7 @@ class Bcz:
 
     def get_book_list(self) -> list:
         """获取可选词书列表 / Get list of available study books."""
-        return self._study.get_book_list()
+        return self._study.get_all_books_basic_info()
 
     def select_book(self, book_id: int) -> None:
         """选择学习词书 / Select a study book."""

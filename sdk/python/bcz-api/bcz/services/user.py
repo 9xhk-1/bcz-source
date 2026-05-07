@@ -7,12 +7,10 @@ Service: unified_user_service
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 from .._protocol import (
-    TYPE_BINARY,
     TYPE_I32,
-    TYPE_I64,
     TYPE_LIST,
     TYPE_STRUCT,
     CompactWriter,
@@ -33,7 +31,7 @@ class UnifiedUserService(_BaseService):
     """百词斩统一用户服务 / BCZ Unified User Service.
 
     Covers registration, login (phone / password / third-party / guest),
-    profile management, social graph, and SMS verification.
+    and profile management.
     """
 
     _host = _HOST
@@ -84,6 +82,29 @@ class UnifiedUserService(_BaseService):
             self._write_i32(w, 2, action)
 
         self._call("send_captcha", _write)
+
+    def send_email_verify_code(self, email: str) -> None:
+        """发送邮箱验证码 / Send email verification code."""
+        def _write(w: CompactWriter) -> None:
+            self._write_string(w, 1, email)
+
+        self._call("send_email_verify_code", _write)
+
+    def get_img_captcha(self, phone: str) -> dict:
+        """获取图形验证码 / Get image captcha."""
+        def _write(w: CompactWriter) -> None:
+            self._write_string(w, 1, phone)
+
+        raw = self._call("get_img_captcha", _write)
+        return raw if isinstance(raw, dict) else {}
+
+    def verify_img_captcha(self, phone: str, code: str) -> None:
+        """验证图形验证码 / Verify image captcha."""
+        def _write(w: CompactWriter) -> None:
+            self._write_string(w, 1, phone)
+            self._write_string(w, 2, code)
+
+        self._call("verify_img_captcha", _write)
 
     # ------------------------------------------------------------------
     # Phone login
@@ -276,6 +297,16 @@ class UnifiedUserService(_BaseService):
         self._call("scan_for_watch_login", _write)
 
     # ------------------------------------------------------------------
+    # Token check
+    # ------------------------------------------------------------------
+
+    def check_access_token(self) -> bool:
+        """验证当前访问令牌是否有效 / Check if the current access token is valid."""
+        self._session.require_auth()
+        result = self._call("check_access_token", lambda w: None)
+        return bool(result)
+
+    # ------------------------------------------------------------------
     # Profile
     # ------------------------------------------------------------------
 
@@ -307,29 +338,26 @@ class UnifiedUserService(_BaseService):
 
         self._call("update_profile", _write)
 
-    def get_user_info(self) -> dict:
-        """获取用户详细信息（v1）/ Get detailed user info (v1)."""
+    def update_nickname(self, nickname: str) -> None:
+        """更新昵称 / Update nickname."""
         self._session.require_auth()
-        raw = self._call("get_user_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
 
-    def get_user_info_v2(self) -> dict:
-        """获取用户详细信息（v2）/ Get detailed user info (v2)."""
+        def _write(w: CompactWriter) -> None:
+            self._write_string(w, 1, nickname)
+
+        self._call("update_nickname", _write)
+
+    def update_gender(self, gender_id: int) -> None:
+        """更新性别 / Update gender."""
         self._session.require_auth()
-        raw = self._call("get_user_info_v2", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
+
+        def _write(w: CompactWriter) -> None:
+            self._write_i32(w, 1, gender_id)
+
+        self._call("update_gender", _write)
 
     # ------------------------------------------------------------------
-    # Logout
-    # ------------------------------------------------------------------
-
-    def logout(self) -> None:
-        """登出当前账号 / Logout current account."""
-        self._session.require_auth()
-        self._call("logout", lambda w: None)
-
-    # ------------------------------------------------------------------
-    # Password management
+    # Account management
     # ------------------------------------------------------------------
 
     def reset_password(self, phone: str, captcha: str, new_password: str) -> None:
@@ -341,20 +369,6 @@ class UnifiedUserService(_BaseService):
 
         self._call("reset_password", _write)
 
-    def change_password(self, old_password: str, new_password: str) -> None:
-        """修改密码 / Change password."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, old_password)
-            self._write_string(w, 2, new_password)
-
-        self._call("change_password", _write)
-
-    # ------------------------------------------------------------------
-    # Phone / email binding
-    # ------------------------------------------------------------------
-
     def bind_phone(self, phone: str, captcha: str) -> None:
         """绑定手机号 / Bind a phone number to the account."""
         self._session.require_auth()
@@ -365,16 +379,6 @@ class UnifiedUserService(_BaseService):
 
         self._call("bind_phone", _write)
 
-    def bind_email(self, email: str, captcha: str) -> None:
-        """绑定邮箱 / Bind an email address to the account."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, email)
-            self._write_string(w, 2, captcha)
-
-        self._call("bind_email", _write)
-
     def unbind_third_party(self, provider: str) -> None:
         """解绑第三方账号 / Unbind third-party account."""
         self._session.require_auth()
@@ -384,112 +388,7 @@ class UnifiedUserService(_BaseService):
 
         self._call("unbind_third_party", _write)
 
-    # ------------------------------------------------------------------
-    # Username check
-    # ------------------------------------------------------------------
-
-    def check_username(self, username: str) -> bool:
-        """检查用户名是否可用 / Check whether a username is available."""
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, username)
-
-        result = self._call("check_username", _write)
-        return bool(result)
-
-    # ------------------------------------------------------------------
-    # Social graph
-    # ------------------------------------------------------------------
-
-    def get_follower_list(self, page: int = 1, page_size: int = 20) -> list:
-        """获取粉丝列表 / Get followers list."""
+    def delete_account(self) -> None:
+        """注销账号 / Delete account."""
         self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_i32(w, 1, page)
-            self._write_i32(w, 2, page_size)
-
-        result = self._call("get_follower_list", _write)
-        return result if isinstance(result, list) else []
-
-    def get_following_list(self, page: int = 1, page_size: int = 20) -> list:
-        """获取关注列表 / Get following list."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_i32(w, 1, page)
-            self._write_i32(w, 2, page_size)
-
-        result = self._call("get_following_list", _write)
-        return result if isinstance(result, list) else []
-
-    def follow_user(self, target_uid: int) -> None:
-        """关注用户 / Follow a user."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_i64(w, 1, target_uid)
-
-        self._call("follow_user", _write)
-
-    def unfollow_user(self, target_uid: int) -> None:
-        """取消关注用户 / Unfollow a user."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_i64(w, 1, target_uid)
-
-        self._call("unfollow_user", _write)
-
-    def get_user_public_info(self, unique_id: int) -> dict:
-        """获取用户公开信息 / Get public info for a user by unique_id."""
-        def _write(w: CompactWriter) -> None:
-            self._write_i64(w, 1, unique_id)
-
-        raw = self._call("get_user_public_info", _write)
-        return raw if isinstance(raw, dict) else {}
-
-    def search_user(self, keyword: str) -> list:
-        """搜索用户 / Search users by keyword."""
-        self._session.require_auth()
-
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, keyword)
-
-        result = self._call("search_user", _write)
-        return result if isinstance(result, list) else []
-
-    # ------------------------------------------------------------------
-    # Rank / sign info
-    # ------------------------------------------------------------------
-
-    def get_rank_info(self) -> dict:
-        """获取排行榜信息 / Get rank information."""
-        self._session.require_auth()
-        raw = self._call("get_rank_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
-
-    def get_sign_info(self) -> dict:
-        """获取签到信息 / Get sign-in information."""
-        self._session.require_auth()
-        raw = self._call("get_sign_info", lambda w: None)
-        return raw if isinstance(raw, dict) else {}
-
-    # ------------------------------------------------------------------
-    # UAID (免密登录 / Passwordless login)
-    # ------------------------------------------------------------------
-
-    def uaid_login(self, phone: str, uaid: str) -> dict:
-        """UAID 免密登录 / Passwordless login via UAID."""
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, phone)
-            self._write_string(w, 2, uaid)
-
-        raw = self._call("uaid_login", _write)
-        return _map_login_result(raw)
-
-    def uaid_send_sms(self, phone: str) -> None:
-        """通过 UAID 发送短信 / Send SMS via UAID."""
-        def _write(w: CompactWriter) -> None:
-            self._write_string(w, 1, phone)
-
-        self._call("uaid_send_sms", _write)
+        self._call("delete_account", lambda w: None)

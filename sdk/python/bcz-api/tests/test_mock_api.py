@@ -219,60 +219,6 @@ class TestUserService(_MockApiTestBase):
         self.assertEqual(info["method_name"], "get_profile")
         self.assertIn("get_profile", info["url"])
 
-    def test_logout(self):
-        info = self._call_with_mock(lambda: self.bcz.user.logout(), _void_reply("logout"))
-        self.assertEqual(info["method_name"], "logout")
-
-    def test_get_user_info(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_user_info(),
-            _struct_reply("get_user_info", {1: "user_info"})
-        )
-        self.assertEqual(info["method_name"], "get_user_info")
-
-    def test_get_user_info_v2(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_user_info_v2(),
-            _struct_reply("get_user_info_v2", {1: "user_info_v2"})
-        )
-        self.assertEqual(info["method_name"], "get_user_info_v2")
-
-    def test_get_follower_list(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_follower_list(),
-            _list_i32_reply("get_follower_list", [1, 2, 3])
-        )
-        self.assertEqual(info["method_name"], "get_follower_list")
-
-    def test_get_following_list(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_following_list(),
-            _list_i32_reply("get_following_list", [4, 5])
-        )
-        self.assertEqual(info["method_name"], "get_following_list")
-
-    def test_get_rank_info(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_rank_info(),
-            _struct_reply("get_rank_info", {1: 100})
-        )
-        self.assertEqual(info["method_name"], "get_rank_info")
-
-    def test_get_sign_info(self):
-        info = self._call_with_mock(
-            lambda: self.bcz.user.get_sign_info(),
-            _struct_reply("get_sign_info", {1: 7})
-        )
-        self.assertEqual(info["method_name"], "get_sign_info")
-
-    def test_uaid_login(self):
-        resp = _struct_reply("uaid_login", {1: "uaid_tok"})
-        info = self._call_with_mock(
-            lambda: self.bcz.user.uaid_login("13900001111", "UAID_XXXXX"),
-            resp
-        )
-        self.assertEqual(info["method_name"], "uaid_login")
-
     def test_bcz_login(self):
         resp = _struct_reply("bcz_login", {1: "bcz_tok"})
         info = self._call_with_mock(
@@ -288,6 +234,41 @@ class TestUserService(_MockApiTestBase):
             resp
         )
         self.assertEqual(info["method_name"], "third_party_login")
+
+    def test_check_access_token(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.user.check_access_token(),
+            _i32_reply("check_access_token", 1)
+        )
+        self.assertEqual(info["method_name"], "check_access_token")
+
+    def test_update_nickname(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.user.update_nickname("NewNick"),
+            _void_reply("update_nickname")
+        )
+        self.assertEqual(info["method_name"], "update_nickname")
+
+    def test_update_gender(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.user.update_gender(1),
+            _void_reply("update_gender")
+        )
+        self.assertEqual(info["method_name"], "update_gender")
+
+    def test_send_email_verify_code(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.user.send_email_verify_code("user@example.com"),
+            _void_reply("send_email_verify_code")
+        )
+        self.assertEqual(info["method_name"], "send_email_verify_code")
+
+    def test_delete_account(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.user.delete_account(),
+            _void_reply("delete_account")
+        )
+        self.assertEqual(info["method_name"], "delete_account")
 
 
 # ---------------------------------------------------------------------------
@@ -307,9 +288,9 @@ class TestStudyService(_MockApiTestBase):
     def test_get_book_list(self):
         info = self._call_with_mock(
             lambda: self.bcz.get_book_list(),
-            _list_i32_reply("get_book_list", [1, 2, 3])
+            _list_i32_reply("get_all_books_basic_info", [1, 2, 3])
         )
-        self.assertEqual(info["method_name"], "get_book_list")
+        self.assertEqual(info["method_name"], "get_all_books_basic_info")
 
     def test_select_book(self):
         info = self._call_with_mock(
@@ -318,75 +299,76 @@ class TestStudyService(_MockApiTestBase):
         )
         self.assertEqual(info["method_name"], "select_book")
 
-    def test_get_today_words(self):
+    def test_get_all_books_basic_info(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_today_words(),
-            _struct_reply("get_today_words", {1: 10})
+            lambda: self.bcz.study.get_all_books_basic_info(),
+            _list_i32_reply("get_all_books_basic_info", [1, 2])
         )
-        self.assertEqual(info["method_name"], "get_today_words")
+        self.assertEqual(info["method_name"], "get_all_books_basic_info")
 
-    def test_get_review_words(self):
+    def test_get_all_books_basic_info_v2(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_review_words(),
-            _list_i32_reply("get_review_words", [101, 102])
+            lambda: self.bcz.study.get_all_books_basic_info_v2(),
+            _list_i32_reply("get_all_books_basic_info_v2", [1])
         )
-        self.assertEqual(info["method_name"], "get_review_words")
+        self.assertEqual(info["method_name"], "get_all_books_basic_info_v2")
 
-    def test_skip_word(self):
+    def test_get_rank_info(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.skip_word(10001),
-            _void_reply("skip_word")
+            lambda: self.bcz.study.get_rank_info(),
+            _struct_reply("get_rank_info", {1: 100})
         )
-        self.assertEqual(info["method_name"], "skip_word")
+        self.assertEqual(info["method_name"], "get_rank_info")
+        self.assertIn("/rpc/user_study/", info["url"])
 
-    def test_mark_word_known(self):
+    def test_get_daka_base_info(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.mark_word_known(10001),
-            _void_reply("mark_word_known")
+            lambda: self.bcz.study.get_daka_base_info(),
+            _struct_reply("get_daka_base_info", {1: 7})
         )
-        self.assertEqual(info["method_name"], "mark_word_known")
+        self.assertEqual(info["method_name"], "get_daka_base_info")
 
-    def test_get_study_statistics(self):
+    def test_get_daily_task(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_study_statistics(),
-            _struct_reply("get_study_statistics", {1: 100})
+            lambda: self.bcz.study.get_daily_task(),
+            _struct_reply("get_daily_task", {1: 1})
         )
-        self.assertEqual(info["method_name"], "get_study_statistics")
+        self.assertEqual(info["method_name"], "get_daily_task")
 
-    def test_get_streak_info(self):
+    def test_user_basic_info(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_streak_info(),
-            _struct_reply("get_streak_info", {1: 7})
+            lambda: self.bcz.study.user_basic_info(),
+            _struct_reply("user_basic_info", {1: 1})
         )
-        self.assertEqual(info["method_name"], "get_streak_info")
+        self.assertEqual(info["method_name"], "user_basic_info")
 
-    def test_get_study_plan(self):
+    def test_user_basic_info_v2(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_study_plan(),
-            _struct_reply("get_study_plan", {1: 20, 2: 30})
+            lambda: self.bcz.study.user_basic_info_v2(),
+            _struct_reply("user_basic_info_v2", {1: 1})
         )
-        self.assertEqual(info["method_name"], "get_study_plan")
+        self.assertEqual(info["method_name"], "user_basic_info_v2")
 
-    def test_update_study_plan(self):
+    def test_win_streak_status(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.update_study_plan(20, 30),
-            _void_reply("update_study_plan")
+            lambda: self.bcz.study.win_streak_status(),
+            _struct_reply("win_streak_status", {1: 5})
         )
-        self.assertEqual(info["method_name"], "update_study_plan")
+        self.assertEqual(info["method_name"], "win_streak_status")
 
-    def test_get_checkpoint_info(self):
+    def test_get_calendar_daily_info(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_checkpoint_info(),
-            _struct_reply("get_checkpoint_info", {1: 1})
+            lambda: self.bcz.study.get_calendar_daily_info("20240101"),
+            _struct_reply("get_calendar_daily_info", {1: 10})
         )
-        self.assertEqual(info["method_name"], "get_checkpoint_info")
+        self.assertEqual(info["method_name"], "get_calendar_daily_info")
 
-    def test_get_user_book_progress(self):
+    def test_get_recommendation(self):
         info = self._call_with_mock(
-            lambda: self.bcz.study.get_user_book_progress(),
-            _struct_reply("get_user_book_progress", {1: 50})
+            lambda: self.bcz.study.get_recommendation(),
+            _struct_reply("get_recommendation", {1: 1})
         )
-        self.assertEqual(info["method_name"], "get_user_book_progress")
+        self.assertEqual(info["method_name"], "get_recommendation")
 
 
 # ---------------------------------------------------------------------------
@@ -535,17 +517,17 @@ class TestBookService(_MockApiTestBase):
     def test_get_user_book_list(self):
         info = self._call_with_mock(
             lambda: self.bcz.book.get_user_book_list(),
-            _list_i32_reply("get_user_book_list", [1, 2])
+            _list_i32_reply("get_user_books", [1, 2])
         )
-        self.assertEqual(info["method_name"], "get_user_book_list")
+        self.assertEqual(info["method_name"], "get_user_books")
         self.assertIn("/rpc/user_book/", info["url"])
 
     def test_create_user_book(self):
         info = self._call_with_mock(
             lambda: self.bcz.book.create_user_book("My Vocab"),
-            _struct_reply("create_user_book", {1: 101, 2: "My Vocab"})
+            _struct_reply("add_user_book", {1: 101, 2: "My Vocab"})
         )
-        self.assertEqual(info["method_name"], "create_user_book")
+        self.assertEqual(info["method_name"], "add_user_book")
 
     def test_delete_user_book(self):
         info = self._call_with_mock(
@@ -554,40 +536,110 @@ class TestBookService(_MockApiTestBase):
         )
         self.assertEqual(info["method_name"], "delete_user_book")
 
+    def test_update_user_book(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.update_user_book(101, name="New Name"),
+            _void_reply("update_user_book_info")
+        )
+        self.assertEqual(info["method_name"], "update_user_book_info")
+
+    def test_select_user_book(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.select_user_book(101),
+            _void_reply("select_user_book")
+        )
+        self.assertEqual(info["method_name"], "select_user_book")
+
+    def test_get_user_plan_book(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.get_user_plan_book(),
+            _struct_reply("get_user_plan_book", {1: 101})
+        )
+        self.assertEqual(info["method_name"], "get_user_plan_book")
+
     def test_get_book_words(self):
         info = self._call_with_mock(
             lambda: self.bcz.book.get_book_words(101),
-            _list_i32_reply("get_book_words", [10001, 10002])
+            _list_i32_reply("get_user_book_words", [10001, 10002])
         )
-        self.assertEqual(info["method_name"], "get_book_words")
+        self.assertEqual(info["method_name"], "get_user_book_words")
 
     def test_add_word_to_book(self):
         info = self._call_with_mock(
-            lambda: self.bcz.book.add_word_to_book(101, "abandon"),
-            _void_reply("add_word_to_book")
+            lambda: self.bcz.book.add_word_to_book(101, 10001),
+            _void_reply("add_word_to_books")
         )
-        self.assertEqual(info["method_name"], "add_word_to_book")
+        self.assertEqual(info["method_name"], "add_word_to_books")
 
-    def test_star_book(self):
+    def test_delete_word_from_book(self):
         info = self._call_with_mock(
-            lambda: self.bcz.book.star_book(999),
-            _void_reply("star_book")
+            lambda: self.bcz.book.delete_word_from_book(101, 10001),
+            _void_reply("delete_user_book_words")
         )
-        self.assertEqual(info["method_name"], "star_book")
+        self.assertEqual(info["method_name"], "delete_user_book_words")
 
-    def test_search_books(self):
+    def test_batch_add_words(self):
         info = self._call_with_mock(
-            lambda: self.bcz.book.search_books("考研"),
-            _list_i32_reply("search_books", [1, 2, 3])
+            lambda: self.bcz.book.batch_add_words(101, [10001, 10002]),
+            _struct_reply("add_words_to_books", {1: 2})
         )
-        self.assertEqual(info["method_name"], "search_books")
+        self.assertEqual(info["method_name"], "add_words_to_books")
+
+    def test_add_words_to_book(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.add_words_to_book(101, [10001, 10002]),
+            _struct_reply("add_words_to_books", {1: 2})
+        )
+        self.assertEqual(info["method_name"], "add_words_to_books")
+
+    def test_ocr_match_words(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.ocr_match_words(b"\x89PNG"),
+            _list_i32_reply("match_words_ocr", [10001])
+        )
+        self.assertEqual(info["method_name"], "match_words_ocr")
+
+    def test_get_smart_device_list(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.get_smart_device_list(),
+            _list_i32_reply("get_user_machine_infos", [])
+        )
+        self.assertEqual(info["method_name"], "get_user_machine_infos")
+
+    def test_unbind_smart_device(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.unbind_smart_device("SN12345"),
+            _void_reply("remove_bind_machine")
+        )
+        self.assertEqual(info["method_name"], "remove_bind_machine")
+
+    def test_get_device_sku_info(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.get_device_sku_info(),
+            _struct_reply("get_device_sku_info", {1: 1})
+        )
+        self.assertEqual(info["method_name"], "get_device_sku_info")
+
+    def test_share_book(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.share_book(101),
+            _struct_reply("get_user_book_share_code", {1: "SHARE123"})
+        )
+        self.assertEqual(info["method_name"], "get_user_book_share_code")
 
     def test_import_shared_book(self):
         info = self._call_with_mock(
             lambda: self.bcz.book.import_shared_book("SHARECODE"),
-            _struct_reply("import_shared_book", {1: 123})
+            _struct_reply("add_user_book_by_code", {1: 123})
         )
-        self.assertEqual(info["method_name"], "import_shared_book")
+        self.assertEqual(info["method_name"], "add_user_book_by_code")
+
+    def test_get_share_code_info(self):
+        info = self._call_with_mock(
+            lambda: self.bcz.book.get_share_code_info("SHARECODE"),
+            _struct_reply("get_share_code_info", {1: "book_name"})
+        )
+        self.assertEqual(info["method_name"], "get_share_code_info")
 
 
 # ---------------------------------------------------------------------------
@@ -1075,15 +1127,19 @@ class TestArgumentEncoding(unittest.TestCase):
         self.assertEqual(ft, TYPE_I32)
         self.assertEqual(r.read_i32(), 999)
 
-    def test_skip_word_encodes_topic_id(self):
-        """skip_word must encode topic_id as field 1 (i32)."""
-        payload = self._capture_payload(lambda: self.bcz.study.skip_word(10042))
+    def test_add_word_to_book_encodes_topic_id(self):
+        """add_word_to_book must encode topic_id as field 2 (i32)."""
+        payload = self._capture_payload(lambda: self.bcz.book.add_word_to_book(101, 10042))
         r = CompactReader(payload)
         r.read_message_begin()
         r.read_struct_begin()
         ft, fid = r.read_field_begin()
         self.assertEqual(fid, 1)
         self.assertEqual(ft, TYPE_I32)
+        self.assertEqual(r.read_i32(), 101)
+        ft2, fid2 = r.read_field_begin()
+        self.assertEqual(fid2, 2)
+        self.assertEqual(ft2, TYPE_I32)
         self.assertEqual(r.read_i32(), 10042)
 
     def test_translate_v2_encodes_source(self):

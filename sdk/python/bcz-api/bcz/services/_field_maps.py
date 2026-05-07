@@ -304,12 +304,30 @@ COMBO_INFO = {
 # user_study_api
 # ============================================================
 
+# user_study_api.StudyHomeProgress
+STUDY_HOME_PROGRESS = {1: "mastered", 2: "learned", 3: "total"}
+
+# user_study_api.StudyHomeToday
+STUDY_HOME_TODAY = {
+    1: "learned",
+    2: "learning_plan",
+    3: "reviewed",
+    4: "review_plan",
+    5: "finished",
+    6: "book_finished",
+    7: "learning_finished_today",
+    8: "learning_finished",
+}
+
+# user_study_api.HomeButton
+HOME_BUTTON = {1: "type", 2: "link", 3: "msg"}
+
 # user_study_api.StudyHome
 STUDY_HOME = {
-    1: "progress",
-    2: "today_progresss",  # IDL typo preserved
-    3: "learning_button",
-    4: "review_button",
+    1: ("progress", STUDY_HOME_PROGRESS),
+    2: ("today_progresss", STUDY_HOME_TODAY),  # IDL typo preserved
+    3: ("learning_button", HOME_BUTTON),
+    4: ("review_button", HOME_BUTTON),
 }
 
 # ============================================================
@@ -405,6 +423,9 @@ BOOK_RESOURCE_UPDATE_INFO = {
 
 # resource_api.TransResultV2
 TRANS_RESULT_V2 = {1: "type", 2: "trans", 4: "trans_provider"}
+
+# resource_api.SearchWordResultV2
+SEARCH_WORD_RESULT_V2 = {1: "word", 2: "topic_id", 3: "mean_cn", 4: "accent"}
 
 # resource_api.WordRootRes
 WORD_ROOT_RES = {1: "roots", 4: "word_pack_list"}

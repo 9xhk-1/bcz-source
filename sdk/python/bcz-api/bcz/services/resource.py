@@ -22,6 +22,7 @@ from ._base import _BaseService, _map_deep
 from ._field_maps import (
     BOOK_RESOURCE_UPDATE_INFO,
     DICT_WIKI,
+    SEARCH_WORD_RESULT_V2,
     TOPIC_RESOURCE_V2,
     TRANS_RESULT_V2,
     WORD_DICT_V2,
@@ -142,7 +143,12 @@ class ResourceService(_BaseService):
             self._write_string(w, 1, query_str)
 
         result = self._call("search_word_v2", _write)
-        return result if isinstance(result, list) else []
+        if not isinstance(result, list):
+            return []
+        return [
+            _map_deep(item, SEARCH_WORD_RESULT_V2) if isinstance(item, dict) else item
+            for item in result
+        ]
 
     def translate_v2(self, source: str) -> dict:
         """翻译文本（v2）/ Translate text (v2). Returns TransResultV2."""

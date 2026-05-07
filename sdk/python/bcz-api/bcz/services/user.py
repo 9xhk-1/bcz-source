@@ -18,47 +18,15 @@ from .._protocol import (
     CompactWriter,
 )
 from .._session import BczSession
-from ._base import _BaseService, _map_fields
+from ._base import _BaseService, _map_deep
+from ._field_maps import USER_LOGIN_RESULT, USER_PROFILE, USER_TRY_RESULT, USER_TRY_RESULT_WATCH
 
 _HOST = "https://passport.baicizhan.com"
 _SVC = "unified_user_service"
 
-# ---------------------------------------------------------------------------
-# Result field maps  (verified against unified_user_service Java source)
-# ---------------------------------------------------------------------------
 
-# unified_user_service.UserLoginResult
-_LOGIN_RESULT_FIELDS = {
-    1: "access_token",
-    2: "is_new_user",
-    3: "email",
-    # field 4 (public_key) does not exist in UserLoginResult
-    5: "last_device",
-    6: "unique_id",
-    7: "phone",
-    8: "force_bind_phone",
-    9: "role_new",
-    10: "role",
-    11: "game_mode",
-}
-
-# unified_user_service.UserProfile
-_PROFILE_FIELDS = {
-    1: "nickname",
-    2: "gender_id",
-    # field 3 does not exist in UserProfile
-    4: "unique_id",
-}
-
-# unified_user_service.UserTryResult
-_TRY_RESULT_FIELDS = {1: "email"}
-
-# unified_user_service.UserTryResultForWatch
-_TRY_RESULT_WATCH_FIELDS = {1: "token"}
-
-
-def _map_login_result(raw: Optional[dict]) -> dict:
-    return _map_fields(raw, _LOGIN_RESULT_FIELDS)
+def _map_login_result(raw) -> dict:
+    return _map_deep(raw, USER_LOGIN_RESULT)
 
 
 class UnifiedUserService(_BaseService):
@@ -83,12 +51,12 @@ class UnifiedUserService(_BaseService):
     def have_a_try_v2(self) -> dict:
         """以游客身份登录（v2）/ Guest login (v2). Returns UserTryResult {email}."""
         raw = self._call("have_a_try_v2", lambda w: None)
-        return _map_fields(raw, _TRY_RESULT_FIELDS)
+        return _map_deep(raw, USER_TRY_RESULT)
 
     def have_a_try_v3(self) -> dict:
         """以游客身份登录（v3）/ Guest login (v3). Returns UserTryResultForWatch {token}."""
         raw = self._call("have_a_try_v3", lambda w: None)
-        return _map_fields(raw, _TRY_RESULT_WATCH_FIELDS)
+        return _map_deep(raw, USER_TRY_RESULT_WATCH)
 
     # ------------------------------------------------------------------
     # SMS / captcha
@@ -318,7 +286,7 @@ class UnifiedUserService(_BaseService):
         """
         self._session.require_auth()
         raw = self._call("get_profile", lambda w: None)
-        return _map_fields(raw, _PROFILE_FIELDS)
+        return _map_deep(raw, USER_PROFILE)
 
     def update_profile(
         self,

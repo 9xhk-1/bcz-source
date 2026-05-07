@@ -11,54 +11,23 @@ from typing import List
 
 from .._protocol import TYPE_I32, TYPE_LIST, TYPE_STRUCT, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService, _map_fields
+from ._base import _BaseService, _map_deep
+from ._field_maps import (
+    ADVERTISE_PROMOTION_INFO,
+    BCZ_LAUNCH_AD,
+    BOOK_AD_V2,
+    BOTTOM_ADV_INFOS,
+    EXPLORE_POPUP_ADV,
+    LIVE_STREAMING_INFO,
+    MAIN_VIEW_GAME_TOP_ADV,
+    MALL_TAB_INFO,
+    PRACTICE_BANNER_ADV,
+    PRACTICE_POPUP_ADV,
+    THIRD_AD,
+)
 
 _HOST = "https://advertise.baicizhan.com"
 _SVC = "advertise"
-
-# ---------------------------------------------------------------------------
-# Result field maps  (verified against advertise_api Java source)
-# ---------------------------------------------------------------------------
-
-# advertise_api.BczLaunchAd
-_BCZ_LAUNCH_AD_FIELDS = {1: "own_ad", 2: "third_ad"}
-
-# advertise_api.BottomAdvInfos
-_BOTTOM_ADV_INFOS_FIELDS = {
-    1: "carousel_banner", 2: "horizontal_banner", 3: "grid_ad",
-}
-
-# advertise_api.MainViewGameTopAdv
-_MAIN_VIEW_GAME_TOP_ADV_FIELDS = {1: "top_ad"}
-
-# advertise_api.PracticeBannerAdv
-_PRACTICE_BANNER_ADV_FIELDS = {1: "id"}
-
-# advertise_api.PracticePopupAdv
-_PRACTICE_POPUP_ADV_FIELDS = {1: "id"}
-
-# advertise_api.ExplorePopupAdv
-_EXPLORE_POPUP_ADV_FIELDS = {1: "id"}
-
-# advertise_api.BookAdV2
-_BOOK_AD_V2_FIELDS = {1: "homepage", 2: "wordlist"}
-
-# advertise_api.MallTabInfo
-_MALL_TAB_INFO_FIELDS = {1: "recommendType"}
-
-# advertise_api.AdvertisePromotionInfo
-_ADVERTISE_PROMOTION_INFO_FIELDS = {
-    1: "start_time", 2: "end_time", 4: "redirect_info",
-    5: "btn_x", 6: "btn_y", 7: "btn_w", 8: "btn_h",
-}
-
-# advertise_api.LiveStreamingInfo
-_LIVE_STREAMING_INFO_FIELDS = {
-    1: "current_timestamp", 2: "start_timestamp", 3: "end_timestamp",
-}
-
-# advertise_api.ThirdAd
-_THIRD_AD_FIELDS = {1: "showTimes"}
 
 
 class AdvertiseApiService(_BaseService):
@@ -78,7 +47,7 @@ class AdvertiseApiService(_BaseService):
     def get_launch_ad(self) -> dict:
         """获取启动广告（v1）/ Get launch screen ad (v1). Returns BczLaunchAd."""
         raw = self._call("get_launch_ad", lambda w: None)
-        return _map_fields(raw, _BCZ_LAUNCH_AD_FIELDS)
+        return _map_deep(raw, BCZ_LAUNCH_AD)
 
     def get_startup_ad_v2(
         self,
@@ -146,42 +115,42 @@ class AdvertiseApiService(_BaseService):
             self._write_double(w, 3, pixel_ratio)
 
         raw = self._call("get_main_view_bottom_advs_v3", _write)
-        return _map_fields(raw, _BOTTOM_ADV_INFOS_FIELDS)
+        return _map_deep(raw, BOTTOM_ADV_INFOS)
 
     def get_main_game_top_banner(self) -> dict:
         """获取游戏首页顶部横幅 / Get main game top banner. Returns MainViewGameTopAdv."""
         raw = self._call("get_main_game_top_banner", lambda w: None)
-        return _map_fields(raw, _MAIN_VIEW_GAME_TOP_ADV_FIELDS)
+        return _map_deep(raw, MAIN_VIEW_GAME_TOP_ADV)
 
     def get_practice_banner_adv(self) -> dict:
         """获取练习页横幅广告 / Get practice page banner ad. Returns PracticeBannerAdv."""
         raw = self._call("get_practice_banner_adv", lambda w: None)
-        return _map_fields(raw, _PRACTICE_BANNER_ADV_FIELDS)
+        return _map_deep(raw, PRACTICE_BANNER_ADV)
 
     def get_practice_popup_adv(self) -> dict:
         """获取练习页弹窗广告 / Get practice page popup ad. Returns PracticePopupAdv."""
         raw = self._call("get_practice_popup_adv", lambda w: None)
-        return _map_fields(raw, _PRACTICE_POPUP_ADV_FIELDS)
+        return _map_deep(raw, PRACTICE_POPUP_ADV)
 
     def get_explore_popup_adv(self) -> dict:
         """获取探索页弹窗广告 / Get explore page popup ad. Returns ExplorePopupAdv."""
         raw = self._call("get_explore_popup_adv", lambda w: None)
-        return _map_fields(raw, _EXPLORE_POPUP_ADV_FIELDS)
+        return _map_deep(raw, EXPLORE_POPUP_ADV)
 
     def get_books_ad_v2(self) -> dict:
         """获取词书页广告（v2）/ Get books page ad (v2). Returns BookAdV2."""
         raw = self._call("get_books_ad_v2", lambda w: None)
-        return _map_fields(raw, _BOOK_AD_V2_FIELDS)
+        return _map_deep(raw, BOOK_AD_V2)
 
     def get_mall_tab_icon_info(self) -> dict:
         """获取商城图标信息 / Get mall tab icon info. Returns MallTabInfo."""
         raw = self._call("get_mall_tab_icon_info", lambda w: None)
-        return _map_fields(raw, _MALL_TAB_INFO_FIELDS)
+        return _map_deep(raw, MALL_TAB_INFO)
 
     def get_promotion_info(self) -> dict:
         """获取促销信息 / Get promotion info. Returns AdvertisePromotionInfo."""
         raw = self._call("get_promotion_info", lambda w: None)
-        return _map_fields(raw, _ADVERTISE_PROMOTION_INFO_FIELDS)
+        return _map_deep(raw, ADVERTISE_PROMOTION_INFO)
 
     def get_loading_ad_items(self) -> list:
         """获取加载页广告列表 / Get loading screen ad items."""
@@ -196,12 +165,12 @@ class AdvertiseApiService(_BaseService):
     def get_live_streaming_info(self) -> dict:
         """获取直播信息 / Get live streaming info. Returns LiveStreamingInfo."""
         raw = self._call("get_live_streaming_info", lambda w: None)
-        return _map_fields(raw, _LIVE_STREAMING_INFO_FIELDS)
+        return _map_deep(raw, LIVE_STREAMING_INFO)
 
     def get_third_ad(self) -> dict:
         """获取第三方广告 / Get third-party ad. Returns ThirdAd."""
         raw = self._call("get_third_ad", lambda w: None)
-        return _map_fields(raw, _THIRD_AD_FIELDS)
+        return _map_deep(raw, THIRD_AD)
 
     # ------------------------------------------------------------------
     # Custom ads config (auth required)

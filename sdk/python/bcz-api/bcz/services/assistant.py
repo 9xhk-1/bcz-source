@@ -12,32 +12,8 @@ from typing import List
 
 from .._protocol import TYPE_I32, TYPE_LIST, TYPE_MAP, TYPE_STRUCT, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService, _map_fields
-
-
-# ---------------------------------------------------------------------------
-# Result field maps  (verified against assistant/activity Java sources)
-# ---------------------------------------------------------------------------
-
-# assistant_api.ClipboardResp
-_CLIPBOARD_RESP_FIELDS = {1: "style", 2: "json"}
-
-# assistant_api.UserBetaInfo
-_USER_BETA_INFO_FIELDS = {
-    1: "beta_types", 2: "high_level_book_ids", 3: "daka_poster_book_ids",
-}
-
-# assistant_api.PayResp
-_PAY_RESP_FIELDS = {
-    1: "order_id", 2: "step_pay_order_id", 3: "no_need_pay",
-    4: "pay_id", 5: "pay_url", 6: "pay_json", 7: "pay_type",
-}
-
-# activity_api.ExportActivityInfo
-_EXPORT_ACTIVITY_INFO_FIELDS = {1: "template_infos", 2: "balance", 4: "banner"}
-
-# activity_api.ExportQuota
-_EXPORT_QUOTA_FIELDS = {1: "balance"}
+from ._base import _BaseService, _map_deep
+from ._field_maps import CLIPBOARD_RESP, EXPORT_ACTIVITY_INFO, EXPORT_QUOTA, PAY_RESP, USER_BETA_INFO
 
 
 # ---------------------------------------------------------------------------
@@ -68,13 +44,13 @@ class UserAssistantApiService(_BaseService):
             self._write_string(w, 1, code)
 
         raw = self._call("analyze_clipboard", _write)
-        return _map_fields(raw, _CLIPBOARD_RESP_FIELDS)
+        return _map_deep(raw, CLIPBOARD_RESP)
 
     def get_beta_user_types_v2(self) -> dict:
         """获取 Beta 用户类型（v2）/ Get beta user types (v2). Returns UserBetaInfo."""
         self._session.require_auth()
         raw = self._call("get_beta_user_types_v2", lambda w: None)
-        return _map_fields(raw, _USER_BETA_INFO_FIELDS)
+        return _map_deep(raw, USER_BETA_INFO)
 
     def get_activity_updated_time(self) -> int:
         """获取活动更新时间戳 / Get activity updated timestamp."""
@@ -129,7 +105,7 @@ class UserAssistantApiService(_BaseService):
             self._write_string(w, 3, product_id)
 
         raw = self._call("huawei_pay", _write)
-        return _map_fields(raw, _PAY_RESP_FIELDS)
+        return _map_deep(raw, PAY_RESP)
 
     def get_learning_stats(self) -> dict:
         """获取学习统计数据 / Get detailed learning statistics."""
@@ -152,13 +128,13 @@ class UserActivityApiService(_BaseService):
         """获取导出活动信息 / Get export activity info. Returns ExportActivityInfo."""
         self._session.require_auth()
         raw = self._call("get_export_activity_info", lambda w: None)
-        return _map_fields(raw, _EXPORT_ACTIVITY_INFO_FIELDS)
+        return _map_deep(raw, EXPORT_ACTIVITY_INFO)
 
     def buy_export_quota(self) -> dict:
         """购买导出配额 / Purchase export quota. Returns ExportQuota."""
         self._session.require_auth()
         raw = self._call("buy_export_quota", lambda w: None)
-        return _map_fields(raw, _EXPORT_QUOTA_FIELDS)
+        return _map_deep(raw, EXPORT_QUOTA)
 
     def export_words(self, email: str, book_id: int, fmt: int = 1) -> None:
         """导出单词到邮箱 / Export words to email.

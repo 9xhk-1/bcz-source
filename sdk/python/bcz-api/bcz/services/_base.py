@@ -125,6 +125,51 @@ def _map_fields(raw: Any, field_map: dict) -> dict:
     return {field_map[fid]: raw[fid] for fid in field_map if fid in raw}
 
 
+def _map_deep(raw: Any, schema: dict) -> Any:
+    """Recursively map a parsed Thrift struct using a schema.
+
+    递归地将解析后的 Thrift struct 映射为命名字段字典。
+
+    Schema format: ``{field_id: spec}``
+
+    - *spec* is a ``str``: simple rename, value passed as-is.
+    - *spec* is a ``(str, nested_schema)`` tuple where *nested_schema* is a
+      ``dict``: rename the field and recursively map its struct value.
+    - *spec* is a ``(str, [item_schema])`` tuple where the inner list contains
+      exactly one ``dict``: rename the field and map each list element as a
+      struct using *item_schema*.
+
+    :param raw: Raw ``{field_id: value}`` dict from ``_parse_struct``.
+    :param schema: Nested schema as described above.
+    :returns: ``{str field_name: mapped_value}`` dict.
+    """
+    if not isinstance(raw, dict):
+        return {}
+    result: dict = {}
+    for fid, spec in schema.items():
+        if fid not in raw:
+            continue
+        val = raw[fid]
+        if isinstance(spec, str):
+            result[spec] = val
+        elif isinstance(spec, tuple):
+            name, nested = spec
+            if isinstance(nested, list) and nested:
+                item_schema = nested[0]
+                if isinstance(val, list):
+                    result[name] = [
+                        _map_deep(item, item_schema) if isinstance(item, dict) else item
+                        for item in val
+                    ]
+                else:
+                    result[name] = val
+            elif isinstance(nested, dict):
+                result[name] = _map_deep(val, nested) if isinstance(val, dict) else val
+            else:
+                result[name] = val
+    return result
+
+
 def _parse_response_result(reader: CompactReader) -> Any:
     """Parse the reply struct.
 

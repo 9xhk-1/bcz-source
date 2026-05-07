@@ -9,94 +9,31 @@ from __future__ import annotations
 
 from .._protocol import TYPE_I32, TYPE_STRUCT, CompactWriter
 from .._session import BczSession
-from ._base import _BaseService, _map_fields
+from ._base import _BaseService, _map_deep
+from ._field_maps import (
+    BUILDING_MAP,
+    COMBO_INFO,
+    COST_COMPASS_RSP,
+    ENERGY_INFO,
+    FINISH_ROUND_RSP,
+    GAME_HOME_INFO,
+    ISLAND_INFO,
+    PURCHASE_RSP,
+    ROADMAP_INFO,
+    ROUND_RSP,
+    SENTENCE_BUILDING_PROGRESS,
+    SENTENCE_BUILDING_STATUS,
+    SENTENCE_CURRENT_INFO,
+    SENTENCE_GAME_HOME,
+    SENTENCE_SKU_INFO,
+    STUDY_HOME_INFO,
+    STUDY_RECORD_RSP,
+    SYNC_INFO,
+    USER_WORTH,
+)
 
 _HOST = "https://game.baicizhan.com"
 _SVC = "game"
-
-# ---------------------------------------------------------------------------
-# Result field maps  (verified against game_api Java source)
-# ---------------------------------------------------------------------------
-
-# game_api.StudyHomeInfo
-_STUDY_HOME_INFO_FIELDS = {1: "book", 2: "learn_info", 3: "mascot"}
-
-# game_api.GameHomeInfo
-_GAME_HOME_INFO_FIELDS = {1: "user_data_info", 2: "plan_info", 3: "basic_info"}
-
-# game_api.UserWorth
-_USER_WORTH_FIELDS = {
-    1: "win_streak_days", 2: "total_daka_days", 3: "word_done_count",
-    4: "listen_count", 5: "reading_count",
-}
-
-# game_api.RoadmapInfo
-_ROADMAP_INFO_FIELDS = {1: "topic_ids", 2: "version", 3: "cake_modules"}
-
-# game_api.IslandInfo
-_ISLAND_INFO_FIELDS = {1: "islands", 2: "version"}
-
-# game_api.SyncInfo
-_SYNC_INFO_FIELDS = {
-    1: "island_version", 2: "roadmap_version", 3: "study_record_version",
-    4: "plan_version", 5: "server_time", 6: "current_book_id",
-    7: "user_data_info", 8: "sentenceSkuId", 9: "resource_version",
-}
-
-# game_api.RoundRsp
-_ROUND_RSP_FIELDS = {
-    1: "round_info", 2: "plan_version", 3: "round_contiue", 4: "energy_info",
-}
-
-# game_api.FinishRoundRsp
-_FINISH_ROUND_RSP_FIELDS = {
-    2: "award_box", 3: "study_record_versin", 4: "plan_version",
-    5: "user_data_info", 6: "plan_info", 7: "lava_quest",
-}
-
-# game_api.CostCompassRsp
-_COST_COMPASS_RSP_FIELDS = {1: "plan_version", 2: "compass_info"}
-
-# game_api.PurchaseRsp
-_PURCHASE_RSP_FIELDS = {1: "copper_before", 2: "copper_after"}
-
-# game_api.StudyRecrodRsp  (note: typo is in the original IDL)
-_STUDY_RECORD_RSP_FIELDS = {1: "study_records", 2: "ability", 4: "version"}
-
-# game_api.BuildingMap
-_BUILDING_MAP_FIELDS = {1: "skuId", 2: "buildings"}
-
-# game_api.SentenceGameHome
-_SENTENCE_GAME_HOME_FIELDS = {1: "energy_info", 2: "building_progress", 3: "lesson_info"}
-
-# game_api.SentenceSkuInfo
-_SENTENCE_SKU_INFO_FIELDS = {
-    1: "skuId", 2: "chapters", 3: "lessons", 4: "version", 5: "languageType",
-}
-
-# game_api.SentenceCurrentInfo
-_SENTENCE_CURRENT_INFO_FIELDS = {
-    1: "skuId", 2: "buildingStatus", 3: "latestContentVersion",
-    4: "energy_info", 5: "finishedLessonIds", 6: "hideLessonIds",
-}
-
-# game_api.EnergyInfo
-_ENERGY_INFO_FIELDS = {1: "energy_cost", 2: "energy_count"}
-
-# game_api.SentenceBuildingProgress
-_SENTENCE_BUILDING_PROGRESS_FIELDS = {
-    1: "building_id", 2: "building_level_id", 3: "hammer_remain", 4: "hammer_used",
-}
-
-# game_api.SentenceBuildingStatus
-_SENTENCE_BUILDING_STATUS_FIELDS = {
-    1: "totalCoin", 2: "spentCoin", 3: "userBuildingLevels",
-}
-
-# game_api.ComboInfo
-_COMBO_INFO_FIELDS = {
-    1: "current_combo", 2: "updateAt", 3: "props", 4: "max_combo",
-}
 
 
 class GameApiService(_BaseService):
@@ -117,13 +54,13 @@ class GameApiService(_BaseService):
         """获取游戏首页 / Get game home page data. Returns StudyHomeInfo."""
         self._session.require_auth()
         raw = self._call("home", lambda w: None)
-        return _map_fields(raw, _STUDY_HOME_INFO_FIELDS)
+        return _map_deep(raw, STUDY_HOME_INFO)
 
     def game_home(self) -> dict:
         """获取游戏主界面数据 / Get game main view data. Returns GameHomeInfo."""
         self._session.require_auth()
         raw = self._call("game_home", lambda w: None)
-        return _map_fields(raw, _GAME_HOME_INFO_FIELDS)
+        return _map_deep(raw, GAME_HOME_INFO)
 
     def get_game_config(self) -> dict:
         """获取游戏配置 / Get game configuration. Returns Map<String, String>."""
@@ -135,7 +72,7 @@ class GameApiService(_BaseService):
         """获取游戏价值/货币信息 / Get player worth and currency. Returns UserWorth."""
         self._session.require_auth()
         raw = self._call("get_worth", lambda w: None)
-        return _map_fields(raw, _USER_WORTH_FIELDS)
+        return _map_deep(raw, USER_WORTH)
 
     def get_equipments(self) -> list:
         """获取装备列表 / Get equipment list."""
@@ -173,19 +110,19 @@ class GameApiService(_BaseService):
         """获取游戏关卡地图 / Get game roadmap. Returns RoadmapInfo."""
         self._session.require_auth()
         raw = self._call("get_roadmap", lambda w: None)
-        return _map_fields(raw, _ROADMAP_INFO_FIELDS)
+        return _map_deep(raw, ROADMAP_INFO)
 
     def get_island_roadmap(self) -> dict:
         """获取岛屿关卡地图 / Get island roadmap. Returns IslandInfo."""
         self._session.require_auth()
         raw = self._call("get_island_roadmap", lambda w: None)
-        return _map_fields(raw, _ISLAND_INFO_FIELDS)
+        return _map_deep(raw, ISLAND_INFO)
 
     def sync_info(self) -> dict:
         """同步游戏信息 / Sync game information. Returns SyncInfo."""
         self._session.require_auth()
         raw = self._call("sync_info", lambda w: None)
-        return _map_fields(raw, _SYNC_INFO_FIELDS)
+        return _map_deep(raw, SYNC_INFO)
 
     # ------------------------------------------------------------------
     # Rounds
@@ -200,7 +137,7 @@ class GameApiService(_BaseService):
             self._write_i32(w, 2, chapter)
 
         raw = self._call("start_round", _write)
-        return _map_fields(raw, _ROUND_RSP_FIELDS)
+        return _map_deep(raw, ROUND_RSP)
 
     def finish_round(
         self,
@@ -219,7 +156,7 @@ class GameApiService(_BaseService):
             self._write_i32(w, 4, total_count)
 
         raw = self._call("finish_round", _write)
-        return _map_fields(raw, _FINISH_ROUND_RSP_FIELDS)
+        return _map_deep(raw, FINISH_ROUND_RSP)
 
     def discard_round(self, round_id: str) -> None:
         """放弃一局游戏 / Discard / abandon a game round."""
@@ -262,7 +199,7 @@ class GameApiService(_BaseService):
             self._write_i32(w, 1, count)
 
         raw = self._call("cost_compass", _write)
-        return _map_fields(raw, _COST_COMPASS_RSP_FIELDS)
+        return _map_deep(raw, COST_COMPASS_RSP)
 
     def purchase(self, item_id: str) -> dict:
         """购买游戏道具 / Purchase an in-game item. Returns PurchaseRsp."""
@@ -272,7 +209,7 @@ class GameApiService(_BaseService):
             self._write_string(w, 1, item_id)
 
         raw = self._call("purchase", _write)
-        return _map_fields(raw, _PURCHASE_RSP_FIELDS)
+        return _map_deep(raw, PURCHASE_RSP)
 
     # ------------------------------------------------------------------
     # Study / ability records
@@ -314,7 +251,7 @@ class GameApiService(_BaseService):
         """获取游戏学习记录 / Get game study record. Returns StudyRecrodRsp."""
         self._session.require_auth()
         raw = self._call("get_study_record", lambda w: None)
-        return _map_fields(raw, _STUDY_RECORD_RSP_FIELDS)
+        return _map_deep(raw, STUDY_RECORD_RSP)
 
     # ------------------------------------------------------------------
     # Building map
@@ -324,7 +261,7 @@ class GameApiService(_BaseService):
         """获取建筑地图 / Get building map data. Returns BuildingMap."""
         self._session.require_auth()
         raw = self._call("get_building_map", lambda w: None)
-        return _map_fields(raw, _BUILDING_MAP_FIELDS)
+        return _map_deep(raw, BUILDING_MAP)
 
     # ------------------------------------------------------------------
     # Sentence game
@@ -334,25 +271,25 @@ class GameApiService(_BaseService):
         """获取句子游戏首页 / Get sentence game home. Returns SentenceGameHome."""
         self._session.require_auth()
         raw = self._call("sentence_home", lambda w: None)
-        return _map_fields(raw, _SENTENCE_GAME_HOME_FIELDS)
+        return _map_deep(raw, SENTENCE_GAME_HOME)
 
     def sentence_sku_info(self) -> dict:
         """获取句子游戏 SKU 信息 / Get sentence game SKU info. Returns SentenceSkuInfo."""
         self._session.require_auth()
         raw = self._call("sentence_sku_info", lambda w: None)
-        return _map_fields(raw, _SENTENCE_SKU_INFO_FIELDS)
+        return _map_deep(raw, SENTENCE_SKU_INFO)
 
     def sentence_current_info(self) -> dict:
         """获取当前句子游戏信息 / Get current sentence game info. Returns SentenceCurrentInfo."""
         self._session.require_auth()
         raw = self._call("sentence_current_info", lambda w: None)
-        return _map_fields(raw, _SENTENCE_CURRENT_INFO_FIELDS)
+        return _map_deep(raw, SENTENCE_CURRENT_INFO)
 
     def sentence_start(self) -> dict:
         """开始句子游戏 / Start a sentence game session. Returns EnergyInfo."""
         self._session.require_auth()
         raw = self._call("sentence_start", lambda w: None)
-        return _map_fields(raw, _ENERGY_INFO_FIELDS)
+        return _map_deep(raw, ENERGY_INFO)
 
     def select_sentence_sku(self, sku_id: str) -> None:
         """选择句子游戏 SKU / Select sentence game SKU."""
@@ -367,10 +304,16 @@ class GameApiService(_BaseService):
         """升级句子建筑（v1）/ Upgrade sentence building (v1). Returns SentenceBuildingProgress."""
         self._session.require_auth()
         raw = self._call("upgrade_sentence_building", lambda w: None)
-        return _map_fields(raw, _SENTENCE_BUILDING_PROGRESS_FIELDS)
+        return _map_deep(raw, SENTENCE_BUILDING_PROGRESS)
 
     def upgrade_sentence_building_v2(self) -> dict:
         """升级句子建筑（v2）/ Upgrade sentence building (v2). Returns SentenceBuildingStatus."""
         self._session.require_auth()
         raw = self._call("upgrade_sentence_building_v2", lambda w: None)
-        return _map_fields(raw, _SENTENCE_BUILDING_STATUS_FIELDS)
+        return _map_deep(raw, SENTENCE_BUILDING_STATUS)
+
+    def get_combo_info(self) -> dict:
+        """获取连击信息 / Get combo info. Returns ComboInfo."""
+        self._session.require_auth()
+        raw = self._call("get_combo_info", lambda w: None)
+        return _map_deep(raw, COMBO_INFO)

@@ -511,5 +511,94 @@ class TestResponseParsing(unittest.TestCase):
         self.assertIn("Unknown function", str(ctx.exception))
 
 
+class TestMapDeep(unittest.TestCase):
+    """Tests for the recursive _map_deep() function."""
+
+    def test_flat_schema(self):
+        """Flat schema behaves identically to _map_fields."""
+        from bcz.services._base import _map_deep
+        schema = {1: "energy_cost", 2: "energy_count"}
+        raw = {1: 5, 2: 10}
+        self.assertEqual(_map_deep(raw, schema), {"energy_cost": 5, "energy_count": 10})
+
+    def test_missing_fields_omitted(self):
+        """Fields absent from raw are omitted from result."""
+        from bcz.services._base import _map_deep
+        schema = {1: "a", 2: "b", 3: "c"}
+        raw = {1: 42}
+        self.assertEqual(_map_deep(raw, schema), {"a": 42})
+
+    def test_nested_struct(self):
+        """Tuple spec with dict recurses into nested struct."""
+        from bcz.services._base import _map_deep
+        inner = {1: "level", 2: "expire_time"}
+        outer = {1: ("vip_info", inner), 2: "copper"}
+        raw = {1: {1: 3, 2: 9999999}, 2: 500}
+        result = _map_deep(raw, outer)
+        self.assertEqual(result, {"vip_info": {"level": 3, "expire_time": 9999999}, "copper": 500})
+
+    def test_nested_list_of_structs(self):
+        """Tuple spec with list recurses into each list element."""
+        from bcz.services._base import _map_deep
+        item_schema = {1: "topic_id", 2: "stage"}
+        schema = {1: ("study_records", [item_schema])}
+        raw = {1: [{1: 100, 2: 1}, {1: 200, 2: 2}]}
+        result = _map_deep(raw, schema)
+        self.assertEqual(result, {
+            "study_records": [{"topic_id": 100, "stage": 1}, {"topic_id": 200, "stage": 2}]
+        })
+
+    def test_deeply_nested(self):
+        """Three levels of nesting are all mapped."""
+        from bcz.services._base import _map_deep
+        compass = {1: "balance", 2: "cost"}
+        plan_progress = {1: "target_round", 3: ("compass_info", compass)}
+        user_plan = {2: ("plan_progress", plan_progress), 3: "plan_version"}
+        raw = {2: {1: 10, 3: {1: 50, 2: 5}}, 3: 7}
+        result = _map_deep(raw, user_plan)
+        self.assertEqual(result, {
+            "plan_progress": {"target_round": 10, "compass_info": {"balance": 50, "cost": 5}},
+            "plan_version": 7,
+        })
+
+    def test_non_dict_raw_returns_empty(self):
+        """Non-dict raw value returns empty dict without raising."""
+        from bcz.services._base import _map_deep
+        self.assertEqual(_map_deep(None, {1: "x"}), {})
+        self.assertEqual(_map_deep([], {1: "x"}), {})
+
+    def test_non_dict_nested_value_passed_as_is(self):
+        """If a nested struct value is not a dict, it is kept as-is."""
+        from bcz.services._base import _map_deep
+        inner = {1: "a"}
+        schema = {1: ("nested", inner)}
+        raw = {1: "not_a_dict"}
+        result = _map_deep(raw, schema)
+        self.assertEqual(result, {"nested": "not_a_dict"})
+
+    def test_real_energy_info_schema(self):
+        """ENERGY_INFO from _field_maps works end-to-end."""
+        from bcz.services._base import _map_deep
+        from bcz.services._field_maps import ENERGY_INFO
+        raw = {1: 3, 2: 7}
+        self.assertEqual(_map_deep(raw, ENERGY_INFO), {"energy_cost": 3, "energy_count": 7})
+
+    def test_real_finish_round_rsp_schema(self):
+        """FINISH_ROUND_RSP nested schema maps user_data_info recursively."""
+        from bcz.services._base import _map_deep
+        from bcz.services._field_maps import FINISH_ROUND_RSP
+        raw = {
+            3: 5,
+            4: 2,
+            5: {1: {1: 2, 2: 1700000000}, 2: {1: 3, 2: 7}, 3: 200},
+        }
+        result = _map_deep(raw, FINISH_ROUND_RSP)
+        self.assertEqual(result["study_record_versin"], 5)
+        self.assertEqual(result["plan_version"], 2)
+        self.assertEqual(result["user_data_info"]["copper"], 200)
+        self.assertEqual(result["user_data_info"]["vip_info"]["level"], 2)
+        self.assertEqual(result["user_data_info"]["energy_info"]["energy_count"], 7)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
